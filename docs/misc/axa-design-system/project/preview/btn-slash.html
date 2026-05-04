@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>AXA — Buttons: Slash (B2B Distributeur)</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; font-family: var(--font-sans); background:#fff; }
+  .grp { display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; align-items: center; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--gray-500); width: 70px; }
+  .btn { font: 700 16px var(--font-sans); padding: 14px 16px; border: 0; border-radius: 0; cursor: pointer; transition: all .2s linear; }
+  .pri { background: var(--axa-blue); color:#fff; box-shadow: inset 0 -2px #00005B; }
+  .pri:hover { background:#00005B; }
+  .sec { background:#fff; color: var(--axa-blue); border: 1px solid var(--axa-blue); border-bottom: 0; box-shadow: inset 0 -2px var(--axa-blue); }
+  .ok  { background:#0C7D3B; color:#fff; box-shadow: inset 0 -2px #084922; }
+  .danger { background:#C7102E; color:#fff; box-shadow: inset 0 -2px #6D0915; }
+  .ghost { background: transparent; color: var(--axa-blue); padding: 4px 8px; text-decoration: underline; font-weight: 400; }
+</style></head>
+<body>
+  <div class="grp"><span class="lbl">Primary</span><button class="btn pri">Valider</button><button class="btn sec">Annuler</button></div>
+  <div class="grp"><span class="lbl">State</span><button class="btn ok">Confirmer</button><button class="btn danger">Supprimer</button></div>
+  <div class="grp"><span class="lbl">Ghost</span><button class="ghost">Voir le détail</button></div>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>AXA — Radii</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; font-family: var(--font-sans); background:#fff; }
+  .row { display:grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
+  .sw  { aspect-ratio: 1/1; background: var(--axa-blue-bg); border: 2px solid var(--axa-blue); display:flex; align-items:flex-end; justify-content:center; padding: 6px;
+         font-family: var(--font-mono); font-size: 10px; color: var(--axa-blue); }
+  .lab { display:block; text-align:center; font-family: var(--font-mono); font-size: 10px; color: var(--gray-800); margin-top: 4px; }
+  .item small { display:block; text-align:center; font-size: 10px; color: var(--gray-500); }
+</style></head>
+<body>
+  <div class="row">
+    <div class="item"><div class="sw" style="border-radius:0">0</div><span class="lab">--radius-0</span><small>Slash buttons</small></div>
+    <div class="item"><div class="sw" style="border-radius:4px">4</div><span class="lab">--radius-sm</span><small>Slash card</small></div>
+    <div class="item"><div class="sw" style="border-radius:8px">8</div><span class="lab">--radius-md</span><small>LF button</small></div>
+    <div class="item"><div class="sw" style="border-radius:12px">12</div><span class="lab">--radius-lg</span><small>Card</small></div>
+    <div class="item"><div class="sw" style="border-radius:16px">16</div><span class="lab">--radius-xl</span><small>Modal</small></div>
+    <div class="item"><div class="sw" style="border-radius:32px">32</div><span class="lab">--radius-3xl</span><small>Big card</small></div>
+    <div class="item"><div class="sw" style="border-radius:100vmax">∞</div><span class="lab">--radius-pill</span><small>Apollo CTA</small></div>
+  </div>
+</body></html>

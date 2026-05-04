@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>AXA — Cards</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; font-family: var(--font-sans); background:#F8F8FF; }
+  .row { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .lf, .apollo, .slash { background:#fff; padding: 16px; }
+  .lf { border-radius: 12px; outline: 1px solid var(--gray-140); outline-offset: -1px; }
+  .apollo { border-radius: 12px; outline: 1px solid var(--gray-140); outline-offset: -1px; }
+  .slash { border-radius: 4px; box-shadow: 0 0 9px 0 rgba(0,0,0,.18); text-align: center; min-height: 110px; display:flex; flex-direction: column; justify-content: center; align-items:center; }
+  .slash svg { fill: var(--axa-blue); }
+  .meta { font-family: var(--font-mono); font-size: 10px; color: var(--gray-500); margin: 0 0 8px; }
+  h5 { margin: 0 0 4px; font-size: 16px; font-weight: 600; color: var(--axa-blue); }
+  p { margin: 0; font-size: 13px; color: var(--gray-800); line-height: 1.4; }
+</style></head>
+<body>
+  <div class="row">
+    <div class="lf">
+      <div class="meta">LF · 12px · 1px outline</div>
+      <h5>Habitation</h5>
+      <p>Protégez votre logement et vos biens contre les sinistres du quotidien.</p>
+    </div>
+    <div class="apollo">
+      <div class="meta">Apollo · 12px · 1px outline</div>
+      <h5>Auto Confort</h5>
+      <p>Une formule complète pour rouler l'esprit tranquille.</p>
+    </div>
+    <div class="slash">
+      <svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 2 2 7v6c0 5 4 9 10 9s10-4 10-9V7L12 2z"/></svg>
+      <div class="meta" style="margin-top:8px">Slash · 4px · halo</div>
+      <strong style="color:var(--gray-1000); font-size:14px">Garanties</strong>
+    </div>
+  </div>
+</body></html>

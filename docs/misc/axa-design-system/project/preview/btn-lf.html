@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>AXA — Buttons: LF (B2C Client)</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; font-family: var(--font-sans); background:#fff; }
+  .grp { display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; align-items: center; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--gray-500); width: 70px; }
+  .btn { font: 700 16px var(--font-sans); padding: 14px 24px; border-radius: 8px; border: 0; cursor: pointer; transition: all .2s linear; }
+  .pri { background: var(--axa-blue); color:#fff; }
+  .pri:hover { background:#000072; }
+  .sec { background:#fff; color: var(--axa-blue); box-shadow: inset 0 0 0 1px var(--axa-blue); }
+  .ter { background:#E8E7F7; color: var(--axa-blue); }
+  .biz { background:#BC4C2D; color:#fff; }
+  .ghost { background: transparent; color: var(--axa-blue); padding: 6px 0; font-weight: 600; text-decoration: underline; }
+</style></head>
+<body>
+  <div class="grp"><span class="lbl">Primary</span><button class="btn pri">Accéder à mon espace</button></div>
+  <div class="grp"><span class="lbl">Secondary</span><button class="btn sec">Modifier</button><button class="btn ter">Détails</button></div>
+  <div class="grp"><span class="lbl">Business</span><button class="btn biz">Devenir Pro</button></div>
+  <div class="grp"><span class="lbl">Ghost</span><button class="ghost">Annuler</button></div>
+</body></html>

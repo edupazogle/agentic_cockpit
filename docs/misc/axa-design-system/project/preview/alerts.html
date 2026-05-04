@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>AXA — Alerts &amp; Messages</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; font-family: var(--font-sans); background:#fff; }
+  .stack > * + * { margin-top: 10px; }
+  .alert { display:flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-radius: 8px; font-size: 14px; line-height: 1.45; }
+  .alert b { display:block; margin-bottom: 2px; }
+  .ico { font-family: var(--font-mono); font-weight: 700; flex: 0 0 22px; text-align: center; }
+  .info { background: #F5FBFD; color: #1f4e7a; box-shadow: inset 0 0 0 1px #3871B533; }
+  .ok   { background: #FAFFFB; color: #0C7D3B; box-shadow: inset 0 0 0 1px #0C7D3B33; }
+  .warn { background: #FFF1EF; color: #BC4C2D; box-shadow: inset 0 0 0 1px #BC4C2D33; }
+  .err  { background: #FFFAFB; color: #C7102E; box-shadow: inset 0 0 0 1px #C7102E33; }
+</style></head>
+<body>
+  <div class="stack">
+    <div class="alert info"><span class="ico">i</span><span><b>Information</b>Votre prochaine échéance est prévue le 15 mars 2026.</span></div>
+    <div class="alert ok"><span class="ico">✓</span><span><b>Confirmation</b>Votre demande a bien été enregistrée.</span></div>
+    <div class="alert warn"><span class="ico">!</span><span><b>Attention</b>Documents manquants pour finaliser votre dossier.</span></div>
+    <div class="alert err"><span class="ico">✕</span><span><b>Erreur</b>Impossible d'enregistrer la modification. Réessayez.</span></div>
+  </div>
+</body></html>

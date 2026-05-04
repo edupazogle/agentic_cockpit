@@ -1,0 +1,370 @@
+'use client'
+
+import {
+  Background,
+  MarkerType,
+  ReactFlow,
+  type Edge,
+  type Node,
+} from '@xyflow/react'
+import {
+  Activity,
+  BarChart3,
+  Bell,
+  ChevronLeft,
+  FileText,
+  MessageSquare,
+  Network,
+  Settings,
+} from 'lucide-react'
+import Link from 'next/link'
+import {
+  startTransition,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useState,
+} from 'react'
+
+import { nodeTypes } from '@/components/flow/node-types'
+import type { FlowNodeDefinition, NodeStatus, ScenarioRecord, ScenarioRun } from '@/lib/domain/types'
+
+const projectTabs = [
+  { label: 'Architecture', icon: Network, active: true },
+  { label: 'Observability', icon: BarChart3 },
+  { label: 'Logs', icon: FileText },
+  { label: 'Settings', icon: Settings },
+]
+
+function buildNodes(
+  scenarioNodes: FlowNodeDefinition[],
+  scenarioStages: ScenarioRecord['stages'],
+  liveMode: boolean,
+  activeRun: ScenarioRun | null,
+): Node[] {
+  const stageNodes: Node[] = scenarioStages.map((stage) => ({
+    id: stage.id,
+    type: 'stageGroup',
+    position: { x: stage.x, y: stage.y },
+    data: { ...stage } as Record<string, unknown>,
+    selectable: false,
+    draggable: false,
+    connectable: false,
+    style: {
+      width: stage.width,
+      height: stage.height,
+      background: 'transparent',
+      border: 'none',
+    },
+  }))
+
+  const serviceNodes: Node[] = scenarioNodes.map((node) => {
+    const resolvedStatus: NodeStatus =
+      activeRun?.nodeStates[node.id] ??
+      (liveMode && node.liveStatus ? node.liveStatus : node.status)
+
+    return {
+      id: node.id,
+      type: node.kind === 'endpoint' ? 'endpointCard' : 'agentCard',
+      position: { x: node.x, y: node.y },
+      parentId: node.parentId,
+      extent: node.parentId ? 'parent' : undefined,
+      draggable: false,
+      data: {
+        ...node,
+        resolvedStatus,
+      } as Record<string, unknown>,
+      style: {
+        width: node.width,
+        height: node.height,
+      },
+    }
+  })
+
+  return [...stageNodes, ...serviceNodes]
+}
+
+function buildEdges(
+  scenarioEdges: ScenarioRecord['edges'],
+  liveMode: boolean,
+): Edge[] {
+  return scenarioEdges.map((edge) => {
+    const active = liveMode && edge.live
+
+    return {
+      id: edge.id,
+      source: edge.source,
+      target: edge.target,
+      animated: active,
+      type: 'smoothstep',
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        color: active ? 'rgba(165, 139, 255, 0.8)' : 'rgba(140, 132, 168, 0.45)',
+        width: 18,
+        height: 18,
+      },
+      style: {
+        stroke: active ? 'rgba(165, 139, 255, 0.72)' : 'rgba(140, 132, 168, 0.3)',
+        strokeWidth: active ? 1.8 : 1.4,
+      },
+    }
+  })
+}
+
+interface ScenarioWorkspaceProps {
+  scenario: ScenarioRecord
+}
+
+export function ScenarioWorkspace({ scenario }: ScenarioWorkspaceProps) {
+  const [showActivity, setShowActivity] = useState(true)
+  const [liveMode, setLiveMode] = useState(scenario.status === 'running')
+  const [activeRun, setActiveRun] = useState<ScenarioRun | null>(null)
+  const [isStartingRun, setIsStartingRun] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
+    scenario.nodes.find((node) => node.kind === 'agent')?.id ?? null,
+  )
+
+  const handleRunSnapshot = useEffectEvent((snapshot: ScenarioRun) => {
+    startTransition(() => {
+      setActiveRun(snapshot)
+      setLiveMode(true)
+    })
+  })
+
+  useEffect(() => {
+    if (!activeRun?.id) {
+      return
+    }
+
+    const source = new EventSource(`/api/runs/${activeRun.id}/stream`)
+
+    source.addEventListener('snapshot', (event) => {
+      handleRunSnapshot(JSON.parse(event.data) as ScenarioRun)
+    })
+
+    source.onerror = () => {
+      source.close()
+    }
+
+    return () => {
+      source.close()
+    }
+  }, [activeRun?.id, handleRunSnapshot])
+
+  const nodes = useMemo(() => {
+    return buildNodes(scenario.nodes, scenario.stages, liveMode, activeRun)
+  }, [activeRun, liveMode, scenario.nodes, scenario.stages])
+
+  const edges = useMemo(() => {
+    return buildEdges(scenario.edges, liveMode)
+  }, [liveMode, scenario.edges])
+
+  const selectedNode = scenario.nodes.find((node) => node.id === selectedNodeId) ?? scenario.nodes[0]
+  const activity = activeRun?.events.length ? activeRun.events.slice().reverse() : scenario.activity
+
+  async function startRun() {
+    setIsStartingRun(true)
+    setError(null)
+
+    try {
+      const response = await fetch(`/api/scenarios/${scenario.id}/runs`, { method: 'POST' })
+      if (!response.ok) {
+        throw new Error(`Failed to start scenario run: HTTP ${response.status}`)
+      }
+      const payload = (await response.json()) as { run: ScenarioRun }
+      setActiveRun(payload.run)
+      setLiveMode(true)
+    } catch (runError) {
+      setError(runError instanceof Error ? runError.message : 'Failed to start run')
+    } finally {
+      setIsStartingRun(false)
+    }
+  }
+
+  function formatActivityDetail(entry: any) {
+    if (!entry.detail) return entry.detail
+
+    if (entry.payload) {
+      const payload = entry.payload as Record<string, unknown>
+      const mcpTools = payload.mcp_tools
+      const documentJob = payload.document_job
+      const vendor = payload.vendor_name || payload.response_payload?.vendor
+
+      if (mcpTools) {
+        return entry.detail + ` (MCP tools: ${mcpTools.length}
+      <header className="metro-header">
+        <div className="metro-header-left">
+          <Link className="metro-breadcrumb" href="/">
+            <ChevronLeft size={16} />
+            <span>{scenario.team}</span>
+          </Link>
+          <span className="metro-header-divider" />
+          <div className="metro-project-name">{scenario.title}</div>
+        </div>
+        <div className="metro-header-actions">
+          <button className="secondary-button secondary-button--compact" type="button" onClick={() => setShowActivity((value) => !value)}>
+            <Activity size={14} />
+            <span>Activity</span>
+          </button>
+          <button
+            className="secondary-button secondary-button--compact"
+            type="button"
+            onClick={() => setLiveMode(true)}
+          >
+            Launch live
+          </button>
+          <button className="primary-button primary-button--compact" type="button" onClick={startRun} disabled={isStartingRun}>
+            {isStartingRun ? 'Starting…' : 'Run wired'}
+          </button>
+          <button
+            className="text-button"
+            type="button"
+            onClick={() => {
+              setActiveRun(null)
+              setLiveMode(false)
+              setError(null)
+            }}
+          >
+            Reset
+          </button>
+          <button className="ghost-icon-button" type="button" aria-label="Notifications">
+            <Bell size={15} />
+          </button>
+        </div>
+      </header>
+
+      <div className="metro-body">
+        <nav className="metro-nav" aria-label="Scenario sections">
+          {projectTabs.map((tab) => (
+            <button key={tab.label} className={`metro-nav-item ${tab.active ? 'is-active' : ''}`} type="button">
+              <tab.icon size={16} />
+              <span className="sr-only">{tab.label}</span>
+            </button>
+          ))}
+          <div className="metro-nav-spacer" />
+          <button className="metro-nav-item" type="button">
+            <MessageSquare size={16} />
+            <span className="sr-only">Agent</span>
+          </button>
+        </nav>
+
+        <div className="metro-content">
+          <div className="metro-canvas-wrap">
+            {error ? <div className="run-banner run-banner--error">{error}</div> : null}
+            {activeRun ? (
+              <div className="run-banner">
+                <span className={`status-pill status-pill--${activeRun.status === 'completed' ? 'ready' : activeRun.status === 'waiting' ? 'review' : 'running'}`}>
+                  {activeRun.status}
+                </span>
+                <span>{activeRun.claimId ?? 'Claim pending'}</span>
+                <span>·</span>
+                <span>{activeRun.currentStep ?? 'queued'}</span>
+                {activeRun.vendorName ? (
+                  <>
+                    <span>·</span>
+                    <span>{activeRun.vendorName}</span>
+                  </>
+                ) : null}
+              </div>
+            ) : null}
+            <div className="metro-canvas">
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                nodeTypes={nodeTypes}
+                nodesDraggable={false}
+                nodesConnectable={false}
+                elementsSelectable
+                fitView
+                fitViewOptions={{ padding: 0.12 }}
+                minZoom={0.45}
+                maxZoom={1.4}
+                proOptions={{ hideAttribution: true }}
+                onNodeClick={(_, node) => setSelectedNodeId(node.id)}
+              >
+                <Background color="rgba(148, 136, 180, 0.24)" gap={14} size={1.1} />
+              </ReactFlow>
+            </div>
+
+            <div className="live-dock">
+              <div className="live-dock-copy">
+                <div className="live-dock-eyebrow">{scenario.dockLabel}</div>
+                <div className="live-dock-title">{scenario.title}</div>
+              </div>
+              <div className="live-dock-actions">
+                <button className="dock-button" type="button">
+                  Supabase
+                </button>
+                <button className="dock-button dock-button--solid" type="button">
+                  Expand
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {showActivity ? (
+            <aside className="metro-sidepanel">
+              <div className="sidepanel-section">
+                <div className="sidepanel-eyebrow">Scenario</div>
+                <h2>{scenario.title}</h2>
+                <p>{scenario.detailSummary}</p>
+              </div>
+
+              <div className="sidepanel-grid">
+                <div className="sidepanel-metric">
+                  <span>Agents</span>
+                  <strong>{scenario.agents}</strong>
+                </div>
+                <div className="sidepanel-metric">
+                  <span>MCPs</span>
+                  <strong>{scenario.mcps}</strong>
+                </div>
+                <div className="sidepanel-metric">
+                  <span>Flows</span>
+                  <strong>{scenario.workflows}</strong>
+                </div>
+                <div className="sidepanel-metric">
+                  <span>Run status</span>
+                  <strong>{activeRun?.status ?? scenario.status}</strong>
+                </div>
+              </div>
+
+              <div className="selection-card">
+                <div className="sidepanel-eyebrow">Selection</div>
+                <div className="selection-card-title">{selectedNode?.title}</div>
+                <div className="selection-card-subtitle">{selectedNode?.subtitle}</div>
+                <p>{selectedNode?.description}</p>
+              </div>
+
+              <div className="selection-card">
+                <div className="sidepanel-eyebrow">Data Source</div>
+                <div className="selection-card-title">External Supabase</div>
+                <div className="selection-card-subtitle">Configured by env vars</div>
+                <p>
+                  Scenario cards and workspace members are loaded from `cockpit_scenarios` and
+                  `v_cockpit_scenario_config`, while run state stays inside the app-owned API layer.
+                </p>
+              </div>
+
+              <div className="sidepanel-section">
+                <div className="sidepanel-eyebrow">Activity</div>
+                <div className="activity-list">
+                  {activity.map((entry) => (
+                    <div className="activity-item" key={entry.id}>
+                      <div className="activity-item-top">
+                        <span>{entry.label}</span>
+                        <time>{'time' in entry ? entry.time : 'Live'}</time>
+                      </div>
+                      <p>{entry.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </aside>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  )
+}
