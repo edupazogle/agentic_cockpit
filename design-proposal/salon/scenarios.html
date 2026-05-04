@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salon · Catalog</title>
+<link rel="stylesheet" href="./salon.css">
+</head>
+<body>
+
+<header class="masthead-s">
+  <div class="masthead-inner-s">
+    <a class="brand-s" href="./index.html">
+      <span class="name">Salon</span>
+      <span class="vol">Catalog · Tome IV · 7 scenarios in print</span>
+    </a>
+    <div class="dateline-s"><span class="dot"></span><span>Mon · 04 May 2026</span><span style="color:var(--gold)">·</span><span class="crumb">7 scenarios · 3 in canary</span></div>
+    <nav class="nav-s">
+      <a href="./index.html">Atelier</a>
+      <a href="./scenarios.html" class="active">Scenarios</a>
+      <a href="./builder.html">Compose</a>
+      <a href="./canvas.html">Run</a>
+    </nav>
+  </div>
+</header>
+
+<main class="viewport-s" style="padding-top:32px;padding-bottom:48px">
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:28px;margin-bottom:22px">
+    <div>
+      <span class="eyebrow-s">Catalog · Tome IV · 142 days in</span>
+      <h1 class="hdline-s h2-s" style="margin-top:14px">Scenarios <em>in print</em>.</h1>
+      <p class="lede-s" style="margin-top:8px;font-size:18px">Each card is a Langflow run, a rubric, a canary plan, an audit chain — composed once, performed thousands of times.</p>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="btn-s sm" style="background:var(--bone-warm);border-color:var(--gold);color:var(--ink-0)">All · 7</button>
+      <button class="btn-s sm">Active · 4</button>
+      <button class="btn-s sm">Canary · 3</button>
+      <button class="btn-s sm">Drafting · 2</button>
+    </div>
+  </div>
+
+  <div class="scen-s">
+
+    <a class="scen-card-s live" href="./canvas.html">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">PFT-014 · property-fast-track · v3</span>
+          <h3>Water-damage <em>triage</em></h3>
+        </div>
+        <span class="tag-s gold"><span class="pip"></span>Gate G2 · 25%</span>
+      </div>
+      <p class="desc">End-to-end fast-track for property water damage. NemoClaw routes evidence through Docling, calls claims_facade for policy lookup, opens human review when confidence dips below 0.85. Claire B. is on duty.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">12,481</div></div>
+        <div><div class="k">success</div><div class="v">98.4%</div></div>
+        <div><div class="k">p95</div><div class="v mono">2.4s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€1.18</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>NemoClaw</span>
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M14 3v5h5M5 21h14a2 2 0 002-2V8l-6-5H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>Docling</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>claims_facade</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>chatwoot</span>
+      </div>
+      <div class="foot">
+        <span>3 runs in flight · <em style="color:var(--rouge)">1 review open</em></span>
+        <span>by claire.b · 14:36</span>
+      </div>
+    </a>
+
+    <a class="scen-card-s live" href="./canvas.html">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">MFL-007 · motor-fleet · v2</span>
+          <h3>Telematics-led <em>FNOL</em></h3>
+        </div>
+        <span class="tag-s moss"><span class="pip"></span>Gate G1 · 5%</span>
+      </div>
+      <p class="desc">Synthetic-50 cleared at 94.8%. NemoClaw cross-checks accident telematics against the body-shop directory, drafts FNOL, escalates ambiguous cases to claire.b for review.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">3,127</div></div>
+        <div><div class="k">success</div><div class="v">94.8%</div></div>
+        <div><div class="k">p95</div><div class="v mono">3.1s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€1.42</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83"/></svg>NemoClaw</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/></svg>telematics</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>bodyshop_dir</span>
+      </div>
+      <div class="foot"><span>1 run in flight · 0 review</span><span>by sara.m · promoted 13:08</span></div>
+    </a>
+
+    <a class="scen-card-s" href="./builder.html">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">SUB-002 · subrogation · v1</span>
+          <h3>Third-party <em>recovery drafter</em></h3>
+        </div>
+        <span class="tag-s gold"><span class="pip"></span>Gate G0 · synthetic-50</span>
+      </div>
+      <p class="desc">Drafts subrogation letters from settled claims, tags responsible third parties, generates evidence bundles. Currently in golden-set replay before its first canary stage.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">214</div></div>
+        <div><div class="k">success</div><div class="v">88.3%</div></div>
+        <div><div class="k">p95</div><div class="v mono">5.8s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€2.10</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>LetterMint</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7z"/></svg>claims_facade</span>
+      </div>
+      <div class="foot"><span>0 runs in flight · drafting</span><span>by sara.m · 02 May</span></div>
+    </a>
+
+    <a class="scen-card-s" href="#">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">REC-001 · recourse · v1</span>
+          <h3>Counter-party <em>recourse</em></h3>
+        </div>
+        <span class="tag-s indigo"><span class="pip"></span>Gate G0 · drafting</span>
+      </div>
+      <p class="desc">Identifies recoverable amounts from at-fault third parties, prepares insurer-to-insurer demands. Built on the subrogation chassis with a thinner judge harness.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">88</div></div>
+        <div><div class="k">success</div><div class="v">82.1%</div></div>
+        <div><div class="k">p95</div><div class="v mono">6.2s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€2.34</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>RecourseDraft</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg>policy_match</span>
+      </div>
+      <div class="foot"><span>0 runs in flight · drafting</span><span>by claire.b · 28 Apr</span></div>
+    </a>
+
+    <a class="scen-card-s" href="#">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">NPS-003 · nps · v2</span>
+          <h3>Post-claim <em>NPS triage</em></h3>
+        </div>
+        <span class="tag-s moss"><span class="pip"></span>Production · 100%</span>
+      </div>
+      <p class="desc">Reads inbound NPS surveys, classifies sentiment, opens follow-up tasks for detractors. Mature scenario — used as a control for tone-empathy judge calibration.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">8,402</div></div>
+        <div><div class="k">success</div><div class="v">99.1%</div></div>
+        <div><div class="k">p95</div><div class="v mono">1.1s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€0.42</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>SentClass</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>chatwoot</span>
+      </div>
+      <div class="foot"><span>2 runs in flight · 0 review</span><span>by sara.m · stable</span></div>
+    </a>
+
+    <a class="scen-card-s" href="#">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div>
+          <span class="id">KYC-005 · kyc-refresh · v1</span>
+          <h3>KYC <em>refresh outreach</em></h3>
+        </div>
+        <span class="tag-s moss"><span class="pip"></span>Production · 100%</span>
+      </div>
+      <p class="desc">Scheduled monthly KYC refresh prompts, ID-document parsing via Docling, automatic chase cadence. Mature; handles 12k policies/month at &lt;0.1% manual rate.</p>
+      <div class="meta-row">
+        <div><div class="k">runs · 7d</div><div class="v">2,840</div></div>
+        <div><div class="k">success</div><div class="v">99.6%</div></div>
+        <div><div class="k">p95</div><div class="v mono">1.8s</div></div>
+        <div><div class="k">cost · 1k</div><div class="v mono">€0.88</div></div>
+      </div>
+      <div class="agents">
+        <span class="agent-chip"><svg viewBox="0 0 24 24"><path d="M14 3v5h5"/></svg>Docling</span>
+        <span class="agent-chip mcp"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/></svg>identity_check</span>
+      </div>
+      <div class="foot"><span>0 runs in flight</span><span>by sara.m · stable</span></div>
+    </a>
+
+  </div>
+
+  <footer class="foot-s">
+    <span>SALON · Catalog</span>
+    <span>6 of 7 in print · 1 archived</span>
+    <span><a href="#" style="color:var(--ink-2);text-decoration:underline">View archive</a></span>
+  </footer>
+
+</main>
+
+</body>
+</html>

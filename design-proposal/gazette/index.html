@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gazette · Front Page</title>
+<link rel="stylesheet" href="./gazette.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand-g" href="./index.html">
+      <span class="name">The Cockpit Gazette</span>
+      <span class="vol">VOL. III · NO. 142</span>
+    </a>
+    <div class="dateline">
+      <span class="pip"></span>
+      <span>Mon · 04 May 2026 · 14:42 CET</span>
+      <span>·</span>
+      <span>Édition · gdai-default</span>
+    </div>
+    <nav style="display:flex;gap:18px;font-family:var(--font-mono);font-size:11px;color:var(--ink-2);letter-spacing:0.06em;text-transform:uppercase">
+      <a href="./scenarios.html">Scenarios</a>
+      <a href="./builder.html">Builder</a>
+      <a href="./canvas.html">Run</a>
+    </nav>
+    <div style="display:flex;gap:8px">
+      <button class="btn"><kbd>⌘</kbd><kbd>K</kbd></button>
+      <a class="btn btn-primary" href="./builder.html">+ Compose</a>
+    </div>
+  </div>
+</header>
+
+<div class="ticker-g">
+  <div class="ticker-track">
+    <span><span class="lbl">WIRE</span>14:42 · CLM-2026-0042 · operator approved partial €3,400 · cited Art. L113-2</span>
+    <span><span class="lbl">EVAL</span>14:38 · PFT-014 rubric tone variance up 0.12 — reseed advised</span>
+    <span><span class="lbl">CANARY</span>13:08 · MFL-007 promoted G0 → G1 · 5% traffic</span>
+    <span><span class="lbl">HITL</span>14:36 · NemoClaw 0.78 below floor · escalated</span>
+    <span><span class="lbl">DEPLOY</span>11:24 · property-fast-track v3 · all-green</span>
+    <!-- Doubled for seamless loop -->
+    <span><span class="lbl">WIRE</span>14:42 · CLM-2026-0042 · operator approved partial €3,400 · cited Art. L113-2</span>
+    <span><span class="lbl">EVAL</span>14:38 · PFT-014 rubric tone variance up 0.12 — reseed advised</span>
+    <span><span class="lbl">CANARY</span>13:08 · MFL-007 promoted G0 → G1 · 5% traffic</span>
+    <span><span class="lbl">HITL</span>14:36 · NemoClaw 0.78 below floor · escalated</span>
+    <span><span class="lbl">DEPLOY</span>11:24 · property-fast-track v3 · all-green</span>
+  </div>
+</div>
+
+<main class="viewport">
+
+  <section class="front-page">
+    <div>
+      <span class="eyebrow-g">Front page · daily edition · sprint 04</span>
+      <h1 class="hdline h1" style="margin-top:18px">A newspaper<br>for <em>autonomous</em> agents.</h1>
+      <p class="lede-g" style="margin-top:18px">
+        Each scenario is an issue, every run a story. The Gazette gives operators a calm, editorial
+        surface for orchestrating AXA's pilot agents — composed daily, archived forever, with a
+        masthead that never lies.
+      </p>
+      <div style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="./scenarios.html">Read the issue →</a>
+        <a class="btn" href="./builder.html">Compose a scenario</a>
+        <a class="btn btn-ghost" href="./canvas.html">Open last run</a>
+      </div>
+    </div>
+    <aside class="front-stats">
+      <div class="stat">
+        <span class="lbl">scenarios live</span>
+        <span class="val">7</span>
+        <span class="delta">+1</span>
+      </div>
+      <div class="stat">
+        <span class="lbl">runs · 7d</span>
+        <span class="val">15,822</span>
+        <span class="delta">+8.3%</span>
+      </div>
+      <div class="stat">
+        <span class="lbl">success rate</span>
+        <span class="val">96.2%</span>
+        <span class="delta">+0.4pp</span>
+      </div>
+      <div class="stat">
+        <span class="lbl">hitl open</span>
+        <span class="val" style="color:var(--gold)">3</span>
+        <span class="delta">−1</span>
+      </div>
+      <div class="stat">
+        <span class="lbl">spend · 7d</span>
+        <span class="val">€312.18</span>
+        <span class="delta down">+€18</span>
+      </div>
+    </aside>
+  </section>
+
+  <hr class="rule-double">
+
+  <section style="display:grid;grid-template-columns:2fr 1fr;gap:36px;align-items:start">
+    <article>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div>
+          <span class="ribbon-g">Lead story</span>
+          <h2 class="hdline h2" style="margin-top:14px">Why we paused at gate G2.</h2>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase">By NemoClaw · 14:36</div>
+      </div>
+      <hr class="rule-thin">
+      <p class="body-g" style="font-size:16px;line-height:1.65">A water-damage claim arrived at 14:36 sharp — invoice <span style="font-family:var(--font-mono);font-size:13px">CLM-2026-0042</span>, €4,820, photographed and parsed within seconds. By the third evidence span, however, NemoClaw's confidence settled at <strong style="color:var(--red);font-weight:500">0.78</strong>: four hundredths below the fast-track floor. The cited ambiguity was Article L113-2 — coverage in shared spaces is not unequivocal. The case was routed to <strong style="color:var(--ink-0);font-weight:500">claire.b</strong> at 14:36:09 with three pre-drafted options.</p>
+      <p class="body-g" style="margin-top:12px;font-size:16px;line-height:1.65">Eight minutes later, claire.b approved a partial settlement of <strong style="color:var(--moss);font-weight:500">€3,400</strong>, capping the shared-space portion under L113-2. The audit row was anchored, the customer notified by SMS, and the run closed in 12.4 seconds of compute time.</p>
+      <div style="margin-top:18px;display:flex;gap:8px">
+        <a class="btn" href="./canvas.html">Read the run →</a>
+        <a class="btn btn-ghost" href="#">Open in Langfuse ↗</a>
+      </div>
+    </article>
+
+    <aside style="border-left:1px solid var(--rule);padding-left:24px">
+      <span class="eyebrow-g">Today on the wire</span>
+      <ol style="margin-top:14px;display:flex;flex-direction:column;gap:14px">
+        <li>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.05em">14:36 · HITL</span>
+            <span class="tag-g gold"><span class="pip"></span>open</span>
+          </div>
+          <div style="font-family:var(--font-display);font-weight:500;font-size:17px;letter-spacing:-0.018em;line-height:1.2;margin-top:4px;color:var(--ink-0)">CLM-2026-0042 · awaiting decision</div>
+          <p style="font-size:12.5px;color:var(--ink-2);margin-top:4px;line-height:1.5">Confidence 0.78 below floor 0.85 — three options drafted, SLA 7m left.</p>
+        </li>
+        <li style="border-top:1px solid var(--rule-hair);padding-top:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.05em">13:08 · canary</span>
+            <span class="tag-g moss"><span class="pip"></span>promoted</span>
+          </div>
+          <div style="font-family:var(--font-display);font-weight:500;font-size:17px;letter-spacing:-0.018em;line-height:1.2;margin-top:4px;color:var(--ink-0)">MFL-007 · G0 → G1 at 5%</div>
+          <p style="font-size:12.5px;color:var(--ink-2);margin-top:4px;line-height:1.5">Motor-fleet validator cleared synthetic-50 with 94.8% success.</p>
+        </li>
+        <li style="border-top:1px solid var(--rule-hair);padding-top:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.05em">11:22 · eval</span>
+            <span class="tag-g azur"><span class="pip"></span>updated</span>
+          </div>
+          <div style="font-family:var(--font-display);font-weight:500;font-size:17px;letter-spacing:-0.018em;line-height:1.2;margin-top:4px;color:var(--ink-0)">PFT-014 · added tone-empathy judge</div>
+          <p style="font-size:12.5px;color:var(--ink-2);margin-top:4px;line-height:1.5">Rubric set to 4 judges; baseline run queued.</p>
+        </li>
+      </ol>
+    </aside>
+  </section>
+
+  <footer class="foot-g">
+    <span>THE COCKPIT GAZETTE · MK II</span>
+    <span>Codex evolution · proposal 04</span>
+    <span>Newsreader · Inter · JetBrains Mono</span>
+  </footer>
+</main>
+
+</body>
+</html>

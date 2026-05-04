@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dossier — Pilot scenarios · GDAI Agentic Cockpit</title>
+  <link rel="stylesheet" href="./dossier.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html"><span class="brand-glyph"></span>Dossier</a>
+      <nav class="crumbs">
+        <span>GDAI</span>
+        <span class="sep">/</span>
+        <span>Pilots</span>
+        <span class="sep">/</span>
+        <span class="leaf">All scenarios</span>
+      </nav>
+      <div class="topbar-actions">
+        <kbd>⌘</kbd> <kbd>K</kbd>
+        <button class="btn">Search</button>
+        <button class="btn-primary btn">New scenario</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="viewport">
+    <section class="hero reveal">
+      <span class="eyebrow">Pilot programme · single-tenant · gdai-default</span>
+      <h1 class="display">Every scenario is a signed dossier.</h1>
+      <p class="lede" style="max-width: 56ch;">
+        Authored, reviewed, and ratified by AXA-internal operators.
+        Each scenario carries its own audit chain, approvals, and provenance — readable years from now.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="label">Active scenarios</div>
+          <div class="value">4</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Runs · last 24 h</div>
+          <div class="value">880</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">HITL reviews pending</div>
+          <div class="value">1</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Audit chain integrity</div>
+          <div class="value" style="color: var(--pale-green-ink);">Verified</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section class="reveal">
+      <div style="display:flex; justify-content:space-between; align-items:end; margin-bottom: 24px;">
+        <div>
+          <span class="eyebrow">Workspace</span>
+          <h2 class="serif" style="margin-top: 8px;">Scenarios on file</h2>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost">Filter</button>
+          <button class="btn btn-ghost">Sort: Updated</button>
+          <button class="btn">Export bundle</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-row head">
+          <span>Scenario · ID</span>
+          <span>Title &amp; description</span>
+          <span>Status</span>
+          <span>Runs · 24 h</span>
+          <span>Last review</span>
+          <span></span>
+        </div>
+
+        <a class="table-row" href="./builder.html">
+          <span class="id">PFT-2026-04</span>
+          <div class="title-cell">
+            <h4>Property Fast-Track</h4>
+            <p>FNOL · triage · documents (Docling) · reserves · dispatch — operator review when reserves &gt; €2 000</p>
+          </div>
+          <span><span class="tag yellow"><span class="dot"></span>Hitl pending</span></span>
+          <span class="num">128</span>
+          <span class="num">2 h ago</span>
+          <span style="text-align: right; color: var(--mute);">→</span>
+        </a>
+
+        <a class="table-row" href="./builder.html">
+          <span class="id">MFL-2026-02</span>
+          <div class="title-cell">
+            <h4>Motor Fleet</h4>
+            <p>Telematics ingest · harsh-event detection · claim correlation · body-shop dispatch — synthetic data only</p>
+          </div>
+          <span><span class="tag green"><span class="dot"></span>Live</span></span>
+          <span class="num">412</span>
+          <span class="num">14 h ago</span>
+          <span style="text-align: right; color: var(--mute);">→</span>
+        </a>
+
+        <a class="table-row" href="./builder.html">
+          <span class="id">FNL-2026-01</span>
+          <div class="title-cell">
+            <h4>FNOL Intake</h4>
+            <p>Voice and web first-notice-of-loss · pre-triage · 3 languages (FR/EN/DE) — routes to property or motor pilots</p>
+          </div>
+          <span><span class="tag green"><span class="dot"></span>Live</span></span>
+          <span class="num">340</span>
+          <span class="num">1 d ago</span>
+          <span style="text-align: right; color: var(--mute);">→</span>
+        </a>
+
+        <a class="table-row" href="./builder.html">
+          <span class="id">BIO-2026-01</span>
+          <div class="title-cell">
+            <h4>Biodiversity Subrogation</h4>
+            <p>Environmental claims subrogation · drafted by ops · awaiting compliance review and 4-eyes publish</p>
+          </div>
+          <span><span class="tag blue"><span class="dot"></span>Validated</span></span>
+          <span class="num" style="color: var(--mute);">—</span>
+          <span class="num">3 h ago</span>
+          <span style="text-align: right; color: var(--mute);">→</span>
+        </a>
+
+        <a class="table-row" href="./builder.html">
+          <span class="id">SUB-2025-11</span>
+          <div class="title-cell">
+            <h4>Health · Coverage Inquiry</h4>
+            <p>Pre-MVP archive · superseded by FNOL Intake — kept for audit reference</p>
+          </div>
+          <span><span class="tag"><span class="dot"></span>Archived</span></span>
+          <span class="num" style="color: var(--mute);">—</span>
+          <span class="num">42 d ago</span>
+          <span style="text-align: right; color: var(--mute);">→</span>
+        </a>
+
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section class="reveal" style="padding-bottom: 96px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;">
+        <div class="card">
+          <span class="eyebrow">Authoring</span>
+          <h3 style="margin: 12px 0 8px;">Linear stepper</h3>
+          <p style="font-size: 14px; color: var(--mute); line-height: 1.6;">
+            Section-by-section authoring. No free-form canvas.
+            Each step captures field, agent, gate, tools, expected I/O, sample case.
+          </p>
+          <a class="btn btn-ghost" href="./builder.html" style="margin-top: 16px; padding-left: 0;">Open builder →</a>
+        </div>
+
+        <div class="card">
+          <span class="eyebrow">Review</span>
+          <h3 style="margin: 12px 0 8px;">HITL decision card</h3>
+          <p style="font-size: 14px; color: var(--mute); line-height: 1.6;">
+            Single decision view with full evidence packet, prior similar cases, audit hash.
+            Accept · reject · ask question · escalate.
+          </p>
+          <a class="btn btn-ghost" href="./hitl.html" style="margin-top: 16px; padding-left: 0;">Open review →</a>
+        </div>
+
+        <div class="card">
+          <span class="eyebrow">Governance</span>
+          <h3 style="margin: 12px 0 8px;">4-eyes publish</h3>
+          <p style="font-size: 14px; color: var(--mute); line-height: 1.6;">
+            Hard 4-step modal at publish gate. Justification &amp; reason code captured to audit_log.
+            Second operator countersigns.
+          </p>
+          <a class="btn btn-ghost" style="margin-top: 16px; padding-left: 0;">Read policy →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer style="border-top: 1px solid var(--rule); padding: 32px 0; display: flex; justify-content: space-between; font-size: 13px; color: var(--mute);">
+      <span>© 2026 GDAI · Internal use · Dossier prototype</span>
+      <span><a href="../index.html">Compare other approaches →</a></span>
+    </footer>
+
+  </main>
+
+  <script src="./dossier.js"></script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diff · Scenario v28 · Copilot</title>
+  <link rel="stylesheet" href="./copilot.css" />
+</head>
+<body>
+
+  <div class="island">
+    <a class="logo" href="./index.html"><span class="glyph"></span>Copilot</a>
+    <nav>
+      <a href="./index.html">Atlas</a>
+      <a href="./scenario.html">Run</a>
+      <a href="./diff.html" class="active">Diff</a>
+      <a href="#">Insights</a>
+    </nav>
+    <div class="actions">
+      <span class="tag azur"><span class="pip"></span>Proposed v28</span>
+      <button class="btn btn-glass">
+        Open scenario
+        <span class="icon-circle">
+          <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <main class="viewport">
+
+    <section class="split" style="grid-template-columns: 38% 62%;">
+
+      <!-- LEFT · CHAT -->
+      <aside class="chat reveal">
+        <div class="bezel-outer">
+          <div class="bezel-inner">
+
+            <header class="chat-header">
+              <div>
+                <div class="heading">Refine scenario</div>
+                <div class="sub">Property Fast-Track · v27 → v28 (proposed)</div>
+              </div>
+              <span class="tag draft"><span class="pip"></span>Draft</span>
+            </header>
+
+            <div class="chat-stream">
+
+              <div class="msg user" style="animation-delay: 0ms;">
+                <div class="avatar">MR</div>
+                <div class="body">
+                  <div class="name">m.rondonneau</div>
+                  <p>Raise the reserves overage threshold from €2 000 to €2 500. Q1 analysis shows the current threshold is producing too many false-positive HITLs.</p>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 240ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot</div>
+                  <p>Understood. I'll change gate G2 only — leaving G3 (claim freshness) untouched. Justification will be captured to <code style="font-family: var(--font-mono); color: var(--azur);">audit_log</code> with reason code <code style="font-family: var(--font-mono); color: var(--azur);">policy_change</code>.</p>
+                  <span class="tool-call"><span class="dot"></span>scenario.diff · v27 → v28</span>
+                </div>
+              </div>
+
+              <div class="msg user" style="animation-delay: 480ms;">
+                <div class="avatar">MR</div>
+                <div class="body">
+                  <div class="name">m.rondonneau</div>
+                  <p>Show me the impact estimate against the last 30 days of runs.</p>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 720ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot</div>
+                  <p>Replayed against 1 280 historical runs: HITL pause-rate would drop from <strong style="color: var(--rose);">14.2%</strong> to <strong style="color: var(--emerald);">8.6%</strong>, removing 72 unnecessary operator interventions over the period. No previously-overturned approvals would slip through.</p>
+                  <span class="tool-call"><span class="dot"></span>langfuse.replay · 1 280 runs</span>
+                  <span class="tool-call" style="margin-left: 6px;"><span class="dot"></span>eval.judge · 3 rubrics</span>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 980ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot · ready</div>
+                  <p>Diff is ready for your review on the right.<span class="cursor"></span></p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="composer">
+              <div class="input-shell">
+                <textarea placeholder="Refine further · ⌘ Enter to send"></textarea>
+                <button class="send" aria-label="Send">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              <div class="hints">
+                <span><kbd>⌘</kbd> <kbd>K</kbd> Palette</span>
+                <span><kbd>↩</kbd> Send</span>
+                <span><kbd>⇧</kbd> <kbd>↩</kbd> New line</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT · CANVAS -->
+      <section class="canvas">
+
+        <article class="bezel-outer reveal">
+          <div class="bezel-inner hero-block" style="padding: 36px 40px 32px;">
+            <span class="eyebrow"><span class="pulse"></span>Proposed change · Property Fast-Track v28</span>
+            <h1 class="display" style="font-size: clamp(36px, 4.4vw, 60px); margin-top: 22px;">
+              Raise gate G2 to <span class="gradient-azur">€2 500</span>.
+            </h1>
+            <p class="lede">
+              Pause-rate falls from 14.2% to 8.6% over the last 30 days · 72 fewer interventions ·
+              no overturned approvals slip through · evaluator rubrics still pass.
+            </p>
+
+            <div class="row" style="margin-top: 28px; gap: 8px;">
+              <button class="btn btn-primary" data-diff-action="accept">
+                Accept &amp; submit for review
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="m6 12 4 4 8-8"/></svg>
+                </span>
+              </button>
+              <button class="btn btn-glass" data-diff-action="reject">
+                Reject
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M6 6l12 12M6 18 18 6"/></svg>
+                </span>
+              </button>
+              <button class="btn-ghost">Save as draft</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="bezel-outer diff-card reveal">
+          <div class="bezel-inner">
+            <div class="head">
+              <div>
+                <span class="eyebrow">Change 01 of 02 · Gates</span>
+                <h3 class="serif" style="font-size: 20px; margin-top: 8px;">Gate G2 · reserves threshold</h3>
+                <div class="sub">scenario.gates[g2].condition · 1 line changed</div>
+              </div>
+              <span class="tag azur"><span class="pip"></span>Pending review</span>
+            </div>
+
+            <div class="diff-row">
+              <div class="diff-cell before">
+                <div class="lbl">Before · v27</div>
+                reserves_estimate &gt; <span style="color: var(--rose);">2_000</span>
+              </div>
+              <div class="diff-cell after">
+                <div class="lbl">After · v28</div>
+                reserves_estimate &gt; <span style="color: var(--emerald);">2_500</span>
+              </div>
+            </div>
+
+            <div class="diff-row">
+              <div class="diff-cell before">
+                <div class="lbl">Justification</div>
+                <span style="color: var(--ink-mute);">— (none)</span>
+              </div>
+              <div class="diff-cell after">
+                <div class="lbl">Justification · required</div>
+                Q1 reserves analysis · OPS-1240 · false-positive HITL rate down 38% in replay · no observed under-reserving
+              </div>
+            </div>
+
+            <div class="diff-row">
+              <div class="diff-cell before">
+                <div class="lbl">Reason code</div>
+                <span style="color: var(--ink-mute);">—</span>
+              </div>
+              <div class="diff-cell after">
+                <div class="lbl">Reason code</div>
+                <span style="color: var(--azur);">policy_change</span>
+              </div>
+            </div>
+
+            <div class="diff-actions">
+              <button class="btn-ghost">Skip this change</button>
+              <button class="btn btn-glass" data-diff-action="reject">
+                Reject
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M6 6l12 12M6 18 18 6"/></svg>
+                </span>
+              </button>
+              <button class="btn btn-primary" data-diff-action="accept">
+                Accept change
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="m6 12 4 4 8-8"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="bezel-outer diff-card reveal">
+          <div class="bezel-inner">
+            <div class="head">
+              <div>
+                <span class="eyebrow">Change 02 of 02 · Telemetry</span>
+                <h3 class="serif" style="font-size: 20px; margin-top: 8px;">PostHog event payload</h3>
+                <div class="sub">scenario.telemetry.events[gate_pause].properties · 1 field added</div>
+              </div>
+              <span class="tag azur"><span class="pip"></span>Pending review</span>
+            </div>
+
+            <div class="diff-row">
+              <div class="diff-cell before">
+                <div class="lbl">Before · v27</div>
+{ <br />
+&nbsp;&nbsp;event: <span style="color: var(--azur);">"gate_pause"</span>,<br />
+&nbsp;&nbsp;gate_id: <span style="color: var(--azur);">"g2"</span><br />
+}
+              </div>
+              <div class="diff-cell after">
+                <div class="lbl">After · v28</div>
+{ <br />
+&nbsp;&nbsp;event: <span style="color: var(--azur);">"gate_pause"</span>,<br />
+&nbsp;&nbsp;gate_id: <span style="color: var(--azur);">"g2"</span>,<br />
+&nbsp;&nbsp;<span style="color: var(--emerald);">threshold_eur: 2500</span><br />
+}
+              </div>
+            </div>
+
+            <div class="diff-actions">
+              <button class="btn-ghost">Skip this change</button>
+              <button class="btn btn-glass" data-diff-action="reject">Reject
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M6 6l12 12M6 18 18 6"/></svg>
+                </span>
+              </button>
+              <button class="btn btn-primary" data-diff-action="accept">Accept change
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="m6 12 4 4 8-8"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="bezel-outer reveal">
+          <div class="bezel-inner" style="padding: 28px 32px;">
+            <span class="eyebrow">Replay · evaluator rubrics</span>
+            <h3 class="serif" style="font-size: 20px; margin-top: 8px; margin-bottom: 22px;">
+              Evaluator scores · 1 280 historical runs replayed against v28
+            </h3>
+            <div class="meta-strip" style="margin-top: 0;">
+              <div class="cell">
+                <div class="label">Factual accuracy</div>
+                <div class="value emerald">0.94</div>
+              </div>
+              <div class="cell">
+                <div class="label">Policy compliance</div>
+                <div class="value emerald">1.00</div>
+              </div>
+              <div class="cell">
+                <div class="label">Tone</div>
+                <div class="value">0.91</div>
+              </div>
+              <div class="cell">
+                <div class="label">Pause-rate</div>
+                <div class="value azur">8.6%</div>
+              </div>
+            </div>
+            <p class="muted" style="font-size: 13px; margin-top: 18px; font-family: var(--font-mono);">
+              All three judge rubrics within tolerance (≥0.90). No regressions observed.
+              Replay artifact stored at <code>artifacts/replay/2026-05-04_PFT-v28.json</code>.
+            </p>
+          </div>
+        </article>
+
+      </section>
+    </section>
+
+    <footer class="foot">
+      <span>© 2026 GDAI · Internal use · Copilot prototype</span>
+      <span><a href="../index.html">Compare approaches</a></span>
+    </footer>
+
+  </main>
+
+  <script src="./copilot.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atrium — Canvas · PFT-014 / run 7f4a-31bd</title>
+<link rel="stylesheet" href="./atrium.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand"><span class="brand-glyph"></span> Atrium</a>
+    <nav class="crumbs">
+      <span>Workspace</span><span class="sep">/</span>
+      <span>PFT-014 · property fast track</span><span class="sep">/</span>
+      <span class="leaf">run · 7f4a-31bd</span>
+    </nav>
+    <div class="topbar-actions">
+      <span class="tag yellow"><span class="pip"></span>WAITING · operator</span>
+      <button class="btn btn-ghost"><svg viewBox="0 0 16 16"><path d="M8 1v14M1 8h14"/></svg>Add node</button>
+      <button class="btn">Replay</button>
+      <a class="btn btn-primary" href="./builder.html">Edit flow →</a>
+    </div>
+  </div>
+</header>
+
+<div class="canvas-shell">
+  <div class="canvas-bg"></div>
+
+  <div class="canvas-stage">
+    <!-- SVG edges layer -->
+    <svg class="edges" id="edges-svg" width="100%" height="100%"></svg>
+
+    <!-- Nodes (positioned absolutely; pan/zoom via transform on .canvas-pan) -->
+    <div class="canvas-pan" id="canvas-pan">
+
+      <article class="node done" id="n-intake" data-inspect style="left:40px;top:120px">
+        <span class="handle out"></span>
+        <div class="node-head">
+          <div class="meta">
+            <span class="kind">tool · claims_facade</span>
+            <span class="name">Intake claim</span>
+          </div>
+          <span class="tag green"><span class="pip"></span>done</span>
+        </div>
+        <div class="node-body">
+          <div class="row"><span class="k">claim_id</span><span class="v">CLM-2026-0042</span></div>
+          <div class="row"><span class="k">amount</span><span class="v">€4,820</span></div>
+          <div class="row"><span class="k">incident</span><span class="v">water</span></div>
+        </div>
+        <div class="node-foot"><span>14:36:01</span><span>120ms</span></div>
+      </article>
+
+      <article class="node done" id="n-extract" data-inspect style="left:380px;top:80px">
+        <span class="handle in"></span><span class="handle out"></span>
+        <div class="node-head">
+          <div class="meta">
+            <span class="kind">tool · docling.parse</span>
+            <span class="name">Extract evidence</span>
+          </div>
+          <span class="tag green"><span class="pip"></span>done</span>
+        </div>
+        <div class="node-body">
+          <div class="row"><span class="k">photos</span><span class="v">3 parsed</span></div>
+          <div class="row"><span class="k">invoice</span><span class="v">€4,820 · OCR 0.97</span></div>
+          <div class="row"><span class="k">PII flagged</span><span class="v">0</span></div>
+        </div>
+        <div class="node-foot"><span>14:36:04</span><span>2.1s</span></div>
+      </article>
+
+      <article class="node live" id="n-decide" data-inspect style="left:720px;top:140px">
+        <span class="handle in"></span><span class="handle out"></span>
+        <div class="node-head">
+          <div class="meta">
+            <span class="kind">llm.judge · nemoclaw</span>
+            <span class="name">Decide fast-track</span>
+          </div>
+          <span class="tag yellow"><span class="pip"></span>waiting</span>
+        </div>
+        <div class="node-body">
+          <div class="row"><span class="k">confidence</span><span class="v" style="color:var(--pale-yellow-ink)">0.78</span></div>
+          <div class="row"><span class="k">floor</span><span class="v">0.85</span></div>
+          <div class="row"><span class="k">verdict</span><span class="v">→ HITL</span></div>
+        </div>
+        <div class="node-foot"><span>14:36:08</span><span>1.4s · gate</span></div>
+      </article>
+
+      <article class="node wait" id="n-handover" data-inspect style="left:1060px;top:80px">
+        <span class="handle in"></span><span class="handle out"></span>
+        <div class="node-head">
+          <div class="meta">
+            <span class="kind">hitl · chatwoot</span>
+            <span class="name">Operator handover</span>
+          </div>
+          <span class="tag yellow"><span class="pip"></span>open</span>
+        </div>
+        <div class="node-body">
+          <div class="row"><span class="k">conv</span><span class="v">#8814</span></div>
+          <div class="row"><span class="k">elapsed</span><span class="v">08:14</span></div>
+          <div class="row"><span class="k">sla</span><span class="v">07:46 left</span></div>
+        </div>
+        <div class="node-foot"><span>14:36:09</span><span>open · operator</span></div>
+      </article>
+
+      <article class="node" id="n-settle" data-inspect style="left:1400px;top:200px">
+        <span class="handle in"></span>
+        <div class="node-head">
+          <div class="meta">
+            <span class="kind">tool · claims_facade</span>
+            <span class="name">Settle &amp; log</span>
+          </div>
+          <span class="tag"><span class="pip"></span>queued</span>
+        </div>
+        <div class="node-body">
+          <div class="row"><span class="k">audit</span><span class="v">pending</span></div>
+          <div class="row"><span class="k">notify</span><span class="v">customer · sms</span></div>
+        </div>
+        <div class="node-foot"><span>—</span><span>queued</span></div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="canvas-toolbar">
+    <div class="group">
+      <button class="tb-btn"><svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h8"/></svg><span class="label">Trace</span></button>
+      <button class="tb-btn"><svg viewBox="0 0 16 16"><path d="M3 3h10v10H3z"/><path d="M7 7h2v2H7z"/></svg><span class="label">Layers</span></button>
+    </div>
+    <div class="group">
+      <button class="tb-btn"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4v4l3 2"/></svg><span class="label">Replay</span></button>
+      <button class="tb-btn"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12"/><path d="M2 6h12M6 2v12"/></svg><span class="label">Compare runs</span></button>
+    </div>
+    <div class="group">
+      <button class="tb-btn"><svg viewBox="0 0 16 16"><path d="M8 1v14M1 8h14"/></svg><span class="label">Add</span></button>
+    </div>
+  </div>
+
+  <!-- Run info -->
+  <div class="canvas-runinfo">
+    <div class="col"><span class="lbl">claim</span><span class="val">CLM-2026-0042</span></div>
+    <div class="col"><span class="lbl">trace</span><span class="val" style="font-family:var(--font-mono);font-size:13px">7f4a-31bd</span></div>
+    <div class="col"><span class="lbl">elapsed</span><span class="val">12.4s</span></div>
+    <div class="col"><span class="lbl">cost</span><span class="val">€0.018</span></div>
+  </div>
+
+  <!-- Zoombar -->
+  <div class="canvas-zoombar">
+    <button class="zb-btn" data-zoom="out"><svg viewBox="0 0 16 16" width="14" height="14" stroke="currentColor" fill="none"><path d="M3 8h10"/></svg></button>
+    <span class="zb-readout">100%</span>
+    <button class="zb-btn" data-zoom="in"><svg viewBox="0 0 16 16" width="14" height="14" stroke="currentColor" fill="none"><path d="M8 3v10M3 8h10"/></svg></button>
+    <button class="zb-btn" data-zoom="fit" style="font-family:var(--font-mono);font-size:11px;padding:6px 8px">FIT</button>
+  </div>
+
+  <!-- Minimap -->
+  <div class="canvas-minimap">
+    <div class="mm-head">Overview</div>
+    <div class="mm-area">
+      <span class="mm-node done" style="left:8px;top:48px"></span>
+      <span class="mm-node done" style="left:38px;top:38px"></span>
+      <span class="mm-node live" style="left:78px;top:54px"></span>
+      <span class="mm-node" style="left:118px;top:38px;background:var(--pale-yellow-ink)"></span>
+      <span class="mm-node" style="left:158px;top:62px"></span>
+      <span class="mm-viewport" style="width:80px;height:50px;left:0;top:24px"></span>
+    </div>
+  </div>
+
+  <!-- Inspector drawer (open by default for showcase) -->
+  <aside class="inspector open">
+    <div class="head">
+      <div class="meta">
+        <span class="kind">llm.judge · nemoclaw · live</span>
+        <h3>Decide fast-track</h3>
+      </div>
+      <button class="btn btn-icon btn-ghost" data-close-inspector>×</button>
+    </div>
+    <div class="body">
+      <div class="panel-head">Live state</div>
+      <dl style="margin:0">
+        <div class="fact-row"><dt>verdict</dt><dd><span class="tag yellow"><span class="pip"></span>route to operator</span></dd></div>
+        <div class="fact-row"><dt>confidence</dt><dd>0.78 — below 0.85 floor</dd></div>
+        <div class="fact-row"><dt>policy hit</dt><dd>NemoClaw · L113-2 ambiguous</dd></div>
+        <div class="fact-row"><dt>tokens</dt><dd>1,184 in · 412 out</dd></div>
+      </dl>
+
+      <div class="panel-head">Inputs</div>
+      <p style="font-size:13px;color:var(--ink);line-height:1.6">Claim CLM-2026-0042 — water damage from upstairs neighbour, €4,820 invoice from approved vendor "Plomberie Lyon". Photos confirm scope; invoice itemised. Customer policy includes water damage clause but coverage in shared spaces is ambiguous.</p>
+
+      <div class="panel-head">Trace</div>
+      <div class="trace-mini">
+        <div class="row done"><span class="ts">14:36:01</span><span class="pip"></span><span class="name">intake</span><span class="dur">120ms</span></div>
+        <div class="row done"><span class="ts">14:36:04</span><span class="pip"></span><span class="name">extract</span><span class="dur">2.1s</span></div>
+        <div class="row live"><span class="ts">14:36:08</span><span class="pip"></span><span class="name">decide_fast_track</span><span class="dur">1.4s · live</span></div>
+      </div>
+
+      <div class="panel-head">Evidence</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2)">
+          <div style="width:48px;height:48px;border-radius:6px;background:linear-gradient(135deg,#cad8e6,#a4b8cc);flex-shrink:0"></div>
+          <div style="flex:1;min-width:0">
+            <strong style="font-family:var(--font-serif);font-weight:500;font-size:14px;color:var(--ink-strong)">Photo 01 · ceiling damage</strong><br>
+            <span style="font-size:12px;color:var(--mute);font-family:var(--font-mono)">1.2 MB · OCR clean · no PII</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2)">
+          <div style="width:48px;height:48px;border-radius:6px;background:#fff;border:1px solid var(--rule);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:9px;color:var(--mute)">PDF</div>
+          <div style="flex:1;min-width:0">
+            <strong style="font-family:var(--font-serif);font-weight:500;font-size:14px;color:var(--ink-strong)">Invoice · Plomberie Lyon</strong><br>
+            <span style="font-size:12px;color:var(--mute);font-family:var(--font-mono)">€4,820 · 14 line items · approved vendor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-head">Operator options (proposed)</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="padding:12px 14px;border:1px solid var(--rule);border-radius:8px"><strong style="font-family:var(--font-serif);font-weight:500;font-size:14px;color:var(--ink-strong)">Approve full reimbursement</strong><br><span style="font-size:12px;color:var(--mute)">€4,820 · invoice matches · vendor approved</span></div>
+        <div style="padding:12px 14px;border:1px solid var(--rule);border-radius:8px"><strong style="font-family:var(--font-serif);font-weight:500;font-size:14px;color:var(--ink-strong)">Approve partial · €3,400</strong><br><span style="font-size:12px;color:var(--mute)">Cap shared-space coverage per Art. L113-2</span></div>
+        <div style="padding:12px 14px;border:1px solid var(--rule);border-radius:8px"><strong style="font-family:var(--font-serif);font-weight:500;font-size:14px;color:var(--ink-strong)">Request more info</strong><br><span style="font-size:12px;color:var(--mute)">Building syndic statement</span></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost">Open in Langfuse</button>
+      <button class="btn">Pin to thread</button>
+      <button class="btn btn-primary">Take over →</button>
+    </div>
+  </aside>
+</div>
+
+<script src="./atrium.js"></script>
+<script>
+  // wire up the canvas
+  const pan = document.getElementById('canvas-pan');
+  const svg = document.getElementById('edges-svg');
+  initCanvas(pan, svg);
+
+  const edges = [
+    { from: 'n-intake', to: 'n-extract', kind: 'done' },
+    { from: 'n-extract', to: 'n-decide', kind: 'done' },
+    { from: 'n-decide', to: 'n-handover', kind: 'live' },
+    { from: 'n-handover', to: 'n-settle', kind: '' },
+  ];
+  // small delay so layout settles
+  setTimeout(() => drawEdges(edges, svg), 50);
+  // redraw on window resize
+  window.addEventListener('resize', () => drawEdges(edges, svg));
+</script>
+</body>
+</html>

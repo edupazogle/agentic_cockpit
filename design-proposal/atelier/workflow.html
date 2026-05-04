@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATELIER // WORKFLOW EDITOR — wf-004 NemoClaw</title>
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- HEADER -->
+    <div class="shell-header">
+      <div class="brand"><span class="glyph"></span>ATELIER®</div>
+      <div class="path">
+        <span>OPS</span><span class="sep">/</span>
+        <span>PILOT // PROPERTY-FAST-TRACK</span><span class="sep">/</span>
+        <span>WORKFLOW</span><span class="sep">/</span>
+        <span class="leaf">wf-004 :: NEMOCLAW</span>
+        <span class="dim" style="margin-left:16px;">REV 27.b @ <span data-time>—</span></span>
+      </div>
+      <div class="header-actions row">
+        <button class="btn btn-ghost">PLAN</button>
+        <button class="btn btn-ghost">BUILD</button>
+        <button class="btn">PREVIEW</button>
+        <button class="btn btn-hazard">DEPLOY</button>
+        <span style="width:1px; height:24px; background:var(--rule);"></span>
+        <span class="kbd">⌘</span><span class="kbd">K</span>
+      </div>
+    </div>
+
+    <!-- SUB STATUS -->
+    <div class="shell-substatus">
+      <div>STATE: <strong>BUILD-OK</strong></div>
+      <div>VALIDATION: <strong>17/17</strong></div>
+      <div>TOOLS: <strong>3 BOUND</strong></div>
+      <div>NODES: <strong>9</strong></div>
+      <div>EDGES: <strong>11</strong></div>
+      <div>HITL GATES: <strong>1</strong></div>
+      <div>LAST DEPLOY: <strong>21H AGO</strong></div>
+      <div class="hazard">PRODUCTION DRIFT :: NONE</div>
+    </div>
+
+    <!-- RAIL -->
+    <aside class="shell-rail">
+      <div class="rail-section">
+        <div class="rail-heading">PROJECT TREE</div>
+        <div class="rail-item"><span class="marker"></span><span>wf-001 :: triage-router</span><span class="id">v3</span></div>
+        <div class="rail-item live"><span class="marker"></span><span>wf-004 :: NEMOCLAW</span><span class="id">v27</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>wf-006 :: docling-extract</span><span class="id">v8</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>wf-009 :: reserves-calc</span><span class="id">v4</span></div>
+      </div>
+      <div class="rail-section">
+        <div class="rail-heading">COMPONENTS</div>
+        <div class="rail-item idle"><span class="marker"></span><span>::: Trigger</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>::: Agent (LLM)</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>::: MCP Tool</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>::: HITL Gate</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>::: Output</span></div>
+      </div>
+      <div class="rail-section">
+        <div class="rail-heading">VARIABLES (3)</div>
+        <div class="rail-item idle"><span class="marker"></span><span>RESERVES_THRESHOLD</span><span class="id">€2000</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>TIER2_POOL</span><span class="id">cw-pool-2</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>SLA_HOURS</span><span class="id">24</span></div>
+      </div>
+    </aside>
+
+    <!-- CANVAS -->
+    <main class="shell-canvas">
+      <div class="canvas">
+        <div class="canvas-frame"><span class="bl"></span><span class="br"></span></div>
+        <div class="canvas-label">[ TOPOLOGY <span class="hz">// wf-004</span> — PORT MAP — REV 27.b ]</div>
+        <div class="canvas-coord">x:0 y:0 // ZOOM 1.00 // GRID 64px</div>
+
+        <!-- Edges (drawn behind nodes) -->
+        <svg class="edges" preserveAspectRatio="none">
+          <path d="M 235 130 C 285 130, 285 130, 335 130" />
+          <path d="M 535 130 C 585 130, 585 130, 635 130" />
+          <path d="M 835 130 C 885 130, 885 130, 935 130" class="live" />
+          <path d="M 535 145 C 585 200, 585 240, 635 240" />
+          <path d="M 835 240 C 885 240, 885 240, 935 240" class="hazard" />
+          <path d="M 1035 130 C 1085 200, 1085 240, 1035 240" />
+        </svg>
+
+        <!-- Nodes (absolute positioned) -->
+        <div class="node" style="top:90px; left:35px;">
+          <div class="node-header"><span class="marker"></span><span>::: TRIGGER</span><span>01</span></div>
+          <div class="node-body">
+            <div class="node-title">FNOL Webhook</div>
+            <div class="node-meta"><span>POST</span><span>/v1/fnol</span></div>
+          </div>
+          <div class="node-foot"><span class="dim">IN</span><span>auth :: jwt</span><span class="lat">3 MS</span></div>
+          <span class="port out"></span>
+        </div>
+
+        <div class="node live" style="top:90px; left:335px;">
+          <div class="node-header"><span class="marker"></span><span>::: AGENT</span><span>02</span></div>
+          <div class="node-body">
+            <div class="node-title">Triage LLM</div>
+            <div class="node-meta"><span>nim/llama-3.1-70b</span><span>0.7</span></div>
+          </div>
+          <div class="node-foot">
+            <span class="gate"><i class="on"></i><i class="on"></i><i></i><i></i></span>
+            <span>G2 // RESERVES</span>
+            <span class="lat">2.1S</span>
+          </div>
+          <span class="port in"></span><span class="port out"></span>
+        </div>
+
+        <div class="node selected" style="top:90px; left:635px;">
+          <div class="node-header"><span class="marker"></span><span>::: MCP TOOL</span><span>03</span></div>
+          <div class="node-body">
+            <div class="node-title">Claims Facade</div>
+            <div class="node-meta"><span>wfmcp03</span><span>n8n</span></div>
+          </div>
+          <div class="node-foot">
+            <span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+            <span>FETCH</span>
+            <span class="lat">412 MS</span>
+          </div>
+          <span class="port in"></span><span class="port out"></span>
+        </div>
+
+        <div class="node hazard" style="top:90px; left:935px;">
+          <div class="node-header"><span class="marker"></span><span>::: HITL GATE</span><span>04</span></div>
+          <div class="node-body">
+            <div class="node-title">Operator Review</div>
+            <div class="node-meta"><span>chatwoot</span><span>tier-2</span></div>
+          </div>
+          <div class="node-foot">
+            <span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="fail"></i></span>
+            <span class="hazard-text">PAUSED</span>
+            <span class="lat">—</span>
+          </div>
+          <span class="port in"></span><span class="port out"></span>
+        </div>
+
+        <div class="node" style="top:200px; left:635px;">
+          <div class="node-header"><span class="marker"></span><span>::: MCP TOOL</span><span>05</span></div>
+          <div class="node-body">
+            <div class="node-title">Docling Extract</div>
+            <div class="node-meta"><span>wf-006</span><span>50MB</span></div>
+          </div>
+          <div class="node-foot">
+            <span class="gate"><i class="on"></i><i class="on"></i><i></i><i></i></span>
+            <span>OCR</span>
+            <span class="lat">8.4S</span>
+          </div>
+          <span class="port in"></span><span class="port out"></span>
+        </div>
+
+        <div class="node" style="top:200px; left:935px;">
+          <div class="node-header"><span class="marker"></span><span>::: AGENT</span><span>06</span></div>
+          <div class="node-body">
+            <div class="node-title">Reserves Calc</div>
+            <div class="node-meta"><span>nim/mistral-12b</span><span>0.2</span></div>
+          </div>
+          <div class="node-foot">
+            <span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+            <span>G1 // POLICY</span>
+            <span class="lat">1.4S</span>
+          </div>
+          <span class="port in"></span><span class="port out"></span>
+        </div>
+
+        <div class="node" style="top:90px; left:1235px;">
+          <div class="node-header"><span class="marker"></span><span>::: OUTPUT</span><span>07</span></div>
+          <div class="node-body">
+            <div class="node-title">Dispatch Result</div>
+            <div class="node-meta"><span>JSON</span><span>+audit</span></div>
+          </div>
+          <div class="node-foot"><span class="dim">OUT</span><span>schema :: v2</span><span class="lat">1 MS</span></div>
+          <span class="port in"></span>
+        </div>
+      </div>
+    </main>
+
+    <!-- INSPECTOR -->
+    <aside class="shell-inspector">
+      <h3>NODE :: 03 // CLAIMS FACADE</h3>
+      <h2>CLAIMS<br />FACADE</h2>
+      <div class="muted" style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:8px;">MCP TOOL // wfmcp03 // n8n</div>
+
+      <div class="tabs">
+        <button class="active">META</button><button>SOURCE</button><button>VARS</button><button>AUDIT</button>
+      </div>
+
+      <dl class="dl">
+        <dt>ID</dt><dd>wfmcp03/claims_facade.fetch</dd>
+        <dt>RUNTIME</dt><dd>n8n :: workflow_id=23</dd>
+        <dt>SCHEMA</dt><dd>claims_v2</dd>
+        <dt>TIMEOUT</dt><dd>15s</dd>
+        <dt>RETRIES</dt><dd>2 // exp-backoff</dd>
+        <dt>P95 LAT</dt><dd>520ms</dd>
+        <dt>ERR RATE</dt><dd class="muted">0.8% (24h)</dd>
+        <dt>SECRETS</dt><dd>2 // axa.facade.api_key, axa.facade.oauth</dd>
+      </dl>
+
+      <h3>EVIDENCE</h3>
+      <div class="evidence-card">
+        <div class="head"><span>RECENT INVOCATION</span><span class="axa">CLM-2026-0042</span></div>
+        <div style="font-size:11px; line-height:1.5;">
+          <div class="dim">REQUEST</div>
+          <div>{ "claim_id": "CLM-2026-0042", "include": ["policy","party"] }</div>
+          <div class="dim" style="margin-top:6px;">RESPONSE (412ms)</div>
+          <div>{ "policy_no":"AXA-FR-PROP-…", "deductible":150, … }</div>
+        </div>
+      </div>
+
+      <h3>HAZARDS</h3>
+      <div class="evidence-card" style="border-color:var(--hazard);">
+        <div class="head"><span class="hazard-text">HZ-001</span><span class="dim">ACK REQUIRED</span></div>
+        <div style="font-size:11px;">If `policy_no` missing → triage step 02 cannot proceed. Currently routes to fail-soft branch (logs to wferr01).</div>
+      </div>
+
+      <button class="btn" style="width:100%; margin-top:12px;">TEST INVOCATION</button>
+    </aside>
+
+    <!-- TELEMETRY -->
+    <div class="shell-telemetry">
+      <div class="telemetry-heading">
+        <span>// LIVE TELEMETRY STREAM &nbsp;—&nbsp; <span class="muted">redis-stream</span></span>
+        <span><span class="muted">FILTER:</span> ALL // <span class="kbd">F</span></span>
+      </div>
+      <div class="telemetry-stream"></div>
+    </div>
+
+  </div>
+
+  <!-- Palette -->
+  <div class="palette-overlay">
+    <div class="palette">
+      <div class="palette-input"><input type="text" placeholder="TYPE A COMMAND OR JUMP TO RESOURCE..." /><span class="kbd">ESC</span></div>
+      <div class="tabs palette-tabs">
+        <button class="active">ACTION</button><button>RESOURCE</button><button>DOC</button>
+      </div>
+      <div class="palette-results">
+        <div class="palette-result"><span class="marker"></span><div><div>ADD HITL GATE AFTER NODE 03</div><div class="meta">EDIT // current canvas</div></div><span class="kbd">↵</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>BIND TOOL :: wfmcp01 (notify)</div><div class="meta">RESOURCE // n8n.workflows</div></div></div>
+        <div class="palette-result"><span class="marker"></span><div><div>RUN PREVIEW :: synthetic CLM-…</div><div class="meta">ACTION // dry-run</div></div><span class="kbd">P</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./studio.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Copilot · GDAI Agentic Cockpit</title>
+  <link rel="stylesheet" href="./copilot.css" />
+</head>
+<body>
+
+  <div class="island">
+    <a class="logo" href="./index.html"><span class="glyph"></span>Copilot</a>
+    <nav>
+      <a href="./index.html" class="active">Atlas</a>
+      <a href="./scenario.html">Run</a>
+      <a href="./diff.html">Diff</a>
+      <a href="#">Insights</a>
+    </nav>
+    <div class="actions">
+      <button class="btn-ghost"><kbd>⌘</kbd> <kbd>K</kbd></button>
+      <button class="btn btn-primary">Open studio
+        <span class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <main class="viewport">
+
+    <section class="landing-hero reveal">
+      <span class="eyebrow"><span class="pulse"></span>Single tenant · gdai-default · sprint 04</span>
+      <h1 class="display">
+        Build, run and review<br />
+        <span class="gradient-azur">agentic claims pilots.</span>
+      </h1>
+      <p class="lede">
+        Copilot is the GDAI Agentic Cockpit — an AXA-internal control plane where operators
+        author scenarios in conversation, watch them run with full provenance, and approve
+        every consequential decision before it becomes effect.
+      </p>
+      <div class="landing-cta">
+        <button class="btn btn-primary">
+          Open Property Fast-Track
+          <span class="icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </button>
+        <button class="btn btn-glass">
+          New scenario
+          <span class="icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <a class="btn-ghost" href="../index.html">Compare other approaches →</a>
+      </div>
+    </section>
+
+    <!-- Bento grid · skill rule: asymmetric -->
+    <section class="bento">
+
+      <article class="card span-7 reveal">
+        <div class="core">
+          <span class="eyebrow">Live · Property Fast-Track v27</span>
+          <h3>Run 7f4a-31bd is paused at gate G2.</h3>
+          <p>Reserves estimate exceeded €2 000 — operator approval is required before dispatch.
+             ChatWoot conversation 8814 has been opened. Trace is live in Langfuse.</p>
+          <div class="row" style="margin-top: auto; gap: 8px;">
+            <a class="btn btn-glass" href="./scenario.html">
+              Open run
+              <span class="icon-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <span class="tag wait"><span class="pip"></span>Awaiting decision · 2:14</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-5 reveal">
+        <div class="core">
+          <span class="eyebrow">Author</span>
+          <h3>Refine the scenario in plain language.</h3>
+          <p>Tell Copilot what should change — it proposes a structured diff, you approve, version is signed.</p>
+          <div class="visual" style="background: linear-gradient(135deg, var(--grape-glow), var(--azur-glow));"></div>
+        </div>
+      </article>
+
+      <article class="card span-4 reveal">
+        <div class="core">
+          <span class="eyebrow">Pilots</span>
+          <div class="col" style="gap: 14px; margin-top: 4px;">
+            <div class="row between">
+              <div class="col" style="gap: 0;">
+                <div style="font-family: var(--font-display); font-weight: 600; font-size: 14px;">Property Fast-Track</div>
+                <div class="muted" style="font-size: 12px; font-family: var(--font-mono);">128 runs · 24 h</div>
+              </div>
+              <span class="tag live"><span class="pip"></span>Live</span>
+            </div>
+            <div class="row between">
+              <div class="col" style="gap: 0;">
+                <div style="font-family: var(--font-display); font-weight: 600; font-size: 14px;">Motor Fleet</div>
+                <div class="muted" style="font-size: 12px; font-family: var(--font-mono);">412 runs · 24 h</div>
+              </div>
+              <span class="tag live"><span class="pip"></span>Live</span>
+            </div>
+            <div class="row between">
+              <div class="col" style="gap: 0;">
+                <div style="font-family: var(--font-display); font-weight: 600; font-size: 14px;">Biodiversity Subro.</div>
+                <div class="muted" style="font-size: 12px; font-family: var(--font-mono);">Draft · awaits review</div>
+              </div>
+              <span class="tag draft"><span class="pip"></span>Draft</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-8 reveal">
+        <div class="core">
+          <span class="eyebrow">Observability</span>
+          <h3>Every run is fully traceable.</h3>
+          <p>Langfuse spans · OTel collector · PII redaction · 4-eyes audit chain.
+             Replay any historical run with full provenance.</p>
+          <div class="row" style="margin-top: auto;">
+            <span class="tag azur"><span class="pip"></span>Trace 7f4a-31bd</span>
+            <span class="tag"><span class="pip"></span>14 spans</span>
+            <span class="tag"><span class="pip"></span>3 tools</span>
+            <span class="tag"><span class="pip"></span>2 LLM calls</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-6 reveal">
+        <div class="core">
+          <span class="eyebrow">Diff</span>
+          <h3>Proposed change · scenario v28.</h3>
+          <p>Raise the reserves threshold gate from <code style="font-family: var(--font-mono); color: var(--rose);">€2 000</code> to <code style="font-family: var(--font-mono); color: var(--emerald);">€2 500</code>.
+             Reason: Q1 reserves analysis · OPS-1240.</p>
+          <a class="btn btn-glass" href="./diff.html" style="margin-top: auto; align-self: flex-start;">
+            Review diff
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card span-6 reveal">
+        <div class="core">
+          <span class="eyebrow">Cohort</span>
+          <h3>Operator activity</h3>
+          <p>Six operators on the queue · 38 decisions today · median TTD 4 m 12 s.
+             p95 dispatch under 12 minutes.</p>
+          <div class="row" style="margin-top: auto;">
+            <span class="tag live"><span class="pip"></span>4 online</span>
+            <span class="tag"><span class="pip"></span>2 on review</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <footer class="foot">
+      <span>© 2026 GDAI · Internal use · Copilot prototype</span>
+      <span><a href="../index.html">Compare approaches</a></span>
+    </footer>
+
+  </main>
+
+  <script src="./copilot.js"></script>
+</body>
+</html>

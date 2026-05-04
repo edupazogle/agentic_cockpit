@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATELIER // OPERATIONS ROSTER — GDAI Cockpit</title>
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <div class="viewport">
+    <header class="manifest-header">
+      <div>
+        <div class="row" style="gap:12px; margin-bottom:24px;">
+          <span class="brand" style="border:0; padding:0;"><span class="glyph"></span>ATELIER®</span>
+          <span class="muted" style="font-size:10px; letter-spacing:0.18em;">// TACTICAL TELEMETRY COCKPIT — REV 0.4-EXPERIMENT</span>
+        </div>
+        <h1>OPERATIONS<br /><span class="red">ROSTER</span></h1>
+      </div>
+      <div class="spacer"></div>
+      <div class="meta">
+        <div>UNIT // GDAI-DEFAULT</div>
+        <div>OPERATOR // m.rondonneau</div>
+        <div><span data-time>00:00:00 UTC</span></div>
+        <div class="hazard-text">2 PILOTS LIVE / 1 HITL PENDING</div>
+      </div>
+    </header>
+
+    <div class="hazard-stripe" style="margin-top:1px;"></div>
+
+    <div class="row" style="margin-top:24px; gap:24px; align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="rail-heading" style="margin-bottom:12px;">PILOT MANIFEST &nbsp;//&nbsp; SORT BY: STATE → PRIORITY</div>
+        <div class="row" style="gap:24px; font-size:10px; letter-spacing:0.14em; color:var(--fg-mute); text-transform:uppercase;">
+          <span><span class="crosshair" style="margin-right:6px;"></span>2 LIVE</span>
+          <span><span class="crosshair" style="margin-right:6px; "></span>1 HAZARD</span>
+          <span><span class="crosshair" style="margin-right:6px;"></span>1 DRAFT</span>
+          <span><span class="crosshair" style="margin-right:6px;"></span>0 ARCHIVED</span>
+          <span class="spacer"></span>
+          <span class="dim">PRESS</span>
+          <span class="kbd">⌘</span><span class="kbd">K</span>
+          <span class="dim">FOR COMMAND</span>
+        </div>
+      </div>
+      <div class="barcode" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <section class="roster" style="margin-top:16px;">
+
+      <article class="pilot-card hazard">
+        <div class="row1">
+          <span>PILOT // PROPERTY-FAST-TRACK</span>
+          <span class="hazard-text">STATE :: HITL PENDING</span>
+        </div>
+        <h3>PROPERTY<br />FAST-TRACK</h3>
+        <p class="desc">FNOL → triage → docs (Docling) → reserves → dispatch. 4 stages, 6 agents, 3 tools (wfmcp03, wf006, wfmcp01). Routing reserves ≥ €2k through Tier-2 operator.</p>
+        <div class="stats">
+          <div class="stat"><div class="label">RUNS / 24H</div><div class="val">128</div></div>
+          <div class="stat"><div class="label">P95 LAT</div><div class="val">3.4s</div></div>
+          <div class="stat"><div class="label">HITL RATE</div><div class="val red">11%</div></div>
+          <div class="stat"><div class="label">SUCCESS</div><div class="val green">94%</div></div>
+        </div>
+        <div class="row" style="font-size:10px; letter-spacing:0.14em; color:var(--fg-mute); text-transform:uppercase;">
+          <span class="ascii-arrow">CLM-2026-0042 awaits operator approval</span>
+        </div>
+      </article>
+
+      <article class="pilot-card live">
+        <div class="row1">
+          <span>PILOT // MOTOR-FLEET</span>
+          <span style="color:var(--terminal-green);">STATE :: NOMINAL</span>
+        </div>
+        <h3>MOTOR<br />FLEET</h3>
+        <p class="desc">Telematics ingest → harsh-event detection → claim correlation → body-shop dispatch. Synthetic data only. 50 packets, 25 shops, 30 vehicles.</p>
+        <div class="stats">
+          <div class="stat"><div class="label">RUNS / 24H</div><div class="val">412</div></div>
+          <div class="stat"><div class="label">P95 LAT</div><div class="val">1.8s</div></div>
+          <div class="stat"><div class="label">HITL RATE</div><div class="val">2%</div></div>
+          <div class="stat"><div class="label">SUCCESS</div><div class="val green">98.7%</div></div>
+        </div>
+        <div class="row" style="font-size:10px; letter-spacing:0.14em; color:var(--fg-mute); text-transform:uppercase;">
+          <span><span class="crosshair" style="margin-right:6px;"></span>17 ACTIVE RUNS // 0 PAUSED</span>
+        </div>
+      </article>
+
+      <article class="pilot-card live">
+        <div class="row1">
+          <span>PILOT // FNOL-INTAKE</span>
+          <span style="color:var(--terminal-green);">STATE :: NOMINAL</span>
+        </div>
+        <h3>FNOL<br />INTAKE</h3>
+        <p class="desc">Voice/web FNOL channel pre-triage. 1 agent, 2 tools (wfmcp02 Twilio, wfmcp04 Mailgun). Routes to PROPERTY-FAST-TRACK or MOTOR-FLEET downstream.</p>
+        <div class="stats">
+          <div class="stat"><div class="label">RUNS / 24H</div><div class="val">340</div></div>
+          <div class="stat"><div class="label">P95 LAT</div><div class="val">0.9s</div></div>
+          <div class="stat"><div class="label">HITL RATE</div><div class="val">0%</div></div>
+          <div class="stat"><div class="label">SUCCESS</div><div class="val green">99.4%</div></div>
+        </div>
+        <div class="row" style="font-size:10px; letter-spacing:0.14em; color:var(--fg-mute); text-transform:uppercase;">
+          <span><span class="crosshair" style="margin-right:6px;"></span>3 LANGUAGES // FR / EN / DE</span>
+        </div>
+      </article>
+
+      <article class="pilot-card draft">
+        <div class="row1">
+          <span>PILOT // BIODIVERSITY-SUBROGATION</span>
+          <span class="dim">STATE :: DRAFT</span>
+        </div>
+        <h3>BIODIVERSITY<br />SUBROGATION</h3>
+        <p class="desc">Experimental — environmental-claims subrogation triage. Drafted by ops via copilot, awaiting compliance review and 4-eyes publish.</p>
+        <div class="stats">
+          <div class="stat"><div class="label">RUNS / 24H</div><div class="val dim">—</div></div>
+          <div class="stat"><div class="label">P95 LAT</div><div class="val dim">—</div></div>
+          <div class="stat"><div class="label">HITL RATE</div><div class="val dim">—</div></div>
+          <div class="stat"><div class="label">SUCCESS</div><div class="val dim">—</div></div>
+        </div>
+        <div class="row" style="font-size:10px; letter-spacing:0.14em; color:var(--fg-mute); text-transform:uppercase;">
+          <span class="ascii-arrow">REQUIRES COMPLIANCE-LEAD APPROVAL TO PUBLISH</span>
+        </div>
+      </article>
+
+    </section>
+
+    <footer style="margin-top:48px; padding:16px 0; border-top:1px solid var(--rule); display:flex; justify-content:space-between; font-size:10px; letter-spacing:0.18em; color:var(--fg-dim); text-transform:uppercase;">
+      <span>© 2026 GDAI ATELIER® // CLASSIFIED // INTERNAL USE</span>
+      <span><a href="./workflow.html">WORKFLOW EDITOR &gt;&gt;</a> &nbsp;//&nbsp; <a href="./scenario.html">LIVE SCENARIO &gt;&gt;</a> &nbsp;//&nbsp; <a href="../index.html">CHOICE &lt;&lt;</a></span>
+      <span>UNIT // D-01 // BUILD 0.4.21</span>
+    </footer>
+  </div>
+
+  <!-- Command palette -->
+  <div class="palette-overlay">
+    <div class="palette">
+      <div class="palette-input"><input type="text" placeholder="TYPE A COMMAND OR JUMP TO RESOURCE..." value="" /><span class="kbd">ESC</span></div>
+      <div class="tabs palette-tabs">
+        <button class="active">ACTION</button><button>RESOURCE</button><button>DOC</button>
+      </div>
+      <div class="palette-results">
+        <div class="palette-result"><span class="marker"></span><div><div>OPEN PROPERTY-FAST-TRACK SCENARIO</div><div class="meta">JUMP // /scenario/property-fast-track</div></div><span class="kbd">↵</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>APPROVE HITL CLM-2026-0042</div><div class="meta">ACTION // hitl_items.write — REQUIRES JUSTIFICATION</div></div><span class="kbd">A</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>EDIT WORKFLOW wf-004</div><div class="meta">JUMP // /atelier/workflow.html</div></div><span class="kbd">E</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>VIEW LANGFUSE TRACE 9c2…</div><div class="meta">EXTERNAL // langfuse-web</div></div><span class="kbd">L</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>EXPORT AUDIT BUNDLE — LAST 24H</div><div class="meta">ACTION // bundle-2026-05-04.zip</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./studio.js"></script>
+</body>
+</html>

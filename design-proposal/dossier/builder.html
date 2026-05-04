@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Property Fast-Track — Builder · Dossier</title>
+  <link rel="stylesheet" href="./dossier.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html"><span class="brand-glyph"></span>Dossier</a>
+      <nav class="crumbs">
+        <a href="./index.html">Pilots</a>
+        <span class="sep">/</span>
+        <span>Property Fast-Track</span>
+        <span class="sep">/</span>
+        <span class="leaf">Builder</span>
+      </nav>
+      <div class="topbar-actions">
+        <span class="tag yellow"><span class="dot"></span>Draft · v27</span>
+        <button class="btn">Save draft</button>
+        <button class="btn-primary btn">Submit for review</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="viewport">
+    <section style="padding: 48px 0 24px;" class="reveal">
+      <span class="eyebrow">Scenario · PFT-2026-04 · revision 27</span>
+      <h1 class="display" style="margin-top: 12px; max-width: 18ch;">Property Fast-Track</h1>
+      <p class="lede" style="margin-top: 16px; max-width: 56ch;">
+        FNOL through dispatch in under five minutes for low-severity property claims.
+        Operator approval required when reserves exceed €2 000.
+      </p>
+    </section>
+
+    <div class="builder-grid">
+
+      <!-- LEFT STEPPER -->
+      <aside class="stepper">
+        <div class="step done">
+          <span class="num">✓</span>
+          <div class="label">
+            <div class="name">Intake</div>
+            <div class="meta">FNOL channel</div>
+          </div>
+        </div>
+        <div class="step done">
+          <span class="num">✓</span>
+          <div class="label">
+            <div class="name">Steps</div>
+            <div class="meta">6 agents</div>
+          </div>
+        </div>
+        <div class="step active">
+          <span class="num">3</span>
+          <div class="label">
+            <div class="name">Gates</div>
+            <div class="meta">G0 · G1 · G2 · G3</div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">4</span>
+          <div class="label">
+            <div class="name">Tools</div>
+            <div class="meta">3 MCP bindings</div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">5</span>
+          <div class="label">
+            <div class="name">Validation</div>
+            <div class="meta">Dry-run · 20 cases</div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">6</span>
+          <div class="label">
+            <div class="name">Publish</div>
+            <div class="meta">4-eyes required</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <div class="builder-main">
+
+        <article class="section-card reveal">
+          <div class="section-meta">
+            <span class="eyebrow">03 of 06 · Gates</span>
+            <span class="tag blue"><span class="dot"></span>In review</span>
+          </div>
+          <h2 class="serif">Decision gates</h2>
+          <p style="margin-top: 8px; color: var(--mute); max-width: 60ch;">
+            Define the conditions that route a claim through Human-in-the-Loop, escalation, or fail-soft branches.
+            Every gate is evaluated against the agent's structured output before transition.
+          </p>
+
+          <div class="divider-thin"></div>
+
+          <h3 style="margin-bottom: 16px;">Gate G2 · Reserves overage</h3>
+          <div class="field-grid">
+            <div class="field">
+              <label>Condition</label>
+              <input type="text" value="reserves_estimate &gt; RESERVES_THRESHOLD" />
+            </div>
+            <div class="field">
+              <label>Threshold (€)</label>
+              <input type="text" value="2 000" />
+            </div>
+            <div class="field">
+              <label>On true</label>
+              <select>
+                <option>Pause for HITL — Tier 2 operator pool</option>
+                <option>Auto-approve</option>
+                <option>Escalate to Tier 3</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>SLA on hold</label>
+              <input type="text" value="24 h" />
+            </div>
+          </div>
+
+          <div class="field" style="margin-top: 20px;">
+            <label>Justification text (required when modifying)</label>
+            <textarea>Threshold raised from €1 500 to €2 000 following Q1 reserves analysis — false-positive HITL rate down 38%, no observed under-reserving. Reason code: policy_change. See ticket OPS-1240.</textarea>
+          </div>
+
+          <div class="divider-thin"></div>
+
+          <h3 style="margin-bottom: 16px;">Gate G3 · Claim freshness</h3>
+          <div class="field-grid">
+            <div class="field">
+              <label>Condition</label>
+              <input type="text" value="claim_age_hours &gt; 48" />
+            </div>
+            <div class="field">
+              <label>On true</label>
+              <select><option>Escalate to ChatWoot · Tier 3</option></select>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card reveal">
+          <div class="section-meta">
+            <span class="eyebrow">Preview · Synthetic case CLM-2026-DRY-04</span>
+            <button class="btn btn-ghost">Re-run dry preview</button>
+          </div>
+          <h2 class="serif" style="font-size: 24px;">Dry-run · expected behaviour</h2>
+
+          <div class="window" style="margin-top: 24px;">
+            <div class="window-chrome">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="label">scenario.dryRun · CLM-2026-DRY-04</span>
+            </div>
+            <div class="window-body">
+<span class="c">// Stage 01 · Notify</span><br />
+trigger.fnol → severity_triage<br />
+&nbsp;&nbsp;<span class="k">severity</span>: <span class="s">"CAT1"</span> · <span class="k">confidence</span>: 0.87<br />
+<br />
+<span class="c">// Stage 02 · Triage</span><br />
+wfmcp03.claims_facade.fetch(claim_id)<br />
+&nbsp;&nbsp;<span class="k">policy_no</span>: <span class="s">"AXA-FR-PROP-…7714"</span><br />
+&nbsp;&nbsp;<span class="k">deductible</span>: 150<br />
+<br />
+<span class="c">// Stage 03 · Docs</span><br />
+wf006.docling.extract(8 docs) → 96% confidence<br />
+reserves_calc → <span class="s">€2 300</span><br />
+<br />
+<span class="c">// Gate G2 · Reserves overage triggered</span><br />
+<span class="k">decision</span>: <span class="s">"PAUSE"</span> → chatwoot.handover(tier-2)<br />
+<span class="k">expected_sla</span>: 24 h<br />
+            </div>
+          </div>
+
+          <p style="margin-top: 16px; color: var(--mute); font-size: 13px;">
+            Synthetic test data only. No production rows touched. Bundle written to <code style="font-family: var(--font-mono); font-size: 12px;">artifacts/dryrun/2026-05-04_PFT-04_v27.json</code>.
+          </p>
+        </article>
+
+        <article class="section-card reveal">
+          <div class="section-meta">
+            <span class="eyebrow">Provenance</span>
+          </div>
+          <h2 class="serif" style="font-size: 24px;">Audit chain · this revision</h2>
+          <dl style="margin-top: 24px;">
+            <div class="fact-row">
+              <dt>Revision</dt>
+              <dd><span class="strong">v27</span> · created from v26 by m.rondonneau</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Rationale</dt>
+              <dd>Reserves threshold review (Q1 2026 analysis · OPS-1240)</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Reason code</dt>
+              <dd><span class="tag blue">policy_change</span></dd>
+            </div>
+            <div class="fact-row">
+              <dt>Hash chain</dt>
+              <dd style="font-family: var(--font-mono); font-size: 13px; color: var(--mute);">
+                0x9c2f… → 0x4e21… → <span class="strong" style="color: var(--ink-strong);">0x7a83…</span>
+              </dd>
+            </div>
+            <div class="fact-row">
+              <dt>Reviewed by</dt>
+              <dd>Pending · Compliance lead</dd>
+            </div>
+          </dl>
+        </article>
+
+      </div>
+
+      <!-- RIGHT APPROVALS -->
+      <aside class="approvals">
+        <div class="approval-card">
+          <div class="who">
+            <div class="avatar">MR</div>
+            <div>
+              <div class="name">m.rondonneau</div>
+              <div class="role">Author · Tier 2</div>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--mute);">Drafted v27 with reserves threshold change. Awaits Compliance counter-sign.</p>
+          <span class="tag green" style="margin-top: 12px;"><span class="dot"></span>Drafted · 2 h ago</span>
+        </div>
+
+        <div class="justification">
+          <div class="head"><span>!</span>Justification required to publish</div>
+          <p style="font-size: 13px; color: var(--pale-yellow-ink); line-height: 1.5;">
+            Every modification to a live scenario captures rationale &amp; reason code to <code style="font-family: var(--font-mono); font-size: 11px;">audit_log</code>.
+          </p>
+        </div>
+
+        <div class="approval-card">
+          <h4>Pending review</h4>
+          <p style="font-size: 13px; color: var(--mute); margin-top: 4px;">Compliance lead must counter-sign before this revision moves to Validation.</p>
+          <button class="btn-primary btn" style="margin-top: 16px; width: 100%; justify-content: center;">Request review</button>
+        </div>
+
+        <div class="approval-card">
+          <h4>Audit</h4>
+          <ul style="margin-top: 12px; display: grid; gap: 10px; font-size: 13px; color: var(--mute);">
+            <li>v26 published · 4 d ago by f.lucas</li>
+            <li>v25 published · 11 d ago by m.rondonneau</li>
+            <li>v24 reverted · 18 d ago (incident OPS-1198)</li>
+            <li>v23 published · 21 d ago</li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script src="./dossier.js"></script>
+</body>
+</html>

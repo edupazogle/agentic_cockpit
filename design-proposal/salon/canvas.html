@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salon · Run · CLM-2026-0042</title>
+<link rel="stylesheet" href="./salon.css">
+</head>
+<body>
+
+<header class="masthead-s">
+  <div class="masthead-inner-s">
+    <a class="brand-s" href="./index.html">
+      <span class="name">Salon</span>
+      <span class="vol">Run · live edition · 04 May · 14:36 CET</span>
+    </a>
+    <div class="dateline-s">
+      <span class="dot"></span>
+      <span class="crumb">
+        <a href="./scenarios.html" style="color:var(--ink-2)">Scenarios</a>
+        <span style="color:var(--rule-strong)">/</span>
+        <span class="leaf">PFT-014</span>
+        <span style="color:var(--rule-strong)">/</span>
+        <span class="leaf">CLM-2026-0042</span>
+      </span>
+    </div>
+    <nav class="nav-s">
+      <a href="./index.html">Atelier</a>
+      <a href="./scenarios.html">Scenarios</a>
+      <a href="./builder.html">Compose</a>
+      <a href="./canvas.html" class="active">Run</a>
+    </nav>
+    <div style="display:flex;gap:6px">
+      <button class="btn-s sm">Open in Langfuse ↗</button>
+      <button class="btn-s sm primary">Take over →</button>
+    </div>
+  </div>
+</header>
+
+<div class="canvas-shell-s" id="shell">
+  <div class="canvas-bg-s"></div>
+
+  <!-- HITL banner -->
+  <div class="hitl-banner-s">
+    <span class="seal-s">✦</span>
+    <span class="crown">Human review · CLM-2026-0042</span>
+    <span class="msg">NemoClaw paused at <em>handover</em> — confidence 0.78 below floor 0.85, ambiguity on Art. L113-2.</span>
+    <span style="flex:1"></span>
+    <span class="countdown">SLA · 06:42</span>
+    <button class="btn-s sm primary">Take over</button>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar-s">
+    <button class="tb-s active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Canvas</button>
+    <button class="tb-s"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg> Trace</button>
+    <button class="tb-s"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Layers</button>
+    <span class="sep-s"></span>
+    <button class="tb-s replay-btn-s" id="replayBtn"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg> Replay <kbd style="margin-left:6px;font-family:var(--font-mono);font-size:10px;opacity:0.85">R</kbd></button>
+  </div>
+
+  <!-- Run info -->
+  <div class="runinfo-s">
+    <div class="col"><span class="lbl">Claim</span><span class="val">CLM-2026-0042</span></div>
+    <div class="col"><span class="lbl">Scenario</span><span class="val italic">water-damage</span></div>
+    <div class="col"><span class="lbl">Trace</span><span class="val mono">7f4a-31bd</span></div>
+    <div class="col"><span class="lbl">Conf.</span><span class="val" style="color:var(--rouge)">0.78</span></div>
+    <div class="col"><span class="lbl">Spend</span><span class="val mono">€0.014</span></div>
+  </div>
+
+  <!-- Pannable canvas with nodes -->
+  <div class="canvas-pan-s" id="pan-s">
+    <svg class="edges-s" id="edges-s" xmlns="http://www.w3.org/2000/svg"></svg>
+
+    <!-- n1 intake done -->
+    <div class="node-s done" id="n1" style="left:60px;top:120px">
+      <div class="head-s">
+        <div class="icon-cell-s">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+        </div>
+        <div class="meta-cell-s">
+          <div class="name-s">Intake</div>
+          <div class="sub-s">FNOL · webhook</div>
+        </div>
+        <div class="status-cell-s">DONE</div>
+      </div>
+      <div class="foot-s">
+        <span>14:36:01</span>
+        <span>· 0.4s</span>
+      </div>
+      <div class="handle-s in"></div>
+      <div class="handle-s out"></div>
+    </div>
+
+    <!-- n2 extract done · MCP burst -->
+    <div class="node-s done" id="n2" style="left:340px;top:120px">
+      <div class="head-s">
+        <div class="icon-cell-s">
+          <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+        </div>
+        <div class="meta-cell-s">
+          <div class="name-s">Extract</div>
+          <div class="sub-s">Docling · 4 spans</div>
+        </div>
+        <div class="status-cell-s">DONE</div>
+      </div>
+      <div class="foot-s">
+        <span>14:36:02</span>
+        <span>· 1.8s</span>
+      </div>
+      <div class="handle-s in"></div>
+      <div class="handle-s out"></div>
+      <div class="mcp-burst-s"></div>
+      <div class="mcp-label-s">claims_facade.lookup</div>
+    </div>
+
+    <!-- n3 decide LIVE -->
+    <div class="node-s live" id="n3" style="left:620px;top:120px">
+      <div class="head-s">
+        <div class="icon-cell-s">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </div>
+        <div class="meta-cell-s">
+          <div class="name-s">Decide</div>
+          <div class="sub-s">NemoClaw · gpt-4o</div>
+        </div>
+        <div class="status-cell-s">LIVE</div>
+      </div>
+      <div class="foot-s">
+        <span>14:36:04</span>
+        <span>· 4.2s</span>
+      </div>
+      <div class="handle-s in"></div>
+      <div class="handle-s out"></div>
+    </div>
+
+    <!-- n4 handover WAIT (HITL) selected -->
+    <div class="node-s wait selected" id="n4" style="left:900px;top:120px">
+      <div class="head-s">
+        <div class="icon-cell-s">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="meta-cell-s">
+          <div class="name-s">Handover</div>
+          <div class="sub-s">Chatwoot · #8814</div>
+        </div>
+        <div class="status-cell-s">WAIT</div>
+      </div>
+      <div class="foot-s">
+        <span>14:36:09</span>
+        <span>· awaiting op.</span>
+      </div>
+      <div class="handle-s in"></div>
+      <div class="handle-s out"></div>
+    </div>
+
+    <!-- n5 settle -->
+    <div class="node-s" id="n5" style="left:1180px;top:120px">
+      <div class="head-s">
+        <div class="icon-cell-s">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div class="meta-cell-s">
+          <div class="name-s">Settle</div>
+          <div class="sub-s">claims_facade · pay</div>
+        </div>
+        <div class="status-cell-s">PENDING</div>
+      </div>
+      <div class="foot-s">
+        <span>—</span>
+        <span>· —</span>
+      </div>
+      <div class="handle-s in"></div>
+      <div class="handle-s out"></div>
+    </div>
+
+  </div>
+
+  <!-- Zoom -->
+  <div class="zoombar-s">
+    <button class="b" data-zs="out">−</button>
+    <span class="r">100%</span>
+    <button class="b" data-zs="in">+</button>
+    <button class="b" data-zs="fit" title="Fit">⛶</button>
+  </div>
+
+  <!-- Minimap -->
+  <div class="minimap-s">
+    <div class="mh">
+      <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)">Map</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-2)">5 nodes</span>
+    </div>
+    <div class="ma">
+      <div class="mn done" style="left:8px;top:42px"></div>
+      <div class="mn done" style="left:38px;top:42px"></div>
+      <div class="mn live" style="left:68px;top:42px"></div>
+      <div class="mn wait" style="left:98px;top:42px"></div>
+      <div class="mn" style="left:128px;top:42px"></div>
+      <div class="vp" style="left:60px;top:32px;width:50px;height:32px"></div>
+    </div>
+  </div>
+
+  <!-- Inspector -->
+  <aside class="inspector-s open">
+    <div class="insp-head-s">
+      <div class="row1">
+        <span class="id">Node · n4 · handover</span>
+        <button class="close">×</button>
+      </div>
+      <h3>NemoClaw paused for <em>human judgement</em>.</h3>
+      <div class="badges">
+        <span class="tag-s gold"><span class="pip"></span>HITL · open</span>
+        <span class="tag-s"><span class="pip" style="background:var(--ink-3)"></span>SLA 06:42</span>
+        <span class="tag-s indigo">trace · 7f4a-31bd</span>
+      </div>
+    </div>
+
+    <nav class="insp-tabs-s">
+      <button class="tab active" data-target="decision">Decision</button>
+      <button class="tab" data-target="evidence">Evidence · 4</button>
+      <button class="tab" data-target="trace">Trace</button>
+      <button class="tab" data-target="history">History</button>
+    </nav>
+
+    <div class="insp-body-s">
+
+      <!-- Decision -->
+      <section class="insp-pane-s active" data-pane="decision" style="padding:22px 26px">
+
+        <div class="insp-section-s">
+          <h4>Verdict</h4>
+          <blockquote class="decision-quote-s">"Coverage applies in part — Article L113-2 is silent on shared common areas; partial settlement is defensible."</blockquote>
+          <div class="decision-meta-s">
+            <span>NemoClaw v3.2</span><span>·</span>
+            <span>gpt-4o-2024-11</span><span>·</span>
+            <span>2,481 tokens</span><span>·</span>
+            <span>4.2s</span>
+          </div>
+        </div>
+
+        <div class="insp-section-s">
+          <h4>Confidence</h4>
+          <div class="confidence-meter-s">
+            <div class="row">
+              <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase">Score</span>
+              <span class="val bad">0.78</span>
+            </div>
+            <div class="bar">
+              <div class="fill" style="width:78%;background:var(--rouge)"></div>
+              <div class="floor" style="left:85%"></div>
+            </div>
+            <div class="decision-meta-s" style="margin-top:10px">
+              <span>floor 0.85</span><span>·</span>
+              <span style="color:var(--rouge)">↓ 0.07 below</span><span>·</span>
+              <span>3 spans cite L113-2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-section-s">
+          <h4>Operator options</h4>
+          <div class="op-options-s">
+
+            <button class="op-opt-s selected">
+              <span class="hk">1</span>
+              <span class="body">
+                <span class="ttl">Approve partial <strong class="ok">€3,400</strong></span>
+                <span class="reason">Cap shared-space portion under L113-2; pay private-area damage in full. Closest match to 14 prior claims with the same article cited.</span>
+                <span class="meta"><span>cited 14×</span><span>·</span><span>avg conf. after override 0.91</span></span>
+              </span>
+              <span class="arrow">→</span>
+            </button>
+
+            <button class="op-opt-s">
+              <span class="hk">2</span>
+              <span class="body">
+                <span class="ttl">Approve full <strong>€4,820</strong></span>
+                <span class="reason">Treat L113-2 ambiguity as covered by default — applied in 3 prior cases when invoice was photographed and timestamped.</span>
+                <span class="meta"><span>cited 3×</span><span>·</span><span>requires manager note</span></span>
+              </span>
+              <span class="arrow">→</span>
+            </button>
+
+            <button class="op-opt-s">
+              <span class="hk">3</span>
+              <span class="body">
+                <span class="ttl">Decline & request further docs</span>
+                <span class="reason">Ask insured for syndic letter confirming shared-space allocation. Pauses claim, re-opens on reply.</span>
+                <span class="meta"><span>average wait 2.4 days</span><span>·</span><span>resolution rate 78%</span></span>
+              </span>
+              <span class="arrow">→</span>
+            </button>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Evidence -->
+      <section class="insp-pane-s" data-pane="evidence" style="padding:22px 26px">
+        <div class="insp-section-s">
+          <h4>Evidence on file</h4>
+          <div class="evidence-list-s">
+            <div class="ev-item-s">
+              <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
+              <div class="body"><div class="name">Invoice — Plomberie Bertin</div><div class="meta">PHOTO · 2.4 MB · OCR 98%</div></div>
+              <span class="v">€4,820</span>
+            </div>
+            <div class="ev-item-s">
+              <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
+              <div class="body"><div class="name">Damage photo · kitchen ceiling</div><div class="meta">PHOTO · 3.1 MB · GPS Paris 75011</div></div>
+              <span class="v">3 spans</span>
+            </div>
+            <div class="ev-item-s">
+              <span class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></span>
+              <div class="body"><div class="name">Policy MR-118 · article L113-2</div><div class="meta">PDF · 14 pages · 2 highlights</div></div>
+              <span class="v">cited</span>
+            </div>
+            <div class="ev-item-s">
+              <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+              <div class="body"><div class="name">Customer message · 14:34</div><div class="meta">CHATWOOT · #8814 · 3 turns</div></div>
+              <span class="v">EN</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trace -->
+      <section class="insp-pane-s" data-pane="trace" style="padding:22px 26px">
+        <div class="insp-section-s">
+          <h4>Span tree · 7f4a-31bd</h4>
+          <div class="trace-s">
+            <div class="row done"><span class="ts">14:36:01</span><span class="pip"></span><span class="name">intake.webhook</span><span class="dur">0.4s</span></div>
+            <div class="row done"><span class="ts">14:36:02</span><span class="pip"></span><span class="name">docling.parse <span class="badge">tool</span></span><span class="dur">1.2s</span></div>
+            <div class="row mcp"><span class="ts">14:36:03</span><span class="pip"></span><span class="name">claims_facade.lookup <span class="badge">mcp</span></span><span class="dur">0.6s</span></div>
+            <div class="row live"><span class="ts">14:36:04</span><span class="pip"></span><span class="name">nemoclaw.decide <span class="badge">llm</span></span><span class="dur">4.2s</span></div>
+            <div class="row"><span class="ts">14:36:09</span><span class="pip"></span><span class="name">handover.open <span class="badge">hitl</span></span><span class="dur">…</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- History -->
+      <section class="insp-pane-s" data-pane="history" style="padding:22px 26px">
+        <div class="insp-section-s">
+          <h4>14 prior claims · same article</h4>
+          <div class="evidence-list-s">
+            <div class="ev-item-s"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg></span><div class="body"><div class="name">CLM-2026-0017 · partial €2,140</div><div class="meta">approved · claire.b · 02 May</div></div><span class="v">0.81</span></div>
+            <div class="ev-item-s"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg></span><div class="body"><div class="name">CLM-2026-0009 · partial €1,860</div><div class="meta">approved · sara.m · 28 Apr</div></div><span class="v">0.79</span></div>
+            <div class="ev-item-s"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg></span><div class="body"><div class="name">CLM-2025-3318 · partial €4,200</div><div class="meta">approved · claire.b · 14 Apr</div></div><span class="v">0.84</span></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="insp-actions-s">
+      <button class="btn-s ghost">Open Langfuse ↗</button>
+      <button class="btn-s primary">Apply decision · 1</button>
+    </div>
+  </aside>
+
+  <!-- Activity dock -->
+  <section class="activity-s open">
+    <div class="head">
+      <span class="ttl"><span class="pip"></span>Live activity · CLM-2026-0042</span>
+      <span class="meta">5 spans · 7.2s elapsed · €0.014</span>
+      <div style="display:flex;gap:6px;margin-left:auto">
+        <span class="filter-chip on">all</span>
+        <span class="filter-chip on">mcp</span>
+        <span class="filter-chip on">hitl</span>
+        <span class="filter-chip">llm</span>
+        <span class="filter-chip">tool</span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="act-row-s done">
+        <span class="ts">14:36:01.214</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></span>
+        <span class="name">intake.webhook · CLM-2026-0042 created</span>
+        <span class="agent">webhook</span><span class="dur">0.4s</span>
+      </div>
+      <div class="act-row-s done">
+        <span class="ts">14:36:02.488</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M14 2v6h6"/><path d="M5 21h14a2 2 0 002-2V8l-6-5H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></span>
+        <span class="name">docling.parse · 4 spans extracted <span class="ribbon-tiny">tool</span></span>
+        <span class="agent">Docling</span><span class="dur">1.2s</span>
+      </div>
+      <div class="act-row-s mcp">
+        <span class="ts">14:36:03.701</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+        <span class="name">claims_facade.lookup · policy MR-118 returned <span class="ribbon-tiny indigo">mcp</span></span>
+        <span class="agent">n8n · wfmcp02</span><span class="dur">0.6s</span>
+      </div>
+      <div class="act-row-s done">
+        <span class="ts">14:36:04.330</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7"/></svg></span>
+        <span class="name">nemoclaw.decide · weighed evidence + policy <span class="ribbon-tiny">llm</span></span>
+        <span class="agent">NemoClaw · gpt-4o</span><span class="dur">4.2s</span>
+      </div>
+      <div class="act-row-s done">
+        <span class="ts">14:36:08.512</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg></span>
+        <span class="name">judge.policy_compliance · score 0.78 below floor 0.85</span>
+        <span class="agent">judge · sonnet-3.7</span><span class="dur">1.8s</span>
+      </div>
+      <div class="act-row-s hitl">
+        <span class="ts">14:36:09.108</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>
+        <span class="name"><em>handover opened</em> · 3 options drafted · routed to claire.b <span class="ribbon-tiny gold">hitl</span></span>
+        <span class="agent">chatwoot · #8814</span><span class="dur">…</span>
+      </div>
+      <div class="act-row-s mcp">
+        <span class="ts">14:36:09.402</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+        <span class="name">chatwoot.send · operator notified <span class="ribbon-tiny indigo">mcp</span></span>
+        <span class="agent">n8n · wfmcp03</span><span class="dur">0.3s</span>
+      </div>
+      <div class="act-row-s">
+        <span class="ts">14:36:09.412</span><span class="pip"></span>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="10"/></svg></span>
+        <span class="name">SLA timer started · 7m budget</span>
+        <span class="agent">gateway</span><span class="dur">—</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="./salon.js"></script>
+<script>
+  const stage = document.getElementById('pan-s');
+  SalonCanvas.initCanvasS(stage);
+
+  const edges = [
+    { from: 'n1', to: 'n2' },
+    { from: 'n2', to: 'n3' },
+    { from: 'n3', to: 'n4' },
+    { from: 'n4', to: 'n5' },
+  ];
+
+  const svg = document.getElementById('edges-s');
+  const decorate = () => {
+    edges[0].kind = 'done';
+    edges[1].kind = 'done';
+    edges[2].kind = 'live';
+    edges[3].kind = '';
+    SalonCanvas.drawEdgesS(edges, svg, stage);
+  };
+  decorate();
+  window.addEventListener('resize', decorate);
+
+  SalonCanvas.initInspectorTabsS();
+  SalonCanvas.initActivityDockS();
+  SalonCanvas.initHotkeysS();
+
+  // MCP burst on n2 — repeats so visitors see it
+  setTimeout(() => SalonCanvas.mcpBurstS('n2', 2400), 900);
+  setInterval(() => SalonCanvas.mcpBurstS('n2', 2200), 9500);
+
+  // Replay button
+  document.getElementById('replayBtn').addEventListener('click', async () => {
+    document.querySelectorAll('.node-s').forEach(n => n.classList.remove('ignite'));
+    document.querySelectorAll('#edges-s path').forEach(p => p.remove());
+    const replayEdges = [
+      { from: 'n1', to: 'n2' },
+      { from: 'n2', to: 'n3', mcp: true },
+      { from: 'n3', to: 'n4' },
+      { from: 'n4', to: 'n5' },
+    ];
+    await SalonCanvas.replayS(replayEdges);
+    decorate();
+  });
+</script>
+
+</body>
+</html>

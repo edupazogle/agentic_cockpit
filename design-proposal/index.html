@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cockpit redesign · taste-skill experiment</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #0E0E10;
+      --surface: #18181B;
+      --rule: rgba(255,255,255,0.08);
+      --rule-bright: rgba(255,255,255,0.18);
+      --ink: #F2F1EE;
+      --soft: rgba(242,241,238,0.68);
+      --mute: rgba(242,241,238,0.42);
+      --azur: #00C0E8;
+      --hazard: #E61919;
+      --emerald: #34D399;
+      --grape: #8B5CF6;
+      --amber: #F4B400;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100dvh; }
+    a { color: inherit; text-decoration: none; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(900px 600px at 12% 8%, rgba(0,192,232,0.10), transparent 55%),
+        radial-gradient(800px 600px at 88% 92%, rgba(139,92,246,0.10), transparent 60%);
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+    .top {
+      padding: 32px 0 22px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--rule);
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .brand .glyph {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--azur), var(--grape));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .top nav { display: flex; gap: 18px; font-size: 13px; color: var(--soft); font-family: 'Geist Mono', monospace; }
+    .top nav a:hover { color: var(--ink); }
+
+    .hero {
+      padding: 80px 0 48px;
+      max-width: 880px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.03);
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--soft);
+    }
+    .eyebrow .pip {
+      width: 6px; height: 6px; border-radius: 999px; background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+    h1 {
+      font-family: 'Newsreader', serif;
+      font-weight: 500;
+      font-size: clamp(40px, 5.6vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin: 24px 0 22px;
+    }
+    h1 em { font-style: italic; color: var(--azur); }
+    .lede {
+      font-size: 17px;
+      color: var(--soft);
+      max-width: 64ch;
+      line-height: 1.6;
+      letter-spacing: -0.005em;
+    }
+    .meta {
+      margin-top: 32px;
+      display: flex; gap: 28px; flex-wrap: wrap;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--mute);
+    }
+    .meta b { color: var(--ink); font-weight: 500; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 32px 0 64px;
+    }
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 600ms cubic-bezier(0.32,0.72,0,1), border-color 400ms ease;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--rule-bright); }
+
+    .card .preview {
+      position: relative;
+      height: 200px;
+      border-bottom: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    /* ATELIER preview · Tactical Telemetry */
+    .preview.atelier {
+      background: #0A0A0A;
+      font-family: 'JetBrains Mono', monospace;
+      color: #EAEAEA;
+      padding: 16px;
+      font-size: 10px;
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+    }
+    .preview.atelier::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.025) 2px, rgba(255,255,255,0.025) 3px);
+      pointer-events: none;
+    }
+    .preview.atelier .ln { display: block; }
+    .preview.atelier .hz { color: var(--hazard); }
+    .preview.atelier .gn { color: #4AF626; }
+    .preview.atelier .mu { color: rgba(234,234,234,0.42); }
+
+    /* DOSSIER preview · Editorial */
+    .preview.dossier {
+      background: #F7F6F3;
+      color: #2F3437;
+      padding: 24px 26px;
+      font-family: 'Geist', sans-serif;
+    }
+    .preview.dossier h4 {
+      font-family: 'Newsreader', serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .preview.dossier .row {
+      display: flex; gap: 8px; align-items: center;
+      font-size: 11px;
+      color: #787774;
+      margin-top: 10px;
+    }
+    .preview.dossier .tag {
+      font-size: 10px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.04em;
+      background: #FBF3DB; color: #956400;
+    }
+    .preview.dossier hr {
+      border: none; border-top: 1px solid #EAEAEA; margin: 14px 0;
+    }
+    .preview.dossier .body {
+      font-size: 12px; line-height: 1.7; color: #2F3437;
+    }
+
+    /* COPILOT preview · Ethereal */
+    .preview.copilot {
+      background:
+        radial-gradient(400px 280px at 22% 30%, rgba(0,192,232,0.22), transparent 60%),
+        radial-gradient(360px 240px at 80% 80%, rgba(139,92,246,0.18), transparent 60%),
+        #050505;
+      padding: 14px;
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .preview.copilot .pane {
+      flex: 1;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      padding: 14px;
+      font-size: 10px;
+      color: rgba(245,244,242,0.72);
+      font-family: 'Geist', sans-serif;
+      line-height: 1.5;
+    }
+    .preview.copilot .pane.canvas {
+      flex: 1.4;
+    }
+    .preview.copilot .pane h5 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: #F5F4F2;
+      margin-bottom: 6px;
+      letter-spacing: -0.015em;
+    }
+    .preview.copilot .pip {
+      display: inline-block; width: 5px; height: 5px;
+      background: #34D399; border-radius: 999px; margin-right: 4px;
+      box-shadow: 0 0 6px #34D399;
+    }
+
+    .card .body { padding: 22px 24px 24px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .card .ttl {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+    .card .ttl b { font-style: normal; color: var(--ink); display: block; font-family: 'Geist', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0; text-transform: uppercase; color: var(--mute); margin-bottom: 8px; letter-spacing: 0.16em; }
+    .card .desc {
+      font-size: 13.5px; color: var(--soft); line-height: 1.6;
+    }
+    .card .skills {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .card .skills span {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--rule);
+      color: var(--soft);
+      letter-spacing: 0.04em;
+    }
+    .card .actions {
+      margin-top: auto;
+      padding-top: 16px;
+      display: flex; gap: 8px;
+      border-top: 1px solid var(--rule);
+    }
+    .card .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 500;
+      transition: all 400ms cubic-bezier(0.32,0.72,0,1);
+    }
+    .card .btn.primary {
+      background: #FAFAF8; color: #0A0A0C;
+    }
+    .card .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,255,255,0.08); }
+    .card .btn.ghost { color: var(--soft); }
+    .card .btn.ghost:hover { color: var(--ink); }
+
+    .links {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      margin-top: 12px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+    }
+    .links a {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--rule);
+      color: var(--soft);
+      letter-spacing: 0.02em;
+    }
+    .links a:hover { color: var(--ink); border-color: var(--rule-bright); }
+
+    table.rubric {
+      width: 100%;
+      border-collapse: separate; border-spacing: 0;
+      font-size: 13px;
+      margin: 24px 0 64px;
+    }
+    .rubric th, .rubric td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--rule);
+    }
+    .rubric th {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 500;
+      color: var(--mute);
+      background: rgba(255,255,255,0.02);
+    }
+    .rubric td b { font-weight: 500; color: var(--ink); }
+    .rubric td.dim { color: var(--soft); font-size: 12.5px; line-height: 1.6; }
+
+    .foot {
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+      display: flex; justify-content: space-between;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--mute);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top">
+      <a class="brand" href="#"><span class="glyph"></span>Cockpit redesign</a>
+      <nav>
+        <a href="#round-2"><b>Round 2 ↓</b></a>
+        <a href="./codex/index.html"><b>Codex ★ refined</b></a>
+        <a href="./atrium/index.html">Atrium</a>
+        <a href="./studio/index.html">Studio</a>
+        <a href="#round-1" style="opacity:0.55">Round 1 ↓</a>
+        <a href="./legacy-v1.html">v1</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow"><span class="pip"></span>Taste-skill experiment · Round 2 (with Codex refinements) · 2026-05-04</span>
+      <h1>Three cockpits.<br />One brief. <em>Apples to apples.</em></h1>
+      <p class="lede">
+        Round 2 evolves the favourite — Dossier — into three new directions with an n8n-style infinite canvas
+        and an AI-powered scenario builder. <strong>Codex has been refined further</strong> with icon-led nodes
+        (no inline data rows, no roman numerals), a more functional decision pane (confidence meter +
+        hotkeys 1/2/3 + reasoning), a slide-up activity dock, choreographed Railway-style replay animations
+        with travelling particles + cascading ignites, an MCP-call burst, an HITL halo, and a dedicated
+        scenarios catalog page.
+      </p>
+      <div class="meta">
+        <span><b>Brief</b> Cockpit + scenario builder + canvas for AXA-internal pilots</span>
+        <span><b>Inspiration</b> AXA Canopée · Railway docs &amp; landing animations · n8n canvas · Dossier round 1</span>
+        <span><b>Skills source</b> .agents/skills/taste · 12 SKILL.md</span>
+      </div>
+    </section>
+
+    <h2 id="round-2" style="font-family:'Newsreader',serif;font-weight:500;font-size:28px;letter-spacing:-0.025em;margin:8px 0 6px">Round 2 — Dossier evolutions</h2>
+    <p class="lede" style="font-size:14.5px;max-width:64ch;margin-bottom:18px">
+      All three share Dossier's editorial DNA (Newsreader serif, warm bone, hairline rules) but each tests a
+      different skill stack and adds the n8n-style infinite canvas with connected nodes plus an AI step-by-step builder.
+    </p>
+
+    <section class="grid">
+
+      <!-- ATRIUM -->
+      <a class="card" href="./atrium/index.html">
+        <div class="preview dossier" style="background:#FAFAF7;border-color:#E8E5DC">
+          <h4 style="color:#1A1A1A">Atrium · workspace</h4>
+          <div class="row" style="color:#5C5D60">
+            <span>Property fast track · v3 ·</span>
+            <span class="tag" style="background:#FBF3DB;color:#956400">● HITL · 08:14</span>
+          </div>
+          <hr style="border-color:#EAE7DF" />
+          <div class="body" style="color:#5C5D60">A calibrated, refined editorial cockpit. Vertical step rail, plan-as-prose, inline AI nudges, infinite canvas with bezier edges and inspector drawer.</div>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>04 · Atrium</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Refined Editorial Cockpit</span>
+          </div>
+          <p class="desc">Notion meets Linear meets a print magazine. Hairline rules, generous whitespace, a vertical 8-step rail and a 3-pane builder where the AI sits beside you, not in your face. Canvas is calm and bezier-clean.</p>
+          <div class="skills">
+            <span>minimalist-ui</span>
+            <span>design-taste-frontend</span>
+            <span>variance 4 · motion 5</span>
+            <span>Newsreader + Inter</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./atrium/index.html">Workspace</a>
+              <a href="./atrium/builder.html">Builder</a>
+              <a href="./atrium/canvas.html">Canvas</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- CODEX -->
+      <a class="card" href="./codex/index.html">
+        <div class="preview dossier" style="background:#F5F2EA;border-color:#E5DFD0">
+          <h4 style="color:#0E0E0F;font-style:italic;font-size:22px">Codex.</h4>
+          <div class="row" style="color:#3F3E3D">
+            <span style="font-style:italic">A magazine for agents.</span>
+            <span class="tag" style="background:#FBF3DB;color:#7A4F00">№ 03 · waiting</span>
+          </div>
+          <hr style="border-color:#E5DFD0" />
+          <div class="body" style="color:#3F3E3D;font-style:italic">Drop caps, asymmetric bento, marginalia next to the canvas. Each scenario reads like a feature article.</div>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>05 · Codex</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Awwwards Editorial</span>
+          </div>
+          <p class="desc">Display-XL Newsreader headlines, a dropped capital, a pull-quote, italic side-marginalia annotating the canvas — the cockpit reads like a New York Times feature about your run. Roman-numeral builder steps. The canvas is the editor's table.</p>
+          <div class="skills">
+            <span>minimalist-ui</span>
+            <span>gpt-taste</span>
+            <span>asymmetric bento</span>
+            <span>JetBrains Mono accents</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./codex/index.html">Index</a>
+              <a href="./codex/builder.html">Builder</a>
+              <a href="./codex/canvas.html">Canvas</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- STUDIO -->
+      <a class="card" href="./studio/index.html">
+        <div class="preview dossier" style="background:#FFFFFF;border-color:#EAE7DF;font-family:'JetBrains Mono',monospace;font-size:11px">
+          <h4 style="color:#131416;font-family:'Newsreader',serif;font-style:italic;font-weight:500;font-size:18px;margin-bottom:10px">Studio · spec.editor</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #EAE7DF;border-radius:6px;overflow:hidden">
+            <div style="padding:8px 10px;border-right:1px solid #EAE7DF;border-bottom:1px solid #EAE7DF"><div style="color:#8A8B8E;font-size:9.5px">id</div><div style="color:#131416;font-size:11px;margin-top:1px">PFT-014</div></div>
+            <div style="padding:8px 10px;border-bottom:1px solid #EAE7DF"><div style="color:#8A8B8E;font-size:9.5px">v</div><div style="color:#131416;font-size:11px;margin-top:1px">3</div></div>
+            <div style="padding:8px 10px;border-right:1px solid #EAE7DF"><div style="color:#8A8B8E;font-size:9.5px">success</div><div style="color:#346538;font-size:11px;margin-top:1px">98.4%</div></div>
+            <div style="padding:8px 10px"><div style="color:#8A8B8E;font-size:9.5px">runs.7d</div><div style="color:#131416;font-size:11px;margin-top:1px">12,481</div></div>
+          </div>
+          <div style="margin-top:10px;color:#5C5D60;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:-0.005em">Schema-card nodes · type signatures · invariant lints.</div>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>06 · Studio</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Design-System-as-Spec</span>
+          </div>
+          <p class="desc">Stripe-docs meets Linear meets a TypeScript declaration file. Every scenario is a documented schema; every node carries a typed input/output signature; every invariant lints in real time. Co-architect chat refines the spec, not the prose.</p>
+          <div class="skills">
+            <span>minimalist-ui</span>
+            <span>stitch-design-taste</span>
+            <span>schema-card system</span>
+            <span>JetBrains Mono · IDs only</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./studio/index.html">Workspace</a>
+              <a href="./studio/builder.html">Builder</a>
+              <a href="./studio/canvas.html">Canvas</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </section>
+
+    <h2 id="round-1" style="font-family:'Newsreader',serif;font-weight:500;font-size:28px;letter-spacing:-0.025em;margin:48px 0 6px;opacity:0.78">Round 1 — original three (kept for comparison)</h2>
+    <p class="lede" style="font-size:14.5px;max-width:64ch;margin-bottom:18px;opacity:0.72">
+      The first set, before the n8n-canvas requirement landed. Dossier was the favourite — Round 2 evolves from it.
+    </p>
+
+    <section class="grid">
+      <a class="card" href="./atelier/index.html">
+        <div class="preview atelier">
+          <span class="ln mu">// AXA · GDAI · INSURANCE PILOTS</span>
+          <span class="ln">[ <span class="hz">●</span> RUN ] 7f4a-31bd · CLM-2026-0042</span>
+          <span class="ln mu">───────────────────────────────</span>
+          <span class="ln">▶ FNOL.INTAKE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="gn">DONE</span></span>
+          <span class="ln">▶ TRIAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="gn">DONE</span></span>
+          <span class="ln">▶ DOCS.EXTRACT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="gn">DONE</span></span>
+          <span class="ln">▶ GATE.G2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hz">PAUSE</span></span>
+          <span class="ln mu">───────────────────────────────</span>
+          <span class="ln mu">+++ HITL // OPERATOR REQUIRED</span>
+          <span class="ln">RESERVES &gt; €2_000 // €2_300 // 0.91</span>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>01 · Atelier</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Tactical Telemetry CRT</span>
+          </div>
+          <p class="desc">A control room for engineers. Hairline grids, ASCII syntax, hazard markers, JetBrains Mono — built for operators who watch runs at 3am.</p>
+          <div class="skills">
+            <span>industrial-brutalist-ui</span>
+            <span>JetBrains Mono</span>
+            <span>0px radius</span>
+            <span>#E61919</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./atelier/index.html">Roster</a>
+              <a href="./atelier/workflow.html">Workflow</a>
+              <a href="./atelier/scenario.html">Run</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- DOSSIER -->
+      <a class="card" href="./dossier/index.html">
+        <div class="preview dossier">
+          <h4>CLM-2026-0042</h4>
+          <div class="row">
+            <span>Property Fast-Track v27 ·</span>
+            <span class="tag">● HITL pending</span>
+          </div>
+          <hr />
+          <div class="body">Storm damage · Île-de-France. Reserves €2 300 above the €2 000 threshold. Eight documents extracted with 96% confidence. KYC verified.</div>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>02 · Dossier</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Editorial Document</span>
+          </div>
+          <p class="desc">A signed record. Warm bone, Newsreader serif, pastel status tags, disciplined whitespace. Reads like a Notion doc the compliance team will love years from now.</p>
+          <div class="skills">
+            <span>minimalist-ui</span>
+            <span>Newsreader serif</span>
+            <span>#F7F6F3</span>
+            <span>4-eyes ready</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./dossier/index.html">Workspace</a>
+              <a href="./dossier/builder.html">Builder</a>
+              <a href="./dossier/hitl.html">HITL</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- COPILOT -->
+      <a class="card" href="./copilot/index.html">
+        <div class="preview copilot">
+          <div class="pane">
+            <h5>Copilot</h5>
+            <span class="pip"></span>Run paused at gate G2 — reserves €2 300, +€300.
+          </div>
+          <div class="pane canvas">
+            <h5>CLM-2026-0042</h5>
+            <span class="pip"></span>Awaiting decision · 6 similar cases.
+          </div>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <b>03 · Copilot</b>
+            <span style="font-style: normal; font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: 22px; color: var(--ink);">Ethereal Chat-Driven</span>
+          </div>
+          <p class="desc">An Awwwards/Linear-tier surface. OLED black, mesh gradients, double-bezel cards, button-in-button CTAs. You author and inspect runs in conversation, the canvas materialises.</p>
+          <div class="skills">
+            <span>high-end-visual-design</span>
+            <span>Geist + Clash Display</span>
+            <span>#050505 OLED</span>
+            <span>cubic-bezier 0.32,0.72,0,1</span>
+          </div>
+          <div class="actions">
+            <span class="btn primary">Open mockup →</span>
+            <div class="links">
+              <a href="./copilot/index.html">Atlas</a>
+              <a href="./copilot/scenario.html">Run</a>
+              <a href="./copilot/diff.html">Diff</a>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </section>
+
+    <h2 style="font-family: 'Newsreader', serif; font-weight: 500; font-size: 28px; letter-spacing: -0.025em; margin-bottom: 14px;">Comparison rubric</h2>
+    <p class="lede" style="font-size: 14.5px; max-width: 64ch; margin-bottom: 18px;">
+      Five axes — pick the one that scores best for AXA's day-to-day operator workflow.
+      No "right" answer; this is taste under constraint.
+    </p>
+
+    <table class="rubric">
+      <thead>
+        <tr>
+          <th>Axis</th>
+          <th>Atelier</th>
+          <th>Dossier</th>
+          <th>Copilot</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Density · scan-ability</b></td>
+          <td class="dim">Highest — every pixel works hard, zero ornament.</td>
+          <td class="dim">Calm — readable but uses macro whitespace.</td>
+          <td class="dim">Editorial split — chat steals attention from canvas.</td>
+        </tr>
+        <tr>
+          <td><b>Trust feel</b></td>
+          <td class="dim">Tactical, technical — feels like a control room.</td>
+          <td class="dim">Archival, signed-record — feels auditable.</td>
+          <td class="dim">Premium, modern — feels like an Apple product.</td>
+        </tr>
+        <tr>
+          <td><b>Authoring ergonomics</b></td>
+          <td class="dim">Graph editor (canvas + nodes).</td>
+          <td class="dim">Linear stepper (no canvas).</td>
+          <td class="dim">Conversational with diff overlay.</td>
+        </tr>
+        <tr>
+          <td><b>Risk of skill mismatch</b></td>
+          <td class="dim">Looks scary to non-technical reviewers.</td>
+          <td class="dim">Could feel under-powered to engineers.</td>
+          <td class="dim">Could feel too consumer for an internal tool.</td>
+        </tr>
+        <tr>
+          <td><b>Implementation cost</b></td>
+          <td class="dim">Low · system fonts, zero JS animation.</td>
+          <td class="dim">Low · standard CSS, IntersectionObserver.</td>
+          <td class="dim">Medium · custom fonts, mesh gradients, GPU motion.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer class="foot">
+      <span>© 2026 GDAI · Internal use · taste-skill experiment</span>
+      <span><a href="../docs/designs/2026-05-04-cockpit-redesign.md" style="color: var(--soft);">Read the design doc →</a></span>
+    </footer>
+
+  </div>
+</body>
+</html>
