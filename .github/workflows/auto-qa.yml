@@ -11,7 +11,7 @@ name: Auto-delegate QA to GitHub Copilot
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, synchronize, ready_for_review]
     branches: [main]
 
 jobs:
