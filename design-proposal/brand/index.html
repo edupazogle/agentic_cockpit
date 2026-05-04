@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AXA France · Canopée Design System — Référence globale</title>
+  <meta name="description" content="Référence du système de design Canopée d'AXA France : trois univers (Apollo, LF, Slash), fondations (couleurs, typographie, espacement, élévation, iconographie), composants et règles de contenu." />
+  <link rel="icon" href="assets/axa_logo.svg" />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="components.css" />
+  <link rel="stylesheet" href="site.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body class="minisite">
+
+<!-- ═════════ TOP BAR ═════════ -->
+<nav class="site-bar" aria-label="Navigation principale">
+  <img class="site-bar__logo" src="assets/axa_logo.svg" alt="AXA" />
+  <div>
+    <p class="site-bar__title">Canopée</p>
+    <span class="site-bar__sub">AXA France · Design system</span>
+  </div>
+  <div class="site-bar__spacer"></div>
+  <div class="site-bar__nav">
+    <a href="#overview" aria-current="page">Vue d'ensemble</a>
+    <a href="#foundations">Fondations</a>
+    <a href="#components">Composants</a>
+    <a href="#resources">Ressources</a>
+  </div>
+</nav>
+
+<!-- ═════════ HERO ═════════ -->
+<header class="hero">
+  <div class="hero__inner">
+    <span class="hero__eyebrow"><span class="pip"></span>Canopée · One Design System · v3</span>
+    <h1>Le système de design d'AXA France, <em>de bout en bout.</em></h1>
+    <p>
+      Canopée unifie les trois univers digitaux d'AXA France — <strong>Apollo</strong> (B2C
+      prospect), <strong>LF</strong> (B2C client) et <strong>Slash</strong> (B2B
+      distributeur) — autour d'un même bleu, d'une même typographie et d'un même
+      vocabulaire de composants. Cette référence regroupe les fondations, les composants
+      et les règles d'écriture pour <em>tout</em> projet AXA France, marketing comme
+      back-office.
+    </p>
+  </div>
+</header>
+
+<!-- ═════════ SHELL ═════════ -->
+<div class="site-shell">
+
+  <!-- ───── TABLE OF CONTENTS ───── -->
+  <aside class="site-toc" aria-label="Sommaire">
+    <h6>Vue d'ensemble</h6>
+    <a href="#overview">Le système</a>
+    <a href="#universes">Les trois univers</a>
+    <a href="#voice">Voix &amp; contenu</a>
+
+    <h6>Fondations</h6>
+    <a href="#logo">Logo</a>
+    <a href="#color-brand">Couleurs · marque</a>
+    <a href="#color-neutrals">Couleurs · neutres</a>
+    <a href="#color-semantic">Couleurs · sémantique</a>
+    <a href="#color-tarif">Tarif &amp; décoratives</a>
+    <a href="#typography">Typographie</a>
+    <a href="#hierarchy">Hiérarchie de texte</a>
+    <a href="#spacing">Échelle d'espacement</a>
+    <a href="#radii">Rayons d'arrondi</a>
+    <a href="#elevation">Élévation</a>
+    <a href="#motion">Mouvement</a>
+    <a href="#iconography">Iconographie</a>
+    <a href="#imagery">Imagerie</a>
+
+    <h6>Composants</h6>
+    <a href="#buttons">Boutons</a>
+    <a href="#cards">Cartes</a>
+    <a href="#tags">Étiquettes &amp; badges</a>
+    <a href="#alerts">Alertes &amp; messages</a>
+    <a href="#forms">Formulaires</a>
+    <a href="#chrome">En-tête &amp; pied</a>
+
+    <h6>Ressources</h6>
+    <a href="#resources">Sources &amp; liens</a>
+    <a href="#license">Licences &amp; mises en garde</a>
+  </aside>
+
+  <!-- ═════════ MAIN ═════════ -->
+  <main>
+
+    <!-- ───── OVERVIEW ───── -->
+    <section class="section" id="overview">
+      <div class="section__num">01 — Vue d'ensemble</div>
+      <h2 class="section__title">Une fondation digitale, trois contextes.</h2>
+      <p class="section__lede">
+        AXA France est l'arme française du Groupe AXA, l'un des plus grands assureurs
+        mondiaux. Canopée — distribué sous le scope npm <code>@axa-fr/canopee-*</code> —
+        consolide trois systèmes de design auparavant distincts en un seul vocabulaire.
+        Même bleu AXA. Même Publico. Mais un radius, une densité et un ton ajustés à
+        l'audience.
+      </p>
+      <p>
+        Cette mini-site est une reconstruction fidèle de Canopée à partir du dépôt public
+        <code>github.com/AxaFrance/design-system</code>. Elle n'est pas affiliée
+        officiellement à AXA mais reproduit les tokens et patterns canoniques — utile
+        pour des prototypes, des slides, ou comme référence de poche en attendant
+        l'accès aux Storybooks officiels.
+      </p>
+    </section>
+
+    <!-- ───── UNIVERSES ───── -->
+    <section class="section" id="universes">
+      <div class="section__num">02 — Les trois univers</div>
+      <h2 class="section__title">Apollo, LF, Slash.</h2>
+      <p class="section__lede">
+        Choisissez l'univers <em>avant</em> les patterns. Ils partagent le bleu
+        <code>#00008F</code> et la paire Publico / Source Sans, mais divergent sur le
+        rayon, la densité et la chrome.
+      </p>
+
+      <div class="universe">
+        <div>
+          <h3 class="universe__name">Apollo</h3>
+          <div class="universe__codename">B2C · Prospect · <code>canopee-react-prospect</code></div>
+          <p class="universe__desc">CTA pilule (radius&nbsp;∞), titres Publico bold,
+            photographie héro pleine largeur. Pour les sites publics, parcours de
+            devis, landing pages — axa.fr.</p>
+        </div>
+        <button class="ds-btn ds-btn--apollo ds-btn--primary">Demander un devis</button>
+      </div>
+      <div class="universe">
+        <div>
+          <h3 class="universe__name">Look &amp; Feel <small style="font-weight:400; color:var(--gray-500);">(LF)</small></h3>
+          <div class="universe__codename">B2C · Client · <code>canopee-react-client</code></div>
+          <p class="universe__desc">Espace client authentifié. Boutons rectangulaires
+            avec radius 8&nbsp;px, sidebar, dashboards, parcours sinistre. Densité
+            moyenne. Plus sobre, moins éditorial qu'Apollo.</p>
+        </div>
+        <button class="ds-btn ds-btn--lf ds-btn--primary">Accéder à mon espace</button>
+      </div>
+      <div class="universe">
+        <div>
+          <h3 class="universe__name">Slash</h3>
+          <div class="universe__codename">B2B · Distributeur · <code>canopee-react-distributeur</code></div>
+          <p class="universe__desc">Back-office agents et courtiers. Boutons à angles
+            vifs (radius&nbsp;0) avec étagère <code>inset 0 -2px</code>, tableaux denses,
+            identifiants en monospace. Vocabulaire d'app de travail.</p>
+        </div>
+        <button class="ds-btn ds-btn--slash ds-btn--primary">Valider</button>
+      </div>
+
+      <h3 style="margin-top:48px;">Tableau comparatif</h3>
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Caractéristique</th>
+            <th>Apollo</th>
+            <th>LF</th>
+            <th>Slash</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Audience</th><td>Prospect B2C</td><td>Client B2C authentifié</td><td>Agent / courtier B2B</td></tr>
+          <tr><th>Bouton — radius</th><td><code>100vmax</code> (pilule)</td><td><code>8px</code></td><td><code>0</code> + étagère <code>inset 0 -2px</code></td></tr>
+          <tr><th>Carte — radius</th><td><code>12px</code> · 1px outline</td><td><code>12px</code> · 1px outline</td><td><code>4px</code> · halo <code>0 0 9px rgba(0,0,0,.18)</code></td></tr>
+          <tr><th>Density</th><td>Aérée · espacements généreux</td><td>Moyenne</td><td>Dense · tabular-nums partout</td></tr>
+          <tr><th>Header</th><td>Blanc, ~80&nbsp;px, photo héro plein écran</td><td>Blanc, sticky, 64&nbsp;px</td><td>Blanc, container 1140&nbsp;px</td></tr>
+          <tr><th>Container max</th><td>1272&nbsp;px</td><td>1140&nbsp;px</td><td>1432&nbsp;px (large), 1140&nbsp;px (header)</td></tr>
+          <tr><th>Tone</th><td>Éditorial, émotif, rassurant</td><td>Direct, opérationnel, chaleureux</td><td>Sec, factuel, expert</td></tr>
+          <tr><th>Imagerie</th><td>Photo plein-bleed, surimpression bleu AXA</td><td>Vignettes, illustrations LF</td><td>Quasi inexistante — UI seule</td></tr>
+          <tr><th>Package</th><td><code>@axa-fr/canopee-react-prospect</code></td><td><code>@axa-fr/canopee-react-client</code></td><td><code>@axa-fr/canopee-react-distributeur</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ───── VOICE ───── -->
+    <section class="section" id="voice">
+      <div class="section__num">03 — Voix &amp; contenu</div>
+      <h2 class="section__title">Français, formel-mais-chaleureux, sentence case.</h2>
+      <p class="section__lede">
+        AXA est un assureur régulé&nbsp;: la copie est claire avant d'être maline.
+        Phrases courtes, jargon désamorcé, jamais de capitales sauf le wordmark AXA
+        lui-même.
+      </p>
+
+      <div class="rules">
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Langue &amp; personne</h5>
+          <p>Français (<code>fr-FR</code>) systématique côté utilisateur. Vouvoiement
+            («&nbsp;vous&nbsp;»). La marque parle en «&nbsp;nous&nbsp;».</p>
+        </div>
+        <div class="rules__item rules__item--dont">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-error);">block</span>Tutoiement</h5>
+          <p>Jamais. Même dans une CTA «&nbsp;découvrir&nbsp;» — toujours
+            «&nbsp;Découvrez nos formules&nbsp;» ou infinitif «&nbsp;Découvrir nos
+            formules&nbsp;».</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Ton</h5>
+          <p>Rassurant, expert, direct. Titres souvent en question
+            («&nbsp;Quelle est votre situation&nbsp;?&nbsp;») ou bénéfice
+            («&nbsp;Votre devis en 3 minutes&nbsp;»).</p>
+        </div>
+        <div class="rules__item rules__item--dont">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-error);">block</span>Capitales</h5>
+          <p>Pas d'<code>ALL CAPS</code> sauf le wordmark AXA et les eyebrows en
+            uppercase tracking <code>0.06em</code>. Sentence case partout ailleurs,
+            titres compris.</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Chiffres &amp; argent</h5>
+          <p>Format français&nbsp;: <code>1&nbsp;234,56&nbsp;€</code> (espace
+            insécable, virgule décimale, € après). Téléphone&nbsp;:
+            <code>01&nbsp;23&nbsp;45&nbsp;67&nbsp;89</code>.</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Dates</h5>
+          <p>Placeholder <code>JJ/MM/AAAA</code>. Mois en toutes lettres en minuscules
+            (<code>12 janvier 2026</code>). Pas de format US.</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>CTA — verbes infinitifs</h5>
+          <p>«&nbsp;Demander un devis&nbsp;», «&nbsp;Souscrire&nbsp;»,
+            «&nbsp;Déclarer un sinistre&nbsp;», «&nbsp;Accéder à mon espace&nbsp;».
+            Pas de «&nbsp;Cliquez ici&nbsp;».</p>
+        </div>
+        <div class="rules__item rules__item--dont">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-error);">block</span>Emoji</h5>
+          <p>Aucun emoji en UI produit, marketing ou transactionnel. Material Symbols
+            Outlined remplace toute la décoration émotive habituelle.</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Microcopie rassurante</h5>
+          <p>«&nbsp;en 3 minutes&nbsp;», «&nbsp;sans engagement&nbsp;»,
+            «&nbsp;gratuit&nbsp;». Pied de page&nbsp;: «&nbsp;Mentions légales&nbsp;»,
+            «&nbsp;Données personnelles&nbsp;», «&nbsp;Cookies&nbsp;».</p>
+        </div>
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>Erreurs</h5>
+          <p>Phrases complètes, voix passive proscrite. «&nbsp;Ce champ est
+            obligatoire.&nbsp;» «&nbsp;Adresse e-mail invalide.&nbsp;»
+            «&nbsp;Impossible d'enregistrer la modification. Réessayez.&nbsp;»</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ FOUNDATIONS ═════════ -->
+    <section class="section" id="foundations">
+      <div class="section__num">04 — Fondations</div>
+      <h2 class="section__title">Tokens, échelles, et règles de base.</h2>
+      <p class="section__lede">
+        Les variables ci-dessous sont définies dans <code>colors_and_type.css</code> et
+        partagées par les trois univers. Elles correspondent aux tokens publiés dans
+        <code>@axa-fr/canopee-css</code>.
+      </p>
+    </section>
+
+    <!-- ───── LOGO ───── -->
+    <section class="section" id="logo">
+      <div class="section__num">04.1 — Logo</div>
+      <h2 class="section__title">Le wordmark AXA + le slash diagonal.</h2>
+      <p class="section__lede">
+        Solide bleu AXA <code>#00008F</code> sur blanc, ou blanc plein sur fond bleu AXA.
+        Hauteur 60–80&nbsp;px en en-tête desktop. Aucune autre couleur. Pas de contour,
+        pas d'effet, pas de logo posé sur photo non aplatie.
+      </p>
+
+      <div class="logo-plate">
+        <div class="logo-plate__cell logo-plate__cell--light">
+          <span class="logo-plate__meta">Sur blanc</span>
+          <img src="assets/axa_logo.svg" alt="AXA" />
+        </div>
+        <div class="logo-plate__cell logo-plate__cell--dark">
+          <span class="logo-plate__meta">Sur AXA blue</span>
+          <img src="assets/axa_logo.svg" alt="AXA" />
+        </div>
+      </div>
+
+      <div class="rules" style="margin-top:24px;">
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>À faire</h5>
+          <p>SVG uniquement. Hauteur fixe (28–80&nbsp;px). Marges de protection&nbsp;: au
+            moins la hauteur du «&nbsp;A&nbsp;» autour du wordmark.</p>
+        </div>
+        <div class="rules__item rules__item--dont">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-error);">block</span>À ne pas faire</h5>
+          <p>Recolorer (vert, rouge, dégradé). Étirer ou déformer. Poser sur photo
+            sans surcouche bleue. Utiliser un PNG basse résolution.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── COLOR · BRAND ───── -->
+    <section class="section" id="color-brand">
+      <div class="section__num">04.2 — Couleurs · marque</div>
+      <h2 class="section__title">Bleu AXA <code>#00008F</code>, partout.</h2>
+      <p class="section__lede">
+        Le bleu AXA est la couleur d'action&nbsp;: boutons, liens, titres dans Apollo,
+        barre de marque, focus-visible. Hover&nbsp;: <code>#000072</code>.
+        Active&nbsp;: <code>#00005B</code>. <code>#3032C1</code> (azur) sert
+        d'accent Slash — en-têtes de tableaux, badges secondaires.
+      </p>
+
+      <div class="grid grid--7">
+        <div class="swatch"><div class="swatch__chip" style="background:#F8F8FF;"></div><div class="swatch__meta"><div class="swatch__name">Blue tint</div><div class="swatch__hex">#F8F8FF</div><div class="swatch__role">Surface bleutée</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#EEEEFF;"></div><div class="swatch__meta"><div class="swatch__name">Blue 30</div><div class="swatch__hex">#EEEEFF</div><div class="swatch__role">Hover sur blanc</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#E4E4FF;"></div><div class="swatch__meta"><div class="swatch__name">Blue 40</div><div class="swatch__hex">#E4E4FF</div><div class="swatch__role">Décoratif clair</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#5959B6;"></div><div class="swatch__meta"><div class="swatch__name">Blue 650</div><div class="swatch__hex">#5959B6</div><div class="swatch__role">Décoratif</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#3333A5;"></div><div class="swatch__meta"><div class="swatch__name">Blue 800</div><div class="swatch__hex">#3333A5</div><div class="swatch__role">Décoratif</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#00008F;"></div><div class="swatch__meta"><div class="swatch__name">AXA Blue ★</div><div class="swatch__hex">#00008F</div><div class="swatch__role">Marque · primaire</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#000072;"></div><div class="swatch__meta"><div class="swatch__name">Blue dark</div><div class="swatch__hex">#000072</div><div class="swatch__role">Hover</div></div></div>
+      </div>
+
+      <h3 class="section__sub--mute">Slash B2B accent</h3>
+      <div class="grid grid--4">
+        <div class="swatch"><div class="swatch__chip" style="background:#3032C1;"></div><div class="swatch__meta"><div class="swatch__name">Azur</div><div class="swatch__hex">#3032C1</div><div class="swatch__role">En-tête de tableau Slash</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#00005B;"></div><div class="swatch__meta"><div class="swatch__name">Blue deeper</div><div class="swatch__hex">#00005B</div><div class="swatch__role">Étagère bouton · active</div></div></div>
+      </div>
+    </section>
+
+    <!-- ───── COLOR · NEUTRALS ───── -->
+    <section class="section" id="color-neutrals">
+      <div class="section__num">04.3 — Couleurs · neutres</div>
+      <h2 class="section__title">Grisaille pure. Pas de teinte.</h2>
+      <p class="section__lede">
+        Les neutres sont strictement gris — aucune dérive bleue ou chaude. Texte
+        primaire&nbsp;: <code>#333</code>. Bordures&nbsp;: <code>#E3E3E3</code>.
+        Surfaces calmes&nbsp;: <code>#F6F6F6</code>.
+      </p>
+      <div class="grid grid--7">
+        <div class="swatch"><div class="swatch__chip" style="background:#FFFFFF; outline:1px solid var(--gray-140);"></div><div class="swatch__meta"><div class="swatch__name">White</div><div class="swatch__hex">#FFFFFF</div><div class="swatch__role">Surface carte</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#F6F6F6;"></div><div class="swatch__meta"><div class="swatch__name">Gray 50</div><div class="swatch__hex">#F6F6F6</div><div class="swatch__role">Surface page · zebra</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#E3E3E3;"></div><div class="swatch__meta"><div class="swatch__name">Gray 140</div><div class="swatch__hex">#E3E3E3</div><div class="swatch__role">Bordure défaut</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#CCCCCC;"></div><div class="swatch__meta"><div class="swatch__name">Gray 250</div><div class="swatch__hex">#CCCCCC</div><div class="swatch__role">Bordure forte</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#999999;"></div><div class="swatch__meta"><div class="swatch__name">Gray 500</div><div class="swatch__hex">#999999</div><div class="swatch__role">Texte muet</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#5C5C5C;"></div><div class="swatch__meta"><div class="swatch__name">Gray 800</div><div class="swatch__hex">#5C5C5C</div><div class="swatch__role">Texte secondaire</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#333333;"></div><div class="swatch__meta"><div class="swatch__name">Gray 1000</div><div class="swatch__hex">#333333</div><div class="swatch__role">Texte primaire</div></div></div>
+      </div>
+    </section>
+
+    <!-- ───── COLOR · SEMANTIC ───── -->
+    <section class="section" id="color-semantic">
+      <div class="section__num">04.4 — Couleurs · sémantique</div>
+      <h2 class="section__title">Vert validation, rouge erreur, orange Pro &amp; warning, cyan info.</h2>
+      <p class="section__lede">
+        Quatre couleurs sémantiques canoniques. L'orange <code>#BC4C2D</code> joue
+        deux rôles&nbsp;: warning <em>et</em> CTA business (offres Pro). C'est volontaire
+        — la même couleur signifie «&nbsp;attention, ce n'est pas le parcours
+        standard&nbsp;».
+      </p>
+      <div class="grid grid--4">
+        <div class="swatch"><div class="swatch__chip" style="background:#0C7D3B;"></div><div class="swatch__meta"><div class="swatch__name">Success</div><div class="swatch__hex">#0C7D3B</div><div class="swatch__role">Validation, confirmations</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#C7102E;"></div><div class="swatch__meta"><div class="swatch__name">Error</div><div class="swatch__hex">#C7102E</div><div class="swatch__role">Erreur de formulaire, CTA destructeur</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#BC4C2D;"></div><div class="swatch__meta"><div class="swatch__name">Warning / Business</div><div class="swatch__hex">#BC4C2D</div><div class="swatch__role">Avertissement, CTA Pro</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#3871B5;"></div><div class="swatch__meta"><div class="swatch__name">Info</div><div class="swatch__hex">#3871B5</div><div class="swatch__role">Bandeau info, conseil</div></div></div>
+      </div>
+
+      <h3 class="section__sub--mute">Surfaces sémantiques (fonds clairs)</h3>
+      <div class="grid grid--4">
+        <div class="swatch"><div class="swatch__chip" style="background:#FAFFFB; outline:1px solid var(--gray-140);"></div><div class="swatch__meta"><div class="swatch__name">Success bg</div><div class="swatch__hex">#FAFFFB</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#FFFAFB; outline:1px solid var(--gray-140);"></div><div class="swatch__meta"><div class="swatch__name">Error bg</div><div class="swatch__hex">#FFFAFB</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#FFF1EF; outline:1px solid var(--gray-140);"></div><div class="swatch__meta"><div class="swatch__name">Warning bg</div><div class="swatch__hex">#FFF1EF</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#F5FBFD; outline:1px solid var(--gray-140);"></div><div class="swatch__meta"><div class="swatch__name">Info bg</div><div class="swatch__hex">#F5FBFD</div></div></div>
+      </div>
+    </section>
+
+    <!-- ───── COLOR · TARIF + DECO ───── -->
+    <section class="section" id="color-tarif">
+      <div class="section__num">04.5 — Tarif &amp; décoratives</div>
+      <h2 class="section__title">Bleu → violet → vert pour les comparaisons d'offre.</h2>
+      <p class="section__lede">
+        Réservées à Apollo, ces palettes différencient les niveaux d'une formule
+        (Tarif) ou colorent illustrations et héros (Décoratives B2C). Jamais en
+        surface UI primaire.
+      </p>
+
+      <h3 class="section__sub--mute">Apollo Tarif — échelle de gamme</h3>
+      <div class="grid grid--5">
+        <div class="swatch"><div class="swatch__chip" style="background:#5F61AD;"></div><div class="swatch__meta"><div class="swatch__name">Blue Tarif</div><div class="swatch__hex">#5F61AD</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#633A96;"></div><div class="swatch__meta"><div class="swatch__name">Purple Light</div><div class="swatch__hex">#633A96</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#5A3976;"></div><div class="swatch__meta"><div class="swatch__name">Purple</div><div class="swatch__hex">#5A3976</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#41314D;"></div><div class="swatch__meta"><div class="swatch__name">Purple Dark</div><div class="swatch__hex">#41314D</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#155D70;"></div><div class="swatch__meta"><div class="swatch__name">Green Tarif</div><div class="swatch__hex">#155D70</div></div></div>
+      </div>
+
+      <h3 class="section__sub--mute">Décoratives B2C — illustrations &amp; héros</h3>
+      <div class="grid grid--5">
+        <div class="swatch"><div class="swatch__chip" style="background:#6657F0;"></div><div class="swatch__meta"><div class="swatch__name">Grape</div><div class="swatch__hex">#6657F0</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#88C4E5;"></div><div class="swatch__meta"><div class="swatch__name">Sky</div><div class="swatch__hex">#88C4E5</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#FFBCD2;"></div><div class="swatch__meta"><div class="swatch__name">Cotton candy</div><div class="swatch__hex">#FFBCD2</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#FFFCB8;"></div><div class="swatch__meta"><div class="swatch__name">Sunshine</div><div class="swatch__hex">#FFFCB8</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:#6FB5D2;"></div><div class="swatch__meta"><div class="swatch__name">Teal</div><div class="swatch__hex">#6FB5D2</div></div></div>
+      </div>
+    </section>
+
+    <!-- ───── TYPOGRAPHY ───── -->
+    <section class="section" id="typography">
+      <div class="section__num">04.6 — Typographie · familles</div>
+      <h2 class="section__title">Publico Headline + Source Sans 3.</h2>
+      <p class="section__lede">
+        Publico apporte la signature éditoriale (titres, moments serif). Source Sans
+        prend la relève partout où l'efficacité prime — corps, formulaires, boutons,
+        tableaux. Source Sans 3 (Google Fonts) sert de substitut libre à Source Sans
+        Pro.
+      </p>
+
+      <div class="grid grid--2" style="gap:24px;">
+        <div class="specimen">
+          <p class="specimen__sample" style="font-family:var(--font-display); font-weight:700; font-size:48px; line-height:1.05;">Aa Bb Cc 123</p>
+          <p class="specimen__sample" style="font-family:var(--font-display); font-weight:300; font-size:24px; color:var(--gray-800);">Light · Medium · Bold · Black</p>
+          <div class="specimen__meta">
+            <span>Publico Headline</span>
+            <span>300 / 500 / 700 / 800 / 900</span>
+            <span>Display · serif</span>
+          </div>
+        </div>
+        <div class="specimen">
+          <p class="specimen__sample" style="font-family:var(--font-sans); font-weight:600; font-size:32px; color:var(--gray-1000);">Aa Bb Cc 123</p>
+          <p class="specimen__sample" style="font-family:var(--font-sans); font-weight:400; font-size:18px; color:var(--gray-800);">Regular · Semibold · Bold</p>
+          <div class="specimen__meta">
+            <span>Source Sans 3</span>
+            <span>300 / 400 / 600 / 700</span>
+            <span>UI · body · sans</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── HIERARCHY ───── -->
+    <section class="section" id="hierarchy">
+      <div class="section__num">04.7 — Hiérarchie de texte</div>
+      <h2 class="section__title">Du H1 Publico bold à l'eyebrow uppercase 12.</h2>
+      <p class="section__lede">
+        Toutes les valeurs sont en pixels desktop. Sur mobile, H1 descend à 32/40,
+        H2 à 28/36. Toutes les hauteurs de ligne sont multiples de 4&nbsp;px.
+      </p>
+
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-family:var(--font-display); font-weight:700; font-size:48px; line-height:60px; color:var(--axa-blue); margin:0;">Votre vie, sereinement</p>
+        <div class="specimen__meta"><span>H1</span><span>Publico Headline Bold</span><span>48 / 60</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-family:var(--font-serif); font-weight:300; font-size:40px; line-height:50px; color:var(--axa-blue); margin:0;">Assurance, épargne, santé.</p>
+        <div class="specimen__meta"><span>H2</span><span>Publico Light</span><span>40 / 50</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-family:var(--font-sans); font-weight:600; font-size:32px; line-height:40px; color:var(--axa-blue); margin:0;">Demander un devis</p>
+        <div class="specimen__meta"><span>H3</span><span>Source Sans Semibold</span><span>32 / 40</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-family:var(--font-sans); font-weight:600; font-size:24px; line-height:30px; color:var(--gray-1000); margin:0;">Vos contrats</p>
+        <div class="specimen__meta"><span>H4</span><span>Source Sans Semibold</span><span>24 / 30</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-size:18px; line-height:27px; color:var(--gray-800); margin:0;">Retrouvez tous vos contrats en un coup d'œil et déclarez un sinistre en quelques clics.</p>
+        <div class="specimen__meta"><span>Lead</span><span>Source Sans Regular</span><span>18 / 27</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-size:16px; line-height:24px; color:var(--gray-1000); margin:0;">Source Sans Pro est utilisée pour le corps de texte sur l'ensemble des univers AXA France.</p>
+        <div class="specimen__meta"><span>Body</span><span>Source Sans Regular</span><span>16 / 24</span></div>
+      </div>
+      <div class="specimen" style="margin-bottom:16px;">
+        <p style="font-size:14px; line-height:21px; color:var(--gray-800); margin:0;">Mentions légales · Données personnelles · Cookies</p>
+        <div class="specimen__meta"><span>Small</span><span>Source Sans Regular</span><span>14 / 21</span></div>
+      </div>
+      <div class="specimen">
+        <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--axa-blue); margin:0;">Espace client</p>
+        <div class="specimen__meta"><span>Eyebrow</span><span>Source Sans Bold · UPPER</span><span>12 / 16 · tracking 0.06em</span></div>
+      </div>
+    </section>
+
+    <!-- ───── SPACING ───── -->
+    <section class="section" id="spacing">
+      <div class="section__num">04.8 — Échelle d'espacement</div>
+      <h2 class="section__title">Base 4&nbsp;px. Multiples uniquement.</h2>
+      <p class="section__lede">
+        Tous les espacements (margin, padding, gap) sont des multiples de 4&nbsp;px.
+        Token canonique <code>--sp-N</code>. Pas d'espacement libre&nbsp;: si la valeur
+        n'est pas dans l'échelle, on en discute avant de l'ajouter.
+      </p>
+
+      <div class="scale-row"><span class="name">--sp-1</span><span class="px">4&nbsp;px</span><div class="bar" style="width:4px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-2</span><span class="px">8&nbsp;px</span><div class="bar" style="width:8px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-3</span><span class="px">12&nbsp;px</span><div class="bar" style="width:12px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-4</span><span class="px">16&nbsp;px</span><div class="bar" style="width:16px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-5</span><span class="px">24&nbsp;px</span><div class="bar" style="width:24px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-6</span><span class="px">32&nbsp;px</span><div class="bar" style="width:32px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-7</span><span class="px">40&nbsp;px</span><div class="bar" style="width:40px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-8</span><span class="px">48&nbsp;px</span><div class="bar" style="width:48px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-9</span><span class="px">64&nbsp;px</span><div class="bar" style="width:64px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-10</span><span class="px">80&nbsp;px</span><div class="bar" style="width:80px;"></div></div>
+      <div class="scale-row"><span class="name">--sp-11</span><span class="px">120&nbsp;px</span><div class="bar" style="width:120px;"></div></div>
+    </section>
+
+    <!-- ───── RADII ───── -->
+    <section class="section" id="radii">
+      <div class="section__num">04.9 — Rayons d'arrondi</div>
+      <h2 class="section__title">0 (Slash) · 4 (carte Slash) · 8 (LF bouton) · 12 (carte) · 16 (modale) · ∞ (CTA Apollo).</h2>
+      <p class="section__lede">
+        Les rayons sont l'un des marqueurs les plus visibles entre univers — pilule
+        Apollo, rectangulaire LF, anguleux Slash. Ne pas mélanger dans un même écran.
+      </p>
+
+      <div class="radii-row">
+        <div class="item"><div class="sw" style="border-radius:0">0</div><span class="lab">--radius-0</span><span class="desc">Boutons Slash</span></div>
+        <div class="item"><div class="sw" style="border-radius:4px">4</div><span class="lab">--radius-sm</span><span class="desc">Carte Slash</span></div>
+        <div class="item"><div class="sw" style="border-radius:8px">8</div><span class="lab">--radius-md</span><span class="desc">Bouton LF · input</span></div>
+        <div class="item"><div class="sw" style="border-radius:12px">12</div><span class="lab">--radius-lg</span><span class="desc">Carte Apollo / LF</span></div>
+        <div class="item"><div class="sw" style="border-radius:16px">16</div><span class="lab">--radius-xl</span><span class="desc">Modale</span></div>
+        <div class="item"><div class="sw" style="border-radius:32px">32</div><span class="lab">--radius-3xl</span><span class="desc">Carte XL héro</span></div>
+        <div class="item"><div class="sw" style="border-radius:100vmax">∞</div><span class="lab">--radius-pill</span><span class="desc">CTA Apollo</span></div>
+      </div>
+    </section>
+
+    <!-- ───── ELEVATION ───── -->
+    <section class="section" id="elevation">
+      <div class="section__num">04.10 — Élévation</div>
+      <h2 class="section__title">Trois ombres canoniques. Pas plus.</h2>
+      <p class="section__lede">
+        Slash utilise une ombre <em>halo</em> sans offset (carte). Apollo / LF préfèrent
+        une ombre teintée bleu pour la levée. Aucune ombre intérieure sur les inputs.
+      </p>
+
+      <div class="grid grid--3">
+        <div class="elev-card" style="box-shadow: 0 0 9px 0 rgba(0,0,0,.18);">
+          <span class="lab">--shadow-card</span>
+          <span class="desc">0 0 9px rgba(0,0,0,.18) — halo Slash carte</span>
+        </div>
+        <div class="elev-card" style="box-shadow: 0 2px 8px 0 rgba(0,0,128,.15);">
+          <span class="lab">--shadow-soft</span>
+          <span class="desc">0 2px 8px rgba(0,0,128,.15) — Apollo lift</span>
+        </div>
+        <div class="elev-card" style="box-shadow: 0 8px 24px -4px rgba(0,0,128,.20);">
+          <span class="lab">--shadow-pop</span>
+          <span class="desc">0 8px 24px -4px rgba(0,0,128,.20) — Modale / Popover</span>
+        </div>
+      </div>
+
+      <p style="margin-top:24px;">
+        Slash ajoute aussi une ombre <em>intérieure</em> (<code>inset 0 -2px var(--axa-blue-deeper)</code>) sur
+        les boutons primaires — l'étagère qui «&nbsp;disparaît&nbsp;» au press, simulant
+        un enfoncement physique.
+      </p>
+    </section>
+
+    <!-- ───── MOTION ───── -->
+    <section class="section" id="motion">
+      <div class="section__num">04.11 — Mouvement</div>
+      <h2 class="section__title">Linéaire, sobre, accessible.</h2>
+      <p class="section__lede">
+        Le défaut Canopée est <code>transition: all 0.2s linear</code>. Pas de spring,
+        pas de bounce, pas de parallaxe. Au survol&nbsp;: bascule de couleur ou
+        d'ombre, point.
+      </p>
+      <ul style="line-height:1.7;">
+        <li><code>--t-fast</code> · 0.15s linear — micro-feedback (chevrons, toggles)</li>
+        <li><code>--t-base</code> · 0.20s linear — défaut hover, focus, color-swap</li>
+        <li><code>--t-slow</code> · 0.30s linear — modal, drawer, tab content</li>
+        <li><code>prefers-reduced-motion</code> est obligatoire&nbsp;: les transitions
+          tombent à <code>0.01ms</code>.</li>
+      </ul>
+    </section>
+
+    <!-- ───── ICONOGRAPHY ───── -->
+    <section class="section" id="iconography">
+      <div class="section__num">04.12 — Iconographie</div>
+      <h2 class="section__title">Material Symbols Outlined · weight 400.</h2>
+      <p class="section__lede">
+        Le seul jeu d'icônes sanctionné. Toujours en <code>currentColor</code> — la
+        teinte est portée par le composant parent. Pas d'emoji, pas de glyph Unicode
+        détourné. Le repo officiel passe par <code>@material-symbols/svg-400</code>
+        et un composant <code>&lt;Svg&gt;</code> qui gère taille et couleur.
+      </p>
+
+      <div class="icon-grid">
+        <div class="ic"><span class="material-symbols-outlined">home</span><small>home</small></div>
+        <div class="ic"><span class="material-symbols-outlined">directions_car</span><small>auto</small></div>
+        <div class="ic"><span class="material-symbols-outlined">favorite</span><small>santé</small></div>
+        <div class="ic"><span class="material-symbols-outlined">shield</span><small>protection</small></div>
+        <div class="ic"><span class="material-symbols-outlined">savings</span><small>épargne</small></div>
+        <div class="ic"><span class="material-symbols-outlined">description</span><small>contrat</small></div>
+        <div class="ic"><span class="material-symbols-outlined">support_agent</span><small>conseiller</small></div>
+        <div class="ic"><span class="material-symbols-outlined">chevron_right</span><small>chevron</small></div>
+        <div class="ic"><span class="material-symbols-outlined">search</span><small>search</small></div>
+        <div class="ic"><span class="material-symbols-outlined">person</span><small>person</small></div>
+        <div class="ic"><span class="material-symbols-outlined">mail</span><small>mail</small></div>
+        <div class="ic"><span class="material-symbols-outlined">phone</span><small>phone</small></div>
+        <div class="ic"><span class="material-symbols-outlined">lock</span><small>lock</small></div>
+        <div class="ic"><span class="material-symbols-outlined">check_circle</span><small>success</small></div>
+        <div class="ic"><span class="material-symbols-outlined">error</span><small>error</small></div>
+        <div class="ic"><span class="material-symbols-outlined">info</span><small>info</small></div>
+      </div>
+
+      <p style="margin-top:18px; color:var(--gray-500); font-size:.875rem;">
+        Tailles canoniques&nbsp;: 18&nbsp;px (inline texte), 20&nbsp;px (bouton),
+        24&nbsp;px (UI général), 32&nbsp;px (carte hero), 48&nbsp;px (illustration).
+      </p>
+    </section>
+
+    <!-- ───── IMAGERY ───── -->
+    <section class="section" id="imagery">
+      <div class="section__num">04.13 — Imagerie</div>
+      <h2 class="section__title">Chaude, naturelle, candide.</h2>
+      <p class="section__lede">
+        Vraies vies, vrais foyers. Lumière du jour, balance neutre. Pas de noir &amp;
+        blanc, pas de grain, pas de gloss mode. Toujours surimprimée d'un voile bleu
+        AXA quand un titre vient se poser dessus.
+      </p>
+
+      <div class="hero-strip">
+        <div class="hero-strip__pic" style="background-image:url(assets/hero-prospect.jpg);"><span>Prospect · Apollo</span></div>
+        <div class="hero-strip__pic" style="background-image:url(assets/hero-client.jpg);"><span>Client · LF</span></div>
+        <div class="hero-strip__pic" style="background-image:url(assets/hero-distributeur.jpg);"><span>Distributeur · Slash</span></div>
+      </div>
+
+      <div class="rules" style="margin-top:24px;">
+        <div class="rules__item rules__item--do">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-success);">check_circle</span>À faire</h5>
+          <p>Photographie originale ou banque sélective. Cadrage humain.
+            Profondeur de champ douce. Surimpression bleu AXA pour les héros.</p>
+        </div>
+        <div class="rules__item rules__item--dont">
+          <h5><span class="material-symbols-outlined" style="color:var(--color-error);">block</span>À ne pas faire</h5>
+          <p>Stock photo cliché, mannequins, dégradés saturés, filtres
+            Instagram, motifs répétitifs, grain, dégradé sur surface UI.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ COMPONENTS ═════════ -->
+    <section class="section" id="components">
+      <div class="section__num">05 — Composants</div>
+      <h2 class="section__title">Le vocabulaire partagé, par univers.</h2>
+      <p class="section__lede">
+        Chaque composant est rendu dans les trois variantes là où elles divergent
+        (boutons, cartes), et en variante unique sinon (étiquettes, alertes,
+        formulaires).
+      </p>
+    </section>
+
+    <!-- ───── BUTTONS ───── -->
+    <section class="section" id="buttons">
+      <div class="section__num">05.1 — Boutons</div>
+      <h2 class="section__title">Pilule, rectangle, anguleux.</h2>
+      <p class="section__lede">
+        Mêmes intentions (primary, secondary, business, ghost, disabled) dans les
+        trois univers. Le radius et la chrome au survol diffèrent. Les CTA Pro/business
+        utilisent l'orange <code>#BC4C2D</code>.
+      </p>
+
+      <h3 class="section__sub--mute">Apollo · pilule (B2C prospect)</h3>
+      <div class="grid grid--3">
+        <div class="demo">
+          <div class="demo__title">Primary</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--primary">Demander un devis</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Secondary · Tertiary</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--secondary">En savoir plus</button><button class="ds-btn ds-btn--apollo ds-btn--tertiary">Découvrir</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Business · Ghost</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--business">Espace Pro</button><button class="ds-btn ds-btn--ghost">Voir nos contrats</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Avec icône</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--primary"><span class="material-symbols-outlined">arrow_forward</span>Souscrire</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Disabled</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--primary" disabled>Indisponible</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Tailles</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--apollo ds-btn--primary ds-btn--sm">Petit</button><button class="ds-btn ds-btn--apollo ds-btn--primary ds-btn--lg">Grand</button></div>
+        </div>
+      </div>
+
+      <h3 class="section__sub--mute">LF · rectangulaire 8&nbsp;px (B2C client)</h3>
+      <div class="grid grid--3">
+        <div class="demo">
+          <div class="demo__title">Primary</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--lf ds-btn--primary">Accéder à mon espace</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Secondary · Tertiary</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--lf ds-btn--secondary">Modifier</button><button class="ds-btn ds-btn--lf ds-btn--tertiary">Détails</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Business · Ghost</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--lf ds-btn--business">Devenir Pro</button><button class="ds-btn ds-btn--ghost">Annuler</button></div>
+        </div>
+      </div>
+
+      <h3 class="section__sub--mute">Slash · anguleux + étagère (B2B)</h3>
+      <div class="grid grid--3">
+        <div class="demo">
+          <div class="demo__title">Primary · Secondary</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--slash ds-btn--primary">Valider</button><button class="ds-btn ds-btn--slash ds-btn--secondary">Annuler</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Validation · Destructive</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--slash ds-btn--success">Confirmer</button><button class="ds-btn ds-btn--slash ds-btn--danger">Supprimer</button></div>
+        </div>
+        <div class="demo">
+          <div class="demo__title">Avec icône · Ghost</div>
+          <div class="demo__row"><button class="ds-btn ds-btn--slash ds-btn--primary"><span class="material-symbols-outlined">save</span>Enregistrer</button><button class="ds-btn ds-btn--ghost">Voir le détail</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── CARDS ───── -->
+    <section class="section" id="cards">
+      <div class="section__num">05.2 — Cartes</div>
+      <h2 class="section__title">12&nbsp;px outline (Apollo / LF) · 4&nbsp;px halo (Slash).</h2>
+      <p class="section__lede">
+        Apollo et LF s'appuient sur un outline de 1&nbsp;px qui s'épaissit à 2&nbsp;px
+        AXA blue au survol. Slash repose sur une ombre halo sans offset, sans bordure,
+        avec un radius minimal de 4&nbsp;px.
+      </p>
+
+      <div class="grid grid--3">
+        <div class="ds-card ds-card--apollo">
+          <p class="ds-card__eyebrow">Apollo · 12&nbsp;px outline</p>
+          <h4 class="ds-card__title">Auto Confort</h4>
+          <p class="ds-card__body">Une formule complète pour rouler l'esprit
+            tranquille. Assistance 24/7 incluse.</p>
+        </div>
+        <div class="ds-card ds-card--lf">
+          <p class="ds-card__eyebrow">LF · 12&nbsp;px outline</p>
+          <h4 class="ds-card__title">Habitation</h4>
+          <p class="ds-card__body">Protégez votre logement et vos biens contre les
+            sinistres du quotidien.</p>
+        </div>
+        <div class="ds-card ds-card--slash">
+          <p class="ds-card__eyebrow">Slash · 4&nbsp;px halo</p>
+          <h4 class="ds-card__title">Garanties</h4>
+          <p class="ds-card__body">Récapitulatif des garanties souscrites, plafonds
+            et franchises associés.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── TAGS ───── -->
+    <section class="section" id="tags">
+      <div class="section__num">05.3 — Étiquettes &amp; badges</div>
+      <h2 class="section__title">Pilule pleine, blanc sur couleur.</h2>
+      <p class="section__lede">
+        <code>border-radius: 16px</code>, fond plein, texte blanc.
+        Variantes&nbsp;: <code>--info</code>, <code>--success</code>,
+        <code>--warning</code>, <code>--error</code>, <code>--dark</code>,
+        <code>--gray</code>, <code>--purple</code>, <code>--outline</code>
+        (rare, pour les états «&nbsp;nouveau&nbsp;»).
+      </p>
+      <div class="demo" style="background:var(--gray-50);">
+        <div class="demo__row">
+          <span class="ds-tag">Par défaut</span>
+          <span class="ds-tag ds-tag--info">Information</span>
+          <span class="ds-tag ds-tag--success">Succès</span>
+          <span class="ds-tag ds-tag--warning">Avertissement</span>
+          <span class="ds-tag ds-tag--error">Erreur</span>
+          <span class="ds-tag ds-tag--dark">Sombre</span>
+          <span class="ds-tag ds-tag--gray">Neutre</span>
+          <span class="ds-tag ds-tag--purple">Tarif</span>
+          <span class="ds-tag ds-tag--outline">Nouveau</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── ALERTS ───── -->
+    <section class="section" id="alerts">
+      <div class="section__num">05.4 — Alertes &amp; messages</div>
+      <h2 class="section__title">Quatre niveaux. Toujours un titre, toujours un corps.</h2>
+      <p class="section__lede">
+        Icône à gauche, titre en gras, corps explicatif. Les alertes sont
+        bordées par une ombre intérieure 1&nbsp;px de la teinte sémantique pour rester
+        lisibles sur fond clair.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="ds-alert ds-alert--info">
+          <span class="ds-alert__icon">i</span>
+          <div><b>Information</b>Votre prochaine échéance est prévue le 15 mars 2026.</div>
+        </div>
+        <div class="ds-alert ds-alert--success">
+          <span class="ds-alert__icon">✓</span>
+          <div><b>Confirmation</b>Votre demande a bien été enregistrée.</div>
+        </div>
+        <div class="ds-alert ds-alert--warning">
+          <span class="ds-alert__icon">!</span>
+          <div><b>Attention</b>Documents manquants pour finaliser votre dossier.</div>
+        </div>
+        <div class="ds-alert ds-alert--error">
+          <span class="ds-alert__icon">✕</span>
+          <div><b>Erreur</b>Impossible d'enregistrer la modification. Réessayez.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── FORMS ───── -->
+    <section class="section" id="forms">
+      <div class="section__num">05.5 — Formulaires</div>
+      <h2 class="section__title">Label en haut, hint discret, erreur en rouge canonique.</h2>
+      <p class="section__lede">
+        Inputs bordurés par <code>--gray-500</code>, focus en outline 2&nbsp;px AXA blue,
+        erreurs via <code>aria-invalid="true"</code>. Variante Slash&nbsp;:
+        <code>border-radius: 0</code>. Pas d'ombre intérieure.
+      </p>
+
+      <div class="grid grid--3">
+        <div class="ds-field">
+          <label class="ds-field__label" for="form-nom">Nom</label>
+          <input class="ds-input" id="form-nom" type="text" value="Dupont" />
+          <div class="ds-field__hint">Tel qu'inscrit sur votre carte d'identité.</div>
+        </div>
+        <div class="ds-field">
+          <label class="ds-field__label" for="form-cp">Code postal</label>
+          <input class="ds-input" id="form-cp" type="text" value="75008" />
+          <div class="ds-field__success">Adresse vérifiée.</div>
+        </div>
+        <div class="ds-field">
+          <label class="ds-field__label" for="form-mail">Adresse e-mail</label>
+          <input class="ds-input" id="form-mail" type="text" value="dupont@" aria-invalid="true" />
+          <div class="ds-field__error">Adresse e-mail invalide.</div>
+        </div>
+      </div>
+
+      <div class="grid grid--2" style="margin-top:24px;">
+        <div class="ds-field">
+          <label class="ds-field__label" for="form-msg">Message</label>
+          <textarea class="ds-textarea" id="form-msg" rows="4" placeholder="Décrivez votre demande en quelques lignes."></textarea>
+          <div class="ds-field__hint">Minimum 10 caractères.</div>
+        </div>
+        <div class="ds-field">
+          <label class="ds-field__label" for="form-prod">Produit</label>
+          <select class="ds-select" id="form-prod">
+            <option>Auto Confort</option>
+            <option>Habitation Sérénité</option>
+            <option>Santé Premium</option>
+            <option>Épargne Évolution</option>
+          </select>
+          <div class="ds-field__hint">Choisissez le contrat concerné.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <label class="ds-checkbox"><input type="checkbox" checked /> J'accepte les <a href="#" style="color:var(--axa-blue);">mentions légales</a> et l'usage de mes données personnelles.</label>
+      </div>
+    </section>
+
+    <!-- ───── CHROME ───── -->
+    <section class="section" id="chrome">
+      <div class="section__num">05.6 — En-tête &amp; pied</div>
+      <h2 class="section__title">En-tête blanc 1140&nbsp;px, pied bleu AXA.</h2>
+      <p class="section__lede">
+        Slash et LF utilisent un en-tête blanc avec wrapper centré 1140&nbsp;px et un
+        pied de page sur fond <code>--axa-blue</code>. Apollo place l'en-tête
+        au-dessus d'une bande de photographie pleine largeur — la struct reste la
+        même.
+      </p>
+
+      <div class="ds-header">
+        <div class="ds-header__inner">
+          <img class="ds-header__logo" src="assets/axa_logo.svg" alt="AXA" />
+          <strong style="color:var(--axa-blue); font-size:1rem;">Espace client</strong>
+          <div style="flex:1;"></div>
+          <a href="#" style="color:var(--axa-blue); font-weight:600; font-size:0.875rem;">Mes contrats</a>
+          <a href="#" style="color:var(--axa-blue); font-weight:600; font-size:0.875rem;">Sinistres</a>
+          <button class="ds-btn ds-btn--lf ds-btn--primary ds-btn--sm">Mon compte</button>
+        </div>
+      </div>
+
+      <div class="ds-footer" style="margin-top:24px;">
+        <div class="ds-footer__inner">
+          <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+            <div>
+              <img src="assets/axa_logo.svg" alt="AXA" style="height:32px; filter:brightness(0) invert(1); margin-bottom:12px;" />
+              <p style="margin:0; max-width:32ch;">AXA France · 313, Terrasses de l'Arche · 92727 Nanterre Cedex.</p>
+            </div>
+            <div>
+              <strong style="display:block; margin-bottom:8px;">Légal</strong>
+              <a href="#">Mentions légales</a><br/>
+              <a href="#">Données personnelles</a><br/>
+              <a href="#">Cookies</a>
+            </div>
+            <div>
+              <strong style="display:block; margin-bottom:8px;">Contact</strong>
+              <a href="#">Nous contacter</a><br/>
+              <a href="#">Trouver une agence</a><br/>
+              <a href="#">Recrutement</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ═════════ EDITORIAL PULL-QUOTE ═════════ -->
+<section style="background:var(--axa-blue-tint); border-top:1px solid var(--gray-140); border-bottom:1px solid var(--gray-140);">
+  <div class="pullquote">
+    <span class="pullquote__mark">«</span>
+    <p class="pullquote__text">
+      Trois univers, un seul bleu. Apollo séduit, LF accueille, Slash exécute&nbsp;—
+      même grammaire, trois accents.
+    </p>
+    <p class="pullquote__attr">— Canopée · One Design System · v3</p>
+  </div>
+</section>
+
+<!-- ═════════ RESOURCES ═════════ -->
+<div class="site-shell" style="padding-top:24px;">
+  <aside class="site-toc" aria-hidden="true"></aside>
+  <main>
+
+    <section class="section" id="resources" style="border-top:0;">
+      <div class="section__num">06 — Ressources &amp; sources</div>
+      <h2 class="section__title">Le matériel canonique.</h2>
+      <p class="section__lede">
+        Tous les liens ci-dessous sont la source de vérité. La présente mini-site
+        en est une reconstruction&nbsp;: en cas de divergence, le repo GitHub fait foi.
+      </p>
+
+      <h3 class="section__sub--mute">Code &amp; documentation</h3>
+      <div class="resources">
+        <a href="https://github.com/AxaFrance/design-system" target="_blank" rel="noopener noreferrer">
+          GitHub — AxaFrance/design-system
+          <small>Repo public · packages canopee-css + canopee-react-*</small>
+        </a>
+        <a href="https://www.npmjs.com/package/@axa-fr/canopee-css" target="_blank" rel="noopener noreferrer">
+          npm — @axa-fr/canopee-css
+          <small>CSS tokens et classes utilitaires</small>
+        </a>
+        <a href="https://axafrance.github.io/design-system/prospect/react/latest/" target="_blank" rel="noopener noreferrer">
+          Storybook — Apollo (Prospect)
+          <small>Composants B2C marketing</small>
+        </a>
+        <a href="https://axafrance.github.io/design-system/client/react/latest/" target="_blank" rel="noopener noreferrer">
+          Storybook — LF (Client)
+          <small>Composants B2C espace client</small>
+        </a>
+        <a href="https://axafrance.github.io/design-system/distributeur/react/latest/" target="_blank" rel="noopener noreferrer">
+          Storybook — Slash (Distributeur)
+          <small>Composants B2B agent / courtier</small>
+        </a>
+        <a href="https://designsystem.axa.com/55adce21f/p/13132e-overview" target="_blank" rel="noopener noreferrer">
+          One Design System — Overview
+          <small>ZeroHeight officiel · accès restreint</small>
+        </a>
+        <a href="https://designsystem.axa.com/55adce21f/p/78d49d-foundations" target="_blank" rel="noopener noreferrer">
+          One Design System — Foundations
+          <small>ZeroHeight officiel · accès restreint</small>
+        </a>
+        <a href="https://zeroheight.com/49b6215d6/v/latest/p/923242-design-system-b2c" target="_blank" rel="noopener noreferrer">
+          ZeroHeight — DS B2C
+          <small>Apollo + LF · documentation produit</small>
+        </a>
+        <a href="https://zeroheight.com/4b1e27a45/v/latest/p/36b4a2-slash-design-system-b-to-b" target="_blank" rel="noopener noreferrer">
+          ZeroHeight — Slash B2B
+          <small>Documentation distributeur</small>
+        </a>
+        <a href="https://www.figma.com/design/vwprvN2ELfI50pjU6MK1Ea/Design-System-B2C" target="_blank" rel="noopener noreferrer">
+          Figma — Design System B2C
+          <small>Apollo + LF · librairie composants</small>
+        </a>
+        <a href="https://www.figma.com/design/reZserxMfytQ9M82bt20Bi/DS-Slash-V3" target="_blank" rel="noopener noreferrer">
+          Figma — DS Slash V3
+          <small>Distributeur · librairie composants</small>
+        </a>
+      </div>
+
+      <h3 id="license" class="section__sub--mute">Licences &amp; mises en garde</h3>
+      <div class="rules">
+        <div class="rules__item">
+          <h5>Publico Headline</h5>
+          <p>Police propriétaire (Commercial Type). Les <code>woff2</code> embarqués
+            ici proviennent du dépôt public AxaFrance pour fidélité. Vérifiez que
+            votre licence AXA couvre votre cas avant redistribution.</p>
+        </div>
+        <div class="rules__item">
+          <h5>Source Sans Pro / Source Sans 3</h5>
+          <p>Source Sans 3 (Google Fonts, OFL) sert ici de repli libre à Source
+            Sans Pro. Pixel-perfect avec l'original n'est pas garanti.</p>
+        </div>
+        <div class="rules__item">
+          <h5>Logo &amp; héros JPG</h5>
+          <p>Marque déposée AXA. Reproduction sous réserve d'usage interne ou
+            d'autorisation explicite. Ne pas redistribuer en dehors des projets
+            AXA France.</p>
+        </div>
+        <div class="rules__item">
+          <h5>Cette mini-site</h5>
+          <p>Reconstruction <em>non officielle</em> à partir des sources publiques
+            (<code>github.com/AxaFrance/design-system</code>). Utile comme référence
+            de poche / prototype, à ne pas substituer aux Storybooks et ZeroHeight
+            officiels en production.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═════════ FOOTER ═════════ -->
+<footer class="ds-footer">
+  <div class="ds-footer__inner" style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+    <div>
+      <img src="assets/axa_logo.svg" alt="AXA" style="height:28px; filter:brightness(0) invert(1); margin-bottom:8px;" />
+      <p style="margin:0;">Canopée Design System — référence non officielle.</p>
+      <p style="margin:4px 0 0; opacity:.7;">Reconstruite à partir de
+        <a href="https://github.com/AxaFrance/design-system">github.com/AxaFrance/design-system</a>.
+      </p>
+    </div>
+    <div>
+      <a href="#overview">Vue d'ensemble</a> &middot;
+      <a href="#foundations">Fondations</a> &middot;
+      <a href="#components">Composants</a> &middot;
+      <a href="#resources">Ressources</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky TOC active link highlight
+  (function () {
+    const links = document.querySelectorAll('.site-toc a[href^="#"]');
+    if (!links.length) return;
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('is-active'));
+          const link = map.get(e.target);
+          if (link) link.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -65% 0px' });
+    map.forEach((_, el) => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>
