@@ -1,5 +1,16 @@
 name: Approve Merge Handler
 
+# Handles two trigger comments on QA issues:
+#
+#   /approve-design  (on [DesignQA] issues)
+#     → merges the frontend branch immediately
+#
+#   /approve-merge   (on [QA] issues)
+#     → checks that any linked [DesignQA] issue is already closed
+#     → then merges the backend branch
+#
+# /request-changes / /request-design-changes → post block comment, do not merge.
+
 on:
   issue_comment:
     types: [created]
@@ -10,8 +21,81 @@ permissions:
   pull-requests: write
 
 jobs:
+  # ────────────────────────────────────────────────────────────────
+  # Frontend gate: /approve-design on a [DesignQA] issue
+  # ────────────────────────────────────────────────────────────────
+  approve-design:
+    if: |
+      contains(github.event.comment.body, '/approve-design') &&
+      startsWith(github.event.issue.title, '[DesignQA]') &&
+      github.event.issue.state == 'open'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract PR number from issue title
+        id: parse
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          PR_NUMBER=$(echo "$TITLE" | grep -oP '(?<=PR #)\d+' | head -1)
+          if [[ -z "$PR_NUMBER" ]]; then
+            echo "ERROR: Could not extract PR number from: $TITLE"
+            exit 1
+          fi
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Check PR is open
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_DATA=$(gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }} \
+            --jq '{state, draft, head_ref: .head.ref}')
+          STATE=$(echo "$PR_DATA" | jq -r '.state')
+          HEAD_REF=$(echo "$PR_DATA" | jq -r '.head_ref')
+          if [[ "$STATE" != "open" ]]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body="❌ Cannot merge: PR #${{ steps.parse.outputs.pr_number }} is not open (state: $STATE)."
+            exit 1
+          fi
+          echo "head_ref=$HEAD_REF" >> "$GITHUB_OUTPUT"
+
+      - name: Squash merge frontend PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_TITLE=$(gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }} \
+            --jq '.title')
+          gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }}/merge \
+            --method PUT \
+            --field merge_method=squash \
+            --field commit_title="${PR_TITLE} [DesignQA approved]" \
+            --field commit_message="Closes #${{ github.event.issue.number }}"
+
+      - name: Delete frontend branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          HEAD_REF="${{ steps.check_pr.outputs.head_ref }}"
+          gh api repos/${{ github.repository }}/git/refs/heads/${HEAD_REF} \
+            --method DELETE && echo "Deleted branch: $HEAD_REF" || echo "Branch already deleted"
+
+      - name: Post confirmation and close [DesignQA] issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MERGE_SHA=$(gh api repos/${{ github.repository }}/commits/main --jq '.sha' | cut -c1-7)
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --method POST \
+            --field body="✅ **Design approved.** PR #${{ steps.parse.outputs.pr_number }} squash-merged to main (\`${MERGE_SHA}\`). Frontend branch deleted. The backend wiring PR can now be merged once code QA passes."
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
+            --method PATCH --field state=closed
+
+  # ────────────────────────────────────────────────────────────────
+  # Backend gate: /approve-merge on a [QA] issue
+  # Requires: any linked [DesignQA] issue must already be closed
+  # ────────────────────────────────────────────────────────────────
   approve-merge:
-    # Only run when /approve-merge is commented on a QA issue
     if: |
       contains(github.event.comment.body, '/approve-merge') &&
       startsWith(github.event.issue.title, '[QA]') &&
@@ -22,15 +106,38 @@ jobs:
       - name: Extract PR number from issue title
         id: parse
         run: |
-          # Title format: [QA] AXA-N — Sprint N title: Review PR #N
           TITLE="${{ github.event.issue.title }}"
           PR_NUMBER=$(echo "$TITLE" | grep -oP '(?<=PR #)\d+' | head -1)
           if [[ -z "$PR_NUMBER" ]]; then
-            echo "ERROR: Could not extract PR number from issue title: $TITLE"
+            echo "ERROR: Could not extract PR number from: $TITLE"
             exit 1
           fi
           echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
-          echo "Parsed PR number: $PR_NUMBER"
+
+      - name: Check linked [DesignQA] issue is closed (frontend gate)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Find any open [DesignQA] issue that references the same sprint/PR
+          # Strategy: search for [DesignQA] issues that are still open in this repo
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          
+          # Check if the issue body mentions a DesignQA gate requirement
+          if echo "$ISSUE_BODY" | grep -q "DesignQA"; then
+            # Extract the linked [DesignQA] issue number from the body
+            DESIGNQA_NUM=$(echo "$ISSUE_BODY" | grep -oP '(?<=issue #)\d+' | head -1)
+            if [[ -n "$DESIGNQA_NUM" ]]; then
+              DESIGNQA_STATE=$(gh api repos/${{ github.repository }}/issues/$DESIGNQA_NUM \
+                --jq '.state' 2>/dev/null || echo "unknown")
+              if [[ "$DESIGNQA_STATE" != "closed" ]]; then
+                gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+                  --method POST \
+                  --field body="⛔ **Merge blocked.** DesignQA issue #${DESIGNQA_NUM} is still open (state: \`${DESIGNQA_STATE}\`). The frontend design must be approved first. Reply \`/approve-design\` on the DesignQA issue, then retry \`/approve-merge\` here."
+                exit 1
+              fi
+              echo "✅ DesignQA #${DESIGNQA_NUM} is closed — gate passed"
+            fi
+          fi
 
       - name: Check PR is open and mergeable
         id: check_pr
@@ -38,63 +145,74 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_DATA=$(gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }} \
-            --jq '{state, mergeable, draft, head_ref: .head.ref}')
+            --jq '{state, draft, head_ref: .head.ref}')
           STATE=$(echo "$PR_DATA" | jq -r '.state')
           DRAFT=$(echo "$PR_DATA" | jq -r '.draft')
           HEAD_REF=$(echo "$PR_DATA" | jq -r '.head_ref')
-
           if [[ "$STATE" != "open" ]]; then
-            echo "PR #${{ steps.parse.outputs.pr_number }} is not open (state: $STATE)" >> "$GITHUB_STEP_SUMMARY"
             gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
               --method POST \
               --field body="❌ Cannot merge: PR #${{ steps.parse.outputs.pr_number }} is not open (state: $STATE)."
             exit 1
           fi
-
           if [[ "$DRAFT" == "true" ]]; then
-            echo "PR is still a draft — converting to ready" >> "$GITHUB_STEP_SUMMARY"
             gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }} \
               --method PATCH --field draft=false
           fi
-
           echo "head_ref=$HEAD_REF" >> "$GITHUB_OUTPUT"
 
-      - name: Squash merge PR
+      - name: Squash merge backend PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_TITLE=$(gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }} \
             --jq '.title')
-          ISSUE_LINK="Closes #${{ github.event.issue.number }}"
-
           gh api repos/${{ github.repository }}/pulls/${{ steps.parse.outputs.pr_number }}/merge \
             --method PUT \
             --field merge_method=squash \
             --field commit_title="${PR_TITLE} [QA approved]" \
-            --field commit_message="$ISSUE_LINK"
+            --field commit_message="Closes #${{ github.event.issue.number }}"
 
-          echo "✅ Merged PR #${{ steps.parse.outputs.pr_number }}" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Delete source branch
+      - name: Delete backend branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           HEAD_REF="${{ steps.check_pr.outputs.head_ref }}"
           gh api repos/${{ github.repository }}/git/refs/heads/${HEAD_REF} \
-            --method DELETE && echo "Deleted branch: $HEAD_REF" || echo "Branch already deleted or protected"
+            --method DELETE && echo "Deleted branch: $HEAD_REF" || echo "Branch already deleted"
 
-      - name: Post merge confirmation on QA issue
+      - name: Post confirmation and close [QA] issue
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           MERGE_SHA=$(gh api repos/${{ github.repository }}/commits/main --jq '.sha' | cut -c1-7)
           gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
             --method POST \
-            --field body="✅ **Merged.** PR #${{ steps.parse.outputs.pr_number }} squash-merged to main (commit \`${MERGE_SHA}\`). Branch deleted. Closing this QA issue."
+            --field body="✅ **Merged.** PR #${{ steps.parse.outputs.pr_number }} squash-merged to main (\`${MERGE_SHA}\`). Branch deleted. Sprint delivery complete."
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
+            --method PATCH --field state=closed
 
-      - name: Close QA issue
+  # ────────────────────────────────────────────────────────────────
+  # Request changes (both issue types)
+  # ────────────────────────────────────────────────────────────────
+  request-changes:
+    if: |
+      (contains(github.event.comment.body, '/request-changes') ||
+       contains(github.event.comment.body, '/request-design-changes')) &&
+      (startsWith(github.event.issue.title, '[QA]') ||
+       startsWith(github.event.issue.title, '[DesignQA]')) &&
+      github.event.issue.state == 'open'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post block comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
-            --method PATCH --field state=closed
+          ISSUE_TYPE="QA"
+          if echo "${{ github.event.issue.title }}" | grep -q '\[DesignQA\]'; then
+            ISSUE_TYPE="DesignQA"
+          fi
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --method POST \
+            --field body="🔴 **Changes requested.** This ${ISSUE_TYPE} issue is being kept open. Address the blocking items above and re-request review."

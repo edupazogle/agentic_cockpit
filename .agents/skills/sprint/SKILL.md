@@ -302,21 +302,70 @@ Assign labels based on sprint content:
 
 ### 4.3 Create sprint issues
 
-**Step 1 — Create with content:**
+**If the sprint has both frontend (UI surfaces) AND backend (gateway/DB) deliverables, create TWO sibling issues, not one.**
+
+Signals that a sprint must be split:
+- Sprint doc has sections for both `app/` / `components/` AND `gateway/` / `db/`
+- Scope includes both visual surfaces (dashboard, scenario view, HITL queue) AND API endpoints / migrations
+- The sprint doc's Acceptance Criteria mix visual ACs ("user sees...") with functional ACs ("gateway returns...")
+
+**Two-issue pattern:**
+
+```
+AXA-N   [Frontend] Sprint N — <slug>    labels: Frontend
+  blocks →
+AXA-N+1 [Backend]  Sprint N — <slug>    labels: Backend, API (or Database, etc.)
+```
+
+- Frontend issue is created first and **blocks** the backend issue.
+- The frontend branch (`deliver/frontend/axa-N-slug`) is delivered first, validated by `designqa-reviewer`, merged.
+- Only then does the backend branch (`deliver/backend/axa-N+1-slug`) open for wiring and `qa-reviewer` review.
+- The backend QA issue body includes a gate note referencing the frontend DesignQA issue.
+
+**Frontend issue title prefix:** `[Frontend] Sprint N — <title>`
+**Backend issue title prefix:** `[Backend] Sprint N — <title>`
+**Blocking relationship:** set `blocks: ["AXA-<backend-id>"]` on the frontend issue.
+
+If the sprint is backend-only or frontend-only, create a single issue with the appropriate label (no prefix needed).
+
+**Step 1 — Create frontend issue (if mixed sprint):**
 
 ```json
 {
-  "title": "Sprint N — [Title]",
-  "description": "[Full description including: ## Why This Sprint Exists, ## Scope, ## Implementation Diagram with ```mermaid block, ## Skills & MCP Servers, ## Acceptance Criteria, ## Demo Script, ## Definition of Done]",
+  "title": "[Frontend] Sprint N — [Title]",
+  "description": "[Full sprint doc — Frontend scope only: UI surfaces, design tokens, component files, designqa acceptance criteria]",
   "team": "AXA GDAI",
   "project": "9e704a34-31f3-4011-9b9d-3b4759a8ef75",
   "state": "Todo",
   "priority": 2,
-  "labels": ["Backend", "Feature"]
+  "labels": ["Frontend", "Feature"]
 }
 ```
 
-**Step 2 — Ensure metadata sticks (separate call):**
+**Step 2 — Create backend issue (if mixed sprint):**
+
+```json
+{
+  "title": "[Backend] Sprint N — [Title]",
+  "description": "[Full sprint doc — Backend scope only: gateway, DB, API wiring, functional integration, QA checklist including 'Frontend DesignQA (AXA-N) must be Done before this branch merges']",
+  "team": "AXA GDAI",
+  "project": "9e704a34-31f3-4011-9b9d-3b4759a8ef75",
+  "state": "Todo",
+  "priority": 2,
+  "labels": ["Backend", "API"]
+}
+```
+
+**Step 3 — Link frontend blocks backend:**
+
+```json
+{
+  "id": "AXA-<frontend-id>",
+  "blocks": ["AXA-<backend-id>"]
+}
+```
+
+**Step 4 — Ensure metadata sticks (separate call for each issue):**
 
 ```json
 {
@@ -326,9 +375,9 @@ Assign labels based on sprint content:
 }
 ```
 
-**Step 3 — Verify:**
+**Step 5 — Verify:**
 
-Call `mcp__linear__get_issue` with the issue ID. Confirm the response includes:
+Call `mcp__linear__get_issue` on both issues. Confirm the response includes:
 - `"project": "Agentic Cockpit"` and `"projectId": "9e704a34-..."`
 - `"projectMilestone": {"id": "8a67772f-...", "name": "MVP"}`
 - `"status": "Todo"` and `"statusType": "unstarted"`

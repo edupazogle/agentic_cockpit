@@ -179,11 +179,36 @@ git rev-parse --git-dir 2>/dev/null || git init
 
 ### 4.2 Create delivery branch
 
+**Two-phase delivery (mixed sprint with Frontend + Backend issues):**
+
 ```bash
+# Phase 1 — deliver the frontend issue first
+git checkout -b deliver/frontend/axa-N-slug
+
+# Phase 2 — after frontend DesignQA is approved and merged, deliver backend
+git checkout main && git pull
+git checkout -b deliver/backend/axa-N+1-slug
+```
+
+**Single-issue delivery (frontend-only or backend-only):**
+
+```bash
+# Frontend-only
+git checkout -b deliver/frontend/axa-N-slug
+
+# Backend-only
+git checkout -b deliver/backend/axa-N-slug
+
+# Legacy / undifferentiated (avoid for new sprints)
 git checkout -b deliver/sprint-N-slug
 ```
 
-Branch naming: `deliver/sprint-N-<slug>` where slug is lowercase-hyphenated from the sprint title.
+Branch naming is critical — `auto-qa.yml` reads the prefix to route to the correct QA agent:
+- `deliver/frontend/*` → `designqa-reviewer` (design validation only)
+- `deliver/backend/*`  → `qa-reviewer` (code + functional integration, requires DesignQA closed)
+- No prefix / `deliver/sprint-*` → file-path detection (both agents if mixed files touched)
+
+**Gate for backend branches:** Do NOT open the backend PR until the frontend `[DesignQA]` issue is closed. The `approve-merge.yml` will block the merge if it isn't, but don't waste QA agent cycles on a PR that can't merge yet.
 
 ### 4.3 Update Linear status
 

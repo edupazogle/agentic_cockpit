@@ -1,6 +1,6 @@
 ---
 name: designqa-reviewer
-description: Closed-loop frontend design QA agent. Runs the full designqa pipeline (screenshot → axe a11y → visual diff → viewimage critique → report.md) on a URL or surface slug. Posts verdict as PASS / PASS-WITH-NOTES / FAIL. On PASS triggers figma_export.py and linear_sync.py. Never asks the user to look at the design until the verdict is PASS.
+description: Closed-loop frontend design QA agent. Runs the full designqa pipeline (screenshot → axe a11y → visual diff → viewimage critique → report.md) on a URL or surface slug. Posts verdict as PASS / PASS-WITH-NOTES / FAIL. On PASS triggers figma_export.py and linear_sync.py. Approves with /approve-design which merges the frontend branch. The backend wiring PR cannot merge until this issue is closed.
 tools: ["read", "search", "edit", "run_in_terminal"]
 ---
 
@@ -126,17 +126,17 @@ python3 $SKILL/linear_sync.py \
 ### If FAIL — blocking items
 - [ ] <item with file:line>
 
-_/approve-publish_ — to confirm Figma + Linear sync is satisfactory
-_/request-fixes_ — to return to design skill with the fix list above
+_/approve-design_ — to merge this frontend branch (backend wiring PR is unblocked once this issue closes)
+_/request-design-changes_ — to return to the design skill with the fix list above
 ```
 
 ---
 
-## Trigger: `/approve-publish`
-Post confirmation and close the issue.
+## Trigger: `/approve-design`
+Post confirmation. The `approve-merge.yml` workflow handles the actual merge and branch deletion. The backend wiring PR is unblocked once this issue closes.
 
-## Trigger: `/request-fixes`
-Post the fix list as a Linear comment payload (or Linear comment directly) and close the issue.
+## Trigger: `/request-design-changes`
+Post the fix list with file:line references. Keep the issue open. Do not close it.
 
 ---
 

@@ -1,5 +1,14 @@
 name: Auto-delegate QA to GitHub Copilot
 
+# Routing logic:
+#   Branch deliver/frontend/axa-N-slug → [DesignQA] issue → designqa-reviewer
+#   Branch deliver/backend/axa-N-slug  → [QA] issue → qa-reviewer
+#   Branch deliver/axa-N-slug (legacy) → detect by changed files → both if mixed
+#
+# Merge gate (enforced in approve-merge.yml):
+#   Backend PRs: BOTH [QA] AND [DesignQA] (if linked) must be closed before merge.
+#   Frontend PRs: [DesignQA] must be closed. Merges independently.
+
 on:
   pull_request:
     types: [opened, ready_for_review]
@@ -15,41 +24,154 @@ jobs:
       contents: read
 
     steps:
-      - name: Find linked Linear issue via branch name
-        id: extract
+      - name: Checkout (needed for changed-files detection)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Classify PR type and extract metadata
+        id: classify
         run: |
           BRANCH="${{ github.head_ref }}"
           echo "Branch: $BRANCH"
-          # Branch format: edupazogle/axa-N-slug
-          ISSUE_KEY=$(echo "$BRANCH" | grep -oE 'axa-[0-9]+' | head -1 | tr '[:lower:]' '[:upper:]' | sed 's/AXA-/AXA-/')
+
+          # Extract Linear issue key from branch name
+          ISSUE_KEY=$(echo "$BRANCH" | grep -oiE 'axa-[0-9]+' | head -1 | tr '[:lower:]' '[:upper:]')
           echo "Linear issue key: $ISSUE_KEY"
           echo "issue_key=$ISSUE_KEY" >> "$GITHUB_OUTPUT"
 
-      - name: Create GitHub issue for Copilot QA
-        id: create_issue
+          # Determine type from branch prefix
+          if echo "$BRANCH" | grep -qE '^[^/]*/frontend/|^deliver/frontend/'; then
+            PR_TYPE="frontend"
+          elif echo "$BRANCH" | grep -qE '^[^/]*/backend/|^deliver/backend/'; then
+            PR_TYPE="backend"
+          else
+            # Infer from changed files
+            CHANGED=$(git diff --name-only origin/main...HEAD 2>/dev/null || echo "")
+            HAS_FRONTEND=$(echo "$CHANGED" | grep -cE '^(app/|components/|design-proposal/|public/)' || true)
+            HAS_BACKEND=$(echo "$CHANGED"  | grep -cE '^(gateway/|lib/server/|db/|supabase/)' || true)
+            if [[ "$HAS_FRONTEND" -gt 0 && "$HAS_BACKEND" -eq 0 ]]; then
+              PR_TYPE="frontend"
+            elif [[ "$HAS_BACKEND" -gt 0 && "$HAS_FRONTEND" -eq 0 ]]; then
+              PR_TYPE="backend"
+            else
+              PR_TYPE="mixed"
+            fi
+          fi
+
+          echo "PR type: $PR_TYPE"
+          echo "pr_type=$PR_TYPE" >> "$GITHUB_OUTPUT"
+
+          # Derive linked frontend issue key for backend PRs
+          # Convention: backend issue key is the same sprint, -B suffix sibling
+          # We store it in the QA issue body so approve-merge.yml can find it.
+          LINKED_FRONTEND_KEY=""
+          if [[ "$PR_TYPE" == "backend" ]]; then
+            # Try to find sibling frontend issue from branch or PR title
+            # Branch: deliver/backend/axa-17-scenarios → look for axa-16 (frontend)
+            LINKED_FRONTEND_KEY=$(echo "$BRANCH" | sed 's|/backend/|/frontend/|' | grep -oiE 'axa-[0-9]+' | head -1 | tr '[:lower:]' '[:upper:]' || true)
+          fi
+          echo "linked_frontend_key=$LINKED_FRONTEND_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Create [DesignQA] issue for frontend/mixed PRs
+        id: create_designqa_issue
+        if: steps.classify.outputs.pr_type == 'frontend' || steps.classify.outputs.pr_type == 'mixed'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
           PR_URL="${{ github.event.pull_request.html_url }}"
           BRANCH="${{ github.head_ref }}"
-          ISSUE_KEY="${{ steps.extract.outputs.issue_key }}"
-          TITLE="${{ github.event.pull_request.title }}"
+          ISSUE_KEY="${{ steps.classify.outputs.issue_key }}"
+
+          BODY="## Design QA Review Request (automated)
+
+**Triggered by:** PR #${PR_NUMBER} opened
+**Linear issue:** ${ISSUE_KEY}
+**PR:** ${PR_URL}
+**Branch:** \`${BRANCH}\`
+**Agent profile:** \`.github/agents/designqa-reviewer.agent.md\`
+**URL to review:** (agent: check PR description or sprint doc for the surface URL)
+
+### Pipeline the agent MUST run (in order)
+1. \`shoot.py\` — screenshots at 1440 / 1024 / 375 px
+2. \`axe.py\` — a11y audit (exit 1 = FAIL, stop)
+3. \`diff.py\` — visual regression vs baselines
+4. \`viewimage\` every PNG — mandatory
+5. \`report.py\` — assemble report.md
+6. If FAIL: fix and re-run. Do NOT post verdict until PASS.
+7. On PASS: \`figma_export.py\` → \`linear_sync.py\` → post verdict here.
+
+Reply \`/approve-design\` to approve and merge the frontend branch.
+Reply \`/request-design-changes\` to return to the design skill."
+
+          ISSUE_NUMBER=$(gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "[DesignQA] ${ISSUE_KEY} — Review PR #${PR_NUMBER}" \
+            --body "$BODY" \
+            --json number --jq '.number')
+
+          echo "Created DesignQA issue #$ISSUE_NUMBER"
+          echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Assign Copilot to [DesignQA] issue
+        if: steps.classify.outputs.pr_type == 'frontend' || steps.classify.outputs.pr_type == 'mixed'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="${{ steps.create_designqa_issue.outputs.issue_number }}"
+          gh api "repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/assignees" \
+            --method POST \
+            --field "assignees[]=copilot-swe-agent[bot]" \
+            --raw-field "agent_assignment[target_repo]=${{ github.repository }}" \
+            --raw-field "agent_assignment[base_branch]=main" \
+            --raw-field "agent_assignment[custom_agent]=designqa-reviewer"
+          echo "designqa-reviewer assigned to issue #$ISSUE_NUMBER"
+
+      - name: Create [QA] issue for backend/mixed PRs
+        id: create_qa_issue
+        if: steps.classify.outputs.pr_type == 'backend' || steps.classify.outputs.pr_type == 'mixed'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          BRANCH="${{ github.head_ref }}"
+          ISSUE_KEY="${{ steps.classify.outputs.issue_key }}"
+          LINKED_FRONTEND_KEY="${{ steps.classify.outputs.linked_frontend_key }}"
+          DESIGNQA_ISSUE="${{ steps.create_designqa_issue.outputs.issue_number }}"
+
+          # Gate note: for backend PRs we record the linked frontend DesignQA issue
+          GATE_NOTE=""
+          if [[ -n "$LINKED_FRONTEND_KEY" ]]; then
+            GATE_NOTE="**⚠️ Merge gate:** the frontend DesignQA for ${LINKED_FRONTEND_KEY} must be approved (issue closed) before this backend PR can merge."
+          elif [[ -n "$DESIGNQA_ISSUE" ]]; then
+            GATE_NOTE="**⚠️ Merge gate:** DesignQA issue #${DESIGNQA_ISSUE} must be closed (approved) before this PR can merge."
+          fi
 
           BODY="## QA Review Request (automated)
 
-          **Triggered by:** PR #${PR_NUMBER} opened
-          **Linear issue:** ${ISSUE_KEY}
-          **PR to review:** ${PR_URL}
-          **Branch:** \`${BRANCH}\`
-          **Agent profile:** \`.github/agents/qa-reviewer.agent.md\`
+**Triggered by:** PR #${PR_NUMBER} opened
+**Linear issue:** ${ISSUE_KEY}
+**PR:** ${PR_URL}
+**Branch:** \`${BRANCH}\`
+**Agent profile:** \`.github/agents/qa-reviewer.agent.md\`
+${GATE_NOTE}
 
-          Please:
-          1. Review all changed files in PR #${PR_NUMBER}
-          2. Post a 4-section QA report (SOLID · Security · Code Quality · Removal Candidates) as a comment on this issue AND on the PR
-          3. State your recommendation: 🟢 Ready / 🟡 Caution / 🔴 Blocker
+### Review scope
+This is a **backend / wiring PR**. In addition to code quality, verify:
+- UI surfaces wired to real API calls (no hard-coded mock data remaining)
+- Gateway endpoints match the wire format spec (JSON, ISO-8601 timestamps, UUIDv4 IDs)
+- State machine transitions correct (queued → running → waiting → completed/failed)
+- No direct Supabase or LLM calls from the Next.js tier
 
-          Do NOT write any new code or open any new PRs."
+Please:
+1. Review all changed files in PR #${PR_NUMBER}
+2. Post a 5-section QA report (SOLID · Security · Code Quality · Functional Integration · Removal Candidates)
+3. State recommendation: 🟢 Ready / 🟡 Caution / 🔴 Blocker
+
+Reply \`/approve-merge\` to merge (gate check runs automatically).
+Reply \`/request-changes\` to return to In Progress."
 
           ISSUE_NUMBER=$(gh issue create \
             --repo "${{ github.repository }}" \
@@ -57,28 +179,39 @@ jobs:
             --body "$BODY" \
             --json number --jq '.number')
 
-          echo "Created issue #$ISSUE_NUMBER"
+          echo "Created QA issue #$ISSUE_NUMBER"
           echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
-      - name: Assign Copilot to the QA issue
+      - name: Assign Copilot to [QA] issue
+        if: steps.classify.outputs.pr_type == 'backend' || steps.classify.outputs.pr_type == 'mixed'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ISSUE_NUMBER="${{ steps.create_issue.outputs.issue_number }}"
+          ISSUE_NUMBER="${{ steps.create_qa_issue.outputs.issue_number }}"
           gh api "repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/assignees" \
             --method POST \
             --field "assignees[]=copilot-swe-agent[bot]" \
             --raw-field "agent_assignment[target_repo]=${{ github.repository }}" \
             --raw-field "agent_assignment[base_branch]=main" \
             --raw-field "agent_assignment[custom_agent]=qa-reviewer"
-          echo "Copilot assigned to issue #$ISSUE_NUMBER"
+          echo "qa-reviewer assigned to issue #$ISSUE_NUMBER"
 
-      - name: Comment on PR with QA issue link
+      - name: Comment on PR with QA issue links
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ISSUE_NUMBER="${{ steps.create_issue.outputs.issue_number }}"
           PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TYPE="${{ steps.classify.outputs.pr_type }}"
+          DESIGNQA_ISSUE="${{ steps.create_designqa_issue.outputs.issue_number }}"
+          QA_ISSUE="${{ steps.create_qa_issue.outputs.issue_number }}"
+
+          MSG="🤖 **Copilot QA agents dispatched** (PR type: \`${PR_TYPE}\`)"
+          [[ -n "$DESIGNQA_ISSUE" ]] && MSG+=$'\n'"- **DesignQA** → issue #${DESIGNQA_ISSUE} (designqa-reviewer)"
+          [[ -n "$QA_ISSUE" ]]      && MSG+=$'\n'"- **Code QA** → issue #${QA_ISSUE} (qa-reviewer)"
+          if [[ "$PR_TYPE" == "backend" ]]; then
+            MSG+=$'\n\n'"⚠️ **Both agents must approve before this PR can merge.**"
+          fi
+
           gh pr comment "$PR_NUMBER" \
             --repo "${{ github.repository }}" \
-            --body "🤖 **GitHub Copilot QA started** — tracking in issue #${ISSUE_NUMBER}. Report will appear there and here once complete."
+            --body "$MSG"
