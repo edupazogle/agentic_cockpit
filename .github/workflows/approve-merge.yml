@@ -28,7 +28,8 @@ jobs:
     if: |
       contains(github.event.comment.body, '/approve-design') &&
       startsWith(github.event.issue.title, '[DesignQA]') &&
-      github.event.issue.state == 'open'
+      github.event.issue.state == 'open' &&
+      github.event.comment.user.login == 'edupazogle'
     runs-on: ubuntu-latest
 
     steps:
@@ -136,7 +137,8 @@ jobs:
     if: |
       contains(github.event.comment.body, '/approve-merge') &&
       startsWith(github.event.issue.title, '[QA]') &&
-      github.event.issue.state == 'open'
+      github.event.issue.state == 'open' &&
+      github.event.comment.user.login == 'edupazogle'
     runs-on: ubuntu-latest
 
     steps:
