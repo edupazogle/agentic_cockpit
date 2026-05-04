@@ -753,12 +753,17 @@ const CodexBuilder = (() => {
       onRender: () => {
         waitingApprove = true;
         setRunhead('PAUSE · SIGNOFF OPÉRATEUR', 'yellow');
+        setNavState();
         const ap = $('b-approve');
         if (ap) ap.addEventListener('click', () => {
           if (!waitingApprove) return;
           waitingApprove = false;
           appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Approuvé. Construis-le.' });
-          advance();
+          setRunhead(`MOUVEMENT 4/8 · APPROUVÉ`, 'azur');
+          ap.textContent = '✓ Approuvé';
+          ap.disabled = true;
+          const it = $('b-iter'); if (it) it.disabled = true;
+          setNavState();
         });
         const it = $('b-iter');
         if (it) it.addEventListener('click', () => {
@@ -1037,39 +1042,61 @@ const CodexBuilder = (() => {
   }
 
   function advance() {
-    mvIdx += 1;
-    if (mvIdx > 8) return finish();
-    renderMovement(mvIdx);
-    if (mvIdx === 4) {
-      // wait for user click
-      setRunhead('PAUSED · OPERATOR SIGN-OFF', 'yellow');
-      return;
+    next();
+  }
+
+  function clearMovementTimers() {
+    timers.forEach(t => clearTimeout(t));
+    timers = [];
+  }
+
+  function setNavState() {
+    const prevBtn = $('bsim-prev');
+    const nxt = $('bsim-next');
+    if (!prevBtn || !nxt) return;
+    prevBtn.disabled = mvIdx <= 1;
+    if (mvIdx === 0) {
+      nxt.textContent = 'Démarrer →';
+      nxt.disabled = false;
+    } else if (mvIdx === 4 && waitingApprove) {
+      nxt.textContent = 'Signoff requis ↓';
+      nxt.disabled = true;
+    } else if (mvIdx >= 8) {
+      nxt.textContent = '✓ Terminé';
+      nxt.disabled = true;
+    } else {
+      const labels = ['', 'Recherche →', 'Plan →', 'Approbation →', 'Construction →', 'Lint →', 'Aperçu →', 'Déploiement →'];
+      nxt.textContent = labels[mvIdx] || `Mouvement ${mvIdx + 1} →`;
+      nxt.disabled = false;
     }
-    const m = MOVEMENTS[mvIdx];
-    const t = setTimeout(advance, m.duration);
-    timers.push(t);
+  }
+
+  function next() {
+    if (mvIdx === 4 && waitingApprove) return;
+    clearMovementTimers();
+    mvIdx += 1;
+    if (mvIdx > 8) { mvIdx = 8; finish(); return; }
+    renderMovement(mvIdx);
+    setNavState();
+  }
+
+  function prev() {
+    if (mvIdx <= 1) return;
+    clearMovementTimers();
+    waitingApprove = false;
+    mvIdx -= 1;
+    renderMovement(mvIdx);
+    setNavState();
   }
 
   function finish() {
-    setRailState(9); // all done
+    setRailState(9);
     setRunhead('LIVRÉ · 8/8 MOUVEMENTS', 'azur');
-    $('bsim-play').textContent = '▶ Rejouer la simulation';
-    $('bsim-play').disabled = false;
-    running = false;
-  }
-
-  function start() {
-    if (running) return;
-    if (mvIdx >= 8) reset();
-    running = true;
-    $('bsim-play').textContent = 'En cours…';
-    $('bsim-play').disabled = true;
-    advance();
+    setNavState();
   }
 
   function reset() {
-    timers.forEach(t => clearTimeout(t));
-    timers = [];
+    clearMovementTimers();
     mvIdx = 0;
     tokens = 0; cost = 0;
     waitingApprove = false;
@@ -1081,20 +1108,25 @@ const CodexBuilder = (() => {
     $('bsim-chat').innerHTML = '';
     $('bsim-body').innerHTML = '';
     $('bsim-eyebrow').textContent = 'Mouvement 0 · Au repos';
-    $('bsim-title').innerHTML = 'Lancez la <em>composition</em>.';
-    $('bsim-lede').textContent = "Simulez les huit mouvements d'une composition de pilote — de la prise en charge au déploiement — avec un contenu factice qui se diffuse en bout-en-bout.";
-    $('bsim-play').textContent = '▶ Lancer la simulation';
-    $('bsim-play').disabled = false;
+    $('bsim-title').innerHTML = 'Composez un pilote, <em>mouvement par mouvement</em>.';
+    $('bsim-lede').textContent = "Cliquez sur Suivant pour avancer dans les huit mouvements — de la prise en charge au déploiement. Précédent revient en arrière, à votre rythme. Flèches ← → ou espace pour naviguer au clavier.";
     setRunhead('AU REPOS · MOUVEMENT 0/8', 'yellow');
+    setNavState();
   }
 
   function init() {
-    if (!$('bsim-play')) return; // not on builder page
-    $('bsim-play').addEventListener('click', start);
+    if (!$('bsim-next')) return;
+    $('bsim-next').addEventListener('click', next);
+    $('bsim-prev').addEventListener('click', prev);
     $('bsim-reset').addEventListener('click', reset);
+    document.addEventListener('keydown', (e) => {
+      if (e.target.matches('input, textarea')) return;
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    });
     reset();
   }
 
-  return { init, start, reset, advance };
+  return { init, next, prev, reset };
 })();
 window.CodexBuilder = CodexBuilder;
