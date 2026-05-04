@@ -225,7 +225,7 @@ const CodexSim = (() => {
     { from: 'cn-presenter', to: 'cn-rachel',   kind: 'queued', fromSide: 'right', toSide: 'left' },
     { from: 'cn-rachel',    to: 'cn-atlas',    kind: 'queued', fromSide: 'right', toSide: 'left' },
     { from: 'cn-atlas',     to: 'cn-reserve',  kind: 'queued', fromSide: 'right', toSide: 'left' },
-    { from: 'cn-reserve',   to: 'cn-docling',  kind: 'queued', fromSide: 'right', toSide: 'left' },
+    { from: 'cn-reserve',   to: 'cn-docling',  kind: 'queued', fromSide: 'right', toSide: 'left', mode: 'vertical' },
     { from: 'cn-docling',   to: 'cn-hermes',   kind: 'queued', fromSide: 'right', toSide: 'left' },
     { from: 'cn-hermes',    to: 'cn-adjuster', kind: 'queued', fromSide: 'right', toSide: 'left' },
     { from: 'cn-adjuster',  to: 'cn-harry',    kind: 'queued', fromSide: 'right', toSide: 'left' },
@@ -598,25 +598,25 @@ const CodexBuilder = (() => {
   const MOVEMENTS = [
     null, // 1-indexed
     { // 1 INTAKE
-      eyebrow: 'Movement I · Intake',
-      title: 'A persona, by <em>name</em>.',
-      lede: 'Codex listens for the operator behind the request, the scope of their work, and the promise the pilot must keep.',
+      eyebrow: 'Mouvement I · Prise en charge',
+      title: 'Un persona, <em>par son nom</em>.',
+      lede: "Codex écoute l'opératrice derrière la requête, le périmètre de son travail, et la promesse que le pilote doit tenir.",
       duration: 4200,
       chat: [
-        { delay: 200, role: 'human', by: 'Claire B. · 14:38', body: "I want a fast-track for water-damage claims under €10k. Auto-resolve clean cases, escalate when policy or amount is ambiguous." },
-        { delay: 1600, role: 'ai', by: 'Codex · 14:38', body: "Captured. I'll start at <strong>0.85</strong> confidence floor and a <strong>15-minute</strong> SLA — both adjustable.", citation: '↳ web_search_insurance · ACPR Art. L113-2' },
-        { delay: 3200, role: 'human', by: 'Claire B. · 14:39', body: "0.85 is fine. SLA 15 min — but bump priority badge after 8 minutes idle." },
+        { delay: 200, role: 'human', by: 'Claire B. · 14:38', body: "Je veux une voie express pour les sinistres dégât-des-eaux sous 10 k€. Auto-résolution des cas nets, escalade dès que la police ou le montant est ambigu." },
+        { delay: 1600, role: 'ai', by: 'Codex · 14:38', body: "Noté. Je démarre à un seuil de confiance <strong>0,85</strong> et un SLA de <strong>15 minutes</strong> — les deux ajustables.", citation: '↳ web_search_insurance · ACPR Art. L113-2' },
+        { delay: 3200, role: 'human', by: 'Claire B. · 14:39', body: "0,85, ça me va. SLA 15 min — mais badge prioritaire après 8 minutes d'inactivité." },
       ],
       render: () => `
         <section class="section">
           <div class="marg"><span class="num">i.</span>Persona<br>3 citations<br>L113-2 ACPR</div>
           <div class="body">
-            <h3>The adjuster, by name.</h3>
-            <p class="dropcap" style="font-family:var(--font-serif);font-size:18px;line-height:1.55;color:var(--ink);margin-bottom:24px">Claire B. is a property adjuster who handles roughly 120 water-damage claims per day across her region. She wants the agent to dispatch obvious cases under €4,000 — the ones she would approve in thirty seconds anyway — and keep the ambiguous ones at her desk with a packet she can act on quickly.</p>
+            <h3>L'experte, <em>par son nom</em>.</h3>
+            <p class="dropcap">Claire B. est experte dommages aux biens. Elle traite environ 120 sinistres dégât-des-eaux par jour sur sa région. Elle veut que l'agent expédie les cas évidents sous 4 000 € — ceux qu'elle approuverait en trente secondes — et garde les cas ambigus sur son bureau avec un dossier exploitable en un clin d'œil.</p>
             <div class="fields">
-              <div class="field-codex"><label>Operator role</label><input id="bf-role" value="" data-target="Property adjuster"></div>
-              <div class="field-codex"><label>Region · scope</label><input id="bf-scope" value="" data-target="FR · individuals · ≤ €10,000"></div>
-              <div class="field-codex full"><label>Promise</label><textarea id="bf-promise" data-target="Triage water-damage claims with photo evidence. Auto-resolve high-confidence cases under €4,000. Escalate ambiguous cases within 90 seconds with a complete packet."></textarea></div>
+              <div class="field-codex"><label>Rôle opérateur</label><input id="bf-role" value="" data-target="Experte dommages aux biens"></div>
+              <div class="field-codex"><label>Région · périmètre</label><input id="bf-scope" value="" data-target="FR · particuliers · ≤ 10 000 €"></div>
+              <div class="field-codex full"><label>Promesse</label><textarea id="bf-promise" data-target="Trier les sinistres dégât-des-eaux avec preuves photo. Auto-résoudre les cas à haute confiance sous 4 000 €. Escalader les cas ambigus en moins de 90 s avec un dossier complet."></textarea></div>
             </div>
           </div>
         </section>`,
@@ -630,37 +630,37 @@ const CodexBuilder = (() => {
       },
     },
     { // 2 RESEARCH
-      eyebrow: 'Movement II · Research',
-      title: 'Twelve sources, <em>read for you</em>.',
-      lede: 'Codex pulls policy texts, regulator memos, and historical claim cohorts. Each citation lands with a verifiable anchor.',
+      eyebrow: 'Mouvement II · Recherche',
+      title: 'Douze sources, <em>lues pour vous</em>.',
+      lede: "Codex parcourt textes de polices, mémos régulateurs et cohortes historiques. Chaque citation atterrit avec une ancre vérifiable.",
       duration: 4400,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:39', body: "Searching policy corpus and regulator archives. <em>web_search_insurance</em>, <em>nemoclaw.policy</em>, <em>axa_corpus.search</em>." },
-        { delay: 2400, role: 'ai', by: 'Codex · 14:40', body: "Twelve relevant sources. Three carry binding language — flagged for the manifest." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:39', body: "Recherche dans le corpus polices et archives régulateur. <em>web_search_insurance</em>, <em>nemoclaw.policy</em>, <em>axa_corpus.search</em>." },
+        { delay: 2400, role: 'ai', by: 'Codex · 14:40', body: "Douze sources pertinentes. Trois portent un langage <strong>contraignant</strong> — signalées dans le manifeste." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">ii.</span>Citations<br>12 sources<br>3 binding</div>
+          <div class="marg"><span class="num">ii.</span>Citations<br>12 sources<br>3 contraignantes</div>
           <div class="body">
-            <h3>The corpus, in twelve citations.</h3>
-            <p>Codex distinguishes <em>binding</em> sources (regulator, policy text) from <em>contextual</em> ones (industry whitepapers, internal heuristics). Only binding sources can constrain the LLM judge.</p>
-            <ul id="cit-list" class="cit-stream" style="list-style:none;padding:0;margin-top:18px"></ul>
+            <h3>Le corpus, en douze citations.</h3>
+            <p>Codex distingue les sources <em>contraignantes</em> (régulateur, texte de police) des sources <em>contextuelles</em> (livres blancs, heuristiques internes). Seules les contraignantes peuvent contraindre le juge LLM.</p>
+            <ul id="cit-list" class="cit-stream"></ul>
           </div>
         </section>`,
       onRender: () => {
         const items = [
-          { tag: 'binding', title: 'ACPR — Article L113-2', sub: 'Code des assurances · disclosure obligations' },
-          { tag: 'binding', title: 'AXA Property — Policy v2024.3', sub: 'water-damage clause 4.1.2 · €10k threshold' },
-          { tag: 'binding', title: 'GDPR Art. 22', sub: 'automated decision-making · right to human review' },
-          { tag: 'context', title: 'FFA — Annual report 2024', sub: 'water-damage claim volumes · regional medians' },
-          { tag: 'context', title: 'AXA internal — Triage cohort 2023', sub: '47k closed claims · auto-resolve precision 0.93' },
-          { tag: 'context', title: 'IIA — Audit guidance for AI', sub: 'sampling rules · post-hoc review intervals' },
-          { tag: 'context', title: 'NemoClaw — Policy compiler v1.4', sub: 'rule precedence · confidence floor patterns' },
-          { tag: 'context', title: 'Docling — Photo evidence schemas', sub: 'invoice extraction · pii redaction defaults' },
-          { tag: 'context', title: 'Chatwoot — Operator handover', sub: 'SLA priority ladder · idle timers' },
-          { tag: 'context', title: 'Langfuse — Evaluation rubrics', sub: 'factual · policy · tone · audit-ready' },
-          { tag: 'context', title: 'AXA EU — Settlement playbook', sub: 'sub-€4k express track · 90-second SLA' },
-          { tag: 'context', title: 'Property fast-track v0.3', sub: 'previous pilot iteration · learnings memo' },
+          { tag: 'contraignant', kind: 'yellow', title: 'ACPR — Article L113-2', sub: "Code des assurances · obligations d'information" },
+          { tag: 'contraignant', kind: 'yellow', title: 'AXA Property — Police v2024.3', sub: 'clause dégât-des-eaux 4.1.2 · seuil 10 k€' },
+          { tag: 'contraignant', kind: 'yellow', title: 'RGPD Art. 22', sub: "décision automatisée · droit à la revue humaine" },
+          { tag: 'contexte', kind: 'blue', title: 'FFA — Rapport annuel 2024', sub: 'volumes dégât-des-eaux · médianes régionales' },
+          { tag: 'contexte', kind: 'blue', title: 'AXA interne — Cohorte triage 2023', sub: '47 k sinistres clos · précision auto-résolution 0,93' },
+          { tag: 'contexte', kind: 'blue', title: 'IFACI — Audit IA', sub: "règles d'échantillonnage · revues post-hoc" },
+          { tag: 'contexte', kind: 'blue', title: 'NemoClaw — Compilateur de polices v1.4', sub: 'précédence des règles · seuils de confiance' },
+          { tag: 'contexte', kind: 'blue', title: 'Docling — Schémas preuves photo', sub: 'extraction factures · redaction PII par défaut' },
+          { tag: 'contexte', kind: 'blue', title: 'Chatwoot — Passation opérateur', sub: 'échelle SLA · timers d\'inactivité' },
+          { tag: 'contexte', kind: 'blue', title: 'Langfuse — Rubriques d\'évaluation', sub: 'factuel · police · ton · audit-ready' },
+          { tag: 'contexte', kind: 'blue', title: 'AXA EU — Playbook règlement', sub: 'voie express sub-4 k€ · SLA 90 s' },
+          { tag: 'contexte', kind: 'blue', title: 'Property fast-track v0.3', sub: 'pilote précédent · mémo retours' },
         ];
         const list = $('cit-list');
         if (!list) return;
@@ -668,10 +668,10 @@ const CodexBuilder = (() => {
           const t = setTimeout(() => {
             const li = document.createElement('li');
             li.className = 'cit-row';
-            li.style.cssText = 'display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--rule);opacity:0;transform:translateY(6px);transition:opacity 320ms ease,transform 320ms ease';
+            li.style.cssText = 'opacity:0;transform:translateY(6px);transition:opacity 320ms ease,transform 320ms ease';
             li.innerHTML = `
-              <span class="tag ${it.tag === 'binding' ? 'yellow' : 'blue'}" style="flex-shrink:0;font-size:10px"><span class="pip"></span>${it.tag}</span>
-              <div style="flex:1"><div style="font-family:var(--font-serif);font-size:16px;color:var(--ink-strong);font-weight:500">${it.title}</div><div style="font-size:12px;color:var(--mute);font-family:var(--font-mono);margin-top:3px">${it.sub}</div></div>`;
+              <span class="tag ${it.kind}"><span class="pip"></span>${it.tag}</span>
+              <div><div style="font-family:var(--font-display);font-weight:500;font-size:15.5px;color:var(--gray-1000);letter-spacing:-0.01em">${it.title}</div><div style="font-size:12px;color:var(--gray-500);font-family:var(--font-mono);margin-top:3px">${it.sub}</div></div>`;
             list.appendChild(li);
             requestAnimationFrame(() => { li.style.opacity = '1'; li.style.transform = 'translateY(0)'; });
           }, 200 + i * 280);
@@ -680,29 +680,29 @@ const CodexBuilder = (() => {
       },
     },
     { // 3 PLAN
-      eyebrow: 'Movement III · Plan',
-      title: 'A flow, in <em>five steps</em>.',
-      lede: 'Codex drafts the topology — five nodes, two human gates. Each row reveals as the planner reasons through it.',
+      eyebrow: 'Mouvement III · Plan',
+      title: 'Un flux, en <em>cinq étapes</em>.',
+      lede: 'Codex esquisse la topologie — cinq nœuds, deux portes humaines. Chaque ligne se révèle au rythme du raisonnement.',
       duration: 3600,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:40', body: "Drafting topology. Two HITL gates: confidence-driven escalation, and a final operator sign-off when amount > €4k." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:40', body: "Brouillon de topologie. Deux portes HITL : escalade par confiance, et signoff opérateur final si montant > 4 k€." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">iii.</span>Flow<br>5 nodes<br>2 HITL gates</div>
+          <div class="marg"><span class="num">iii.</span>Flux<br>5 nœuds<br>2 portes HITL</div>
           <div class="body">
-            <h3>A flow, in five steps.</h3>
-            <p>The two italicised steps are <em>HITL gates</em> — they pause the run and hand control to an operator with a structured packet. Everything else runs without human attention until evidence demands it.</p>
-            <div id="flow-list" class="flow-list" style="margin-top:18px"></div>
+            <h3>Un flux, en cinq étapes.</h3>
+            <p>Les deux étapes en italique sont des <em>portes HITL</em> — elles mettent le run en pause et passent la main à un opérateur avec un dossier structuré. Tout le reste s'exécute sans intervention humaine, jusqu'à ce que la preuve l'exige.</p>
+            <div id="flow-list" class="flow-list"></div>
           </div>
         </section>`,
       onRender: () => {
         const rows = [
-          { ix: 'i.', name: 'Intake claim', sub: 'tool · claims_facade.create_claim', tag: 'tool', kind: 'blue' },
-          { ix: 'ii.', name: 'Extract evidence', sub: 'tool · docling.parse · photos + invoice → structured facts', tag: 'tool', kind: 'blue' },
-          { ix: 'iii.', name: 'Decide fast-track', sub: 'llm.judge · NemoClaw policy · floor 0.85', tag: 'HITL gate', kind: 'yellow', gate: true },
-          { ix: 'iv.', name: 'Operator handover', sub: 'hitl.chatwoot · packet · SLA 15 min', tag: 'HITL gate', kind: 'yellow', gate: true },
-          { ix: 'v.', name: 'Settle & log', sub: 'tool · claims_facade.resolve · audit anchored', tag: 'tool', kind: 'blue' },
+          { ix: 'i.', name: 'Réception sinistre', sub: 'tool · claims_facade.create_claim', tag: 'tool', kind: 'blue' },
+          { ix: 'ii.', name: 'Extraction des preuves', sub: 'tool · docling.parse · photos + facture → faits structurés', tag: 'tool', kind: 'blue' },
+          { ix: 'iii.', name: 'Décider voie express', sub: 'llm.judge · NemoClaw · seuil 0,85', tag: 'porte HITL', kind: 'yellow', gate: true },
+          { ix: 'iv.', name: 'Passation opérateur', sub: 'hitl.chatwoot · dossier · SLA 15 min', tag: 'porte HITL', kind: 'yellow', gate: true },
+          { ix: 'v.', name: 'Régler & journaliser', sub: 'tool · claims_facade.resolve · audit ancré', tag: 'tool', kind: 'blue' },
         ];
         const list = $('flow-list');
         if (!list) return;
@@ -720,75 +720,80 @@ const CodexBuilder = (() => {
       },
     },
     { // 4 APPROVE
-      eyebrow: 'Movement IV · Approve',
-      title: 'A pause, for <em>operator sign-off</em>.',
-      lede: 'Before bytes leave the planner, Claire reviews the bundle: capability manifest, egress allow-list, HITL gates. Approve to build, or iterate aloud.',
-      duration: 0, // user-driven
+      eyebrow: 'Mouvement IV · Approbation',
+      title: 'Une pause, pour <em>signoff opérateur</em>.',
+      lede: "Avant qu'un seul octet ne quitte le planificateur, Claire revoit le bundle : manifeste de capacités, allow-list de sortie, portes HITL. Approuve pour construire, ou itère à voix haute.",
+      duration: 0,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Plan ready for sign-off. Bundle declares <strong>three internal tools</strong>, <strong>two private egress hosts</strong>, and <strong>two HITL gates</strong>. Approve to build." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Plan prêt pour signoff. Le bundle déclare <strong>trois outils internes</strong>, <strong>deux hôtes de sortie privés</strong>, et <strong>deux portes HITL</strong>. Approuve pour construire." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">iv.</span>Sign-off<br>capability +<br>egress + HITL</div>
+          <div class="marg"><span class="num">iv.</span>Signoff<br>capacités +<br>sortie + HITL</div>
           <div class="body">
-            <h3>The bundle, awaiting <em>your</em> approval.</h3>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px">
-              <div class="approval-tile"><span class="tile-key">Tools declared</span><span class="tile-val">3</span><span class="tile-sub">claims_facade.* · docling.parse · nemoclaw.policy</span></div>
-              <div class="approval-tile"><span class="tile-key">Egress allow-list</span><span class="tile-val">2</span><span class="tile-sub">chatwoot.gdai.private · langfuse.gdai.private</span></div>
-              <div class="approval-tile"><span class="tile-key">HITL gates</span><span class="tile-val">2</span><span class="tile-sub">confidence floor 0.85 · operator handover SLA 15min</span></div>
-              <div class="approval-tile"><span class="tile-key">Audit anchor</span><span class="tile-val">on</span><span class="tile-sub">audit_external_anchor · hash chained on settle</span></div>
-            </div>
-            <div style="margin-top:32px;display:flex;gap:14px;justify-content:flex-end;align-items:center">
-              <span style="font-family:var(--font-mono);font-size:11px;color:var(--mute);margin-right:auto">Awaiting Claire B. · 14:41</span>
-              <button class="btn" id="b-iter">Iterate plan</button>
-              <button class="btn btn-primary" id="b-approve">Approve & build →</button>
+            <h3>Le bundle, en attente de <em>votre</em> approbation.</h3>
+            <div class="bsim-approve">
+              <h4>Manifeste de capacités · v0.4-rc</h4>
+              <div class="bsim-approve-grid">
+                <div class="bsim-cap-tile"><span class="k">Outils déclarés</span><span class="v">3 · <code>claims_facade.*</code> · <code>docling.parse</code> · <code>nemoclaw.policy</code></span></div>
+                <div class="bsim-cap-tile"><span class="k">Sortie · allow-list</span><span class="v">2 · <code>chatwoot.gdai.private</code> · <code>langfuse.gdai.private</code></span></div>
+                <div class="bsim-cap-tile"><span class="k">Portes HITL</span><span class="v">2 · seuil 0,85 · SLA 15 min</span></div>
+                <div class="bsim-cap-tile"><span class="k">Ancre d'audit</span><span class="v">on · <code>audit_external_anchor</code></span></div>
+                <div class="bsim-cap-tile"><span class="k">Budget pilote</span><span class="v">80 k tokens · 5,00 €</span></div>
+                <div class="bsim-cap-tile"><span class="k">PII</span><span class="v">redaction par défaut</span></div>
+              </div>
+              <div class="bsim-approve-actions">
+                <span class="hint">En attente de Claire B. · 14:41</span>
+                <button class="btn" id="b-iter">Itérer le plan</button>
+                <button class="btn btn-primary" id="b-approve">Approuver &amp; construire →</button>
+              </div>
             </div>
           </div>
         </section>`,
       onRender: () => {
         waitingApprove = true;
-        setRunhead('PAUSED · OPERATOR SIGN-OFF', 'yellow');
+        setRunhead('PAUSE · SIGNOFF OPÉRATEUR', 'yellow');
         const ap = $('b-approve');
         if (ap) ap.addEventListener('click', () => {
           if (!waitingApprove) return;
           waitingApprove = false;
-          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Approved. Build it.' });
+          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Approuvé. Construis-le.' });
           advance();
         });
         const it = $('b-iter');
         if (it) it.addEventListener('click', () => {
-          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Tighten the floor to 0.88 first.' });
-          setTimeout(() => appendChat({ role: 'ai', by: 'Codex · 14:41', body: 'Logged. Floor → 0.88. Rebuilding the plan in place.' }), 800);
+          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Resserre d\'abord le seuil à 0,88.' });
+          setTimeout(() => appendChat({ role: 'ai', by: 'Codex · 14:41', body: 'Noté. Seuil → 0,88. Plan reconstruit.' }), 800);
         });
       },
     },
     { // 5 BUILD
-      eyebrow: 'Movement V · Build',
-      title: 'A bundle, <em>compiled</em>.',
-      lede: 'Codex generates flow.json, the capability manifest, and the audit anchor stub. Watch it type out, line by line.',
+      eyebrow: 'Mouvement V · Construction',
+      title: 'Un bundle, <em>compilé</em>.',
+      lede: "Codex génère flow.json, le manifeste de capacités, et le stub d'ancre d'audit. Regardez-le se taper, ligne par ligne.",
       duration: 5200,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Compiling flow.json. Topology, manifest, anchor stub." },
-        { delay: 3600, role: 'ai', by: 'Codex · 14:42', body: "Bundle compiled. <strong>2,847 bytes</strong>. Manifest is signed and ready for lint." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Compilation flow.json. Topologie, manifeste, stub d'ancre." },
+        { delay: 3600, role: 'ai', by: 'Codex · 14:42', body: "Bundle compilé. <strong>2 847 octets</strong>. Manifeste signé, prêt pour le lint." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">v.</span>Bundle<br>flow.json<br>2,847 bytes</div>
+          <div class="marg"><span class="num">v.</span>Bundle<br>flow.json<br>2 847 octets</div>
           <div class="body">
-            <h3>The bundle, line by line.</h3>
-            <div style="margin-top:18px;background:var(--ink-strong);color:#f5f4f2;border-radius:14px;overflow:hidden;font-family:var(--font-mono);font-size:13px;line-height:1.7">
+            <h3>Le bundle, ligne par ligne.</h3>
+            <div class="bsim-codeblock">
               <div style="padding:12px 22px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
                 <span style="width:9px;height:9px;border-radius:999px;background:#fb6f57"></span>
                 <span style="width:9px;height:9px;border-radius:999px;background:#f6c64d"></span>
                 <span style="width:9px;height:9px;border-radius:999px;background:#84cc7a"></span>
-                <span style="margin-left:auto;color:rgba(245,244,242,0.5);font-size:11px;letter-spacing:0.06em">flow.json · property-fast-track · v0.4-build</span>
+                <span style="margin-left:auto;color:rgba(245,244,242,0.5);font-size:11px;letter-spacing:0.06em;font-family:var(--font-mono)">flow.json · property-fast-track · v0.4-build</span>
               </div>
-              <div style="padding:24px 28px;min-height:280px"><pre id="b-code" style="margin:0;font-family:inherit;white-space:pre-wrap"></pre></div>
+              <div style="padding:24px 28px;min-height:280px"><pre id="b-code"></pre></div>
             </div>
           </div>
         </section>`,
       onRender: () => {
-        const code = `// Generated by Codex Builder · 14:42:08
+        const code = `// Généré par Codex Builder · 14:42:08
 {
   "name": "property-fast-track",
   "version": "0.4",
@@ -817,30 +822,30 @@ const CodexBuilder = (() => {
       },
     },
     { // 6 LINT
-      eyebrow: 'Movement VI · Lint',
-      title: 'A pass, <em>refused or signed</em>.',
-      lede: 'Six checks. The manifest must declare every tool the flow calls, every egress host, and zero literal secrets. Each ✓ is an invariant.',
+      eyebrow: 'Mouvement VI · Lint',
+      title: 'Six invariants, <em>tous verts</em>.',
+      lede: "Six contrôles. Le manifeste doit déclarer chaque outil appelé, chaque hôte de sortie, et zéro secret littéral. Chaque ✓ est un invariant.",
       duration: 3200,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:42', body: "Running capability lint. Six checks." },
-        { delay: 2800, role: 'ai', by: 'Codex · 14:42', body: "All checks green. Bundle is sign-ready." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:42', body: "Lint des capacités en cours. Six contrôles." },
+        { delay: 2800, role: 'ai', by: 'Codex · 14:42', body: "Tous les contrôles verts. Bundle prêt à signer." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">vi.</span>Lint<br>6 checks<br>0 errors</div>
+          <div class="marg"><span class="num">vi.</span>Lint<br>6 contrôles<br>0 erreur</div>
           <div class="body">
-            <h3>The lint, six invariants strong.</h3>
+            <h3>Le lint, six invariants forts.</h3>
             <div id="lint-list" class="lint-stream"></div>
           </div>
         </section>`,
       onRender: () => {
         const checks = [
-          'Every tool referenced in nodes is declared in capability_manifest.tools',
-          'Every egress host called is listed in capability_manifest.egress',
-          'No literal secrets (API keys, tokens) embedded in flow.json',
-          'HITL gate channel chatwoot is bound to a private domain',
-          'Audit anchor strategy is one of: external | internal | none',
-          'LLM judge floor in [0.50, 0.99] — current 0.85 ✓',
+          'Chaque outil référencé dans les nœuds est déclaré dans capability_manifest.tools',
+          'Chaque hôte de sortie appelé est listé dans capability_manifest.egress',
+          'Aucun secret littéral (clé API, token) embarqué dans flow.json',
+          'La porte HITL chatwoot est liée à un domaine privé',
+          'Stratégie d\'ancre d\'audit ∈ { external, internal, none }',
+          'Seuil du juge LLM ∈ [0,50 ; 0,99] — courant 0,85 ✓',
         ];
         const list = $('lint-list');
         if (!list) return;
@@ -850,7 +855,6 @@ const CodexBuilder = (() => {
             row.className = 'lint-row';
             row.innerHTML = `<span class="lint-pip">⏳</span><span class="lint-text">${c}</span>`;
             list.appendChild(row);
-            // Then resolve to ✓
             const t2 = setTimeout(() => {
               row.classList.add('ok');
               row.querySelector('.lint-pip').textContent = '✓';
@@ -862,19 +866,19 @@ const CodexBuilder = (() => {
       },
     },
     { // 7 PREVIEW
-      eyebrow: 'Movement VII · Preview',
-      title: 'A sandbox, <em>five nodes lit</em>.',
-      lede: 'Codex runs one synthetic claim through the pilot in a sealed sandbox. Every node lights up. Tokens, latency, cost — all measured.',
+      eyebrow: 'Mouvement VII · Aperçu',
+      title: 'Un sandbox, <em>cinq nœuds allumés</em>.',
+      lede: "Codex passe un sinistre synthétique dans le pilote, en bac à sable scellé. Chaque nœud s'allume. Tokens, latence, coût — tout est mesuré.",
       duration: 4400,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Sandbox dispatched. Claim CLM-SYN-001 · €3,200 water damage · synthetic." },
-        { delay: 3600, role: 'ai', by: 'Codex · 14:43', body: "Run completed. Auto-resolved. Latency p50 = 4.1s · cost €0.024 · tokens 2,840." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Sandbox lancé. Sinistre <code>CLM-SYN-001</code> · 3 200 € dégât-des-eaux · synthétique." },
+        { delay: 3600, role: 'ai', by: 'Codex · 14:43', body: "Run terminé. Auto-résolu. Latence p50 = 4,1 s · coût 0,024 € · 2 840 tokens." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">vii.</span>Sandbox<br>synthetic<br>CLM-SYN-001</div>
+          <div class="marg"><span class="num">vii.</span>Sandbox<br>synthétique<br>CLM-SYN-001</div>
           <div class="body">
-            <h3>A synthetic run, end-to-end.</h3>
+            <h3>Un run synthétique, de bout en bout.</h3>
             <div id="prev-track" class="prev-track"></div>
             <div id="prev-metrics" class="prev-metrics"></div>
           </div>
@@ -892,40 +896,40 @@ const CodexBuilder = (() => {
         });
         const t2 = setTimeout(() => {
           $('prev-metrics').innerHTML = `
-            <div class="prev-met"><span>Latency p50</span><strong>4.1s</strong></div>
-            <div class="prev-met"><span>Cost</span><strong>€0.024</strong></div>
-            <div class="prev-met"><span>Tokens</span><strong>2,840</strong></div>
-            <div class="prev-met"><span>Verdict</span><strong style="color:var(--axa-azur)">auto-resolve</strong></div>`;
+            <div class="prev-met"><span>Latence p50</span><strong>4,1 s</strong></div>
+            <div class="prev-met"><span>Coût</span><strong>0,024 €</strong></div>
+            <div class="prev-met"><span>Tokens</span><strong>2 840</strong></div>
+            <div class="prev-met"><span>Verdict</span><strong>auto-résolu</strong></div>`;
         }, 3400);
         timers.push(t2);
       },
     },
     { // 8 DEPLOY
-      eyebrow: 'Movement VIII · Deploy',
-      title: 'A pilot, <em>shipped to G0</em>.',
-      lede: 'Bundle signed. Anchored on audit chain. Live behind feature flag pf_orchestrator at 0% — promote when ready.',
-      duration: 2200,
+      eyebrow: 'Mouvement VIII · Déploiement',
+      title: 'Un pilote, <em>livré en G0</em>.',
+      lede: "Bundle signé. Ancré sur la chaîne d'audit. Vivant derrière le feature flag pf_orchestrator à 0 % — promotion à votre signal.",
+      duration: 3200,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Deploying to G0 ring. <em>railway.deploy</em>, <em>posthog.flag.create</em>." },
-        { delay: 1600, role: 'ai', by: 'Codex · 14:43', body: "<strong>Shipped.</strong> property-fast-track v0.4 is live behind <code>pf_orchestrator</code> at 0%. Open the canvas to watch a real run." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Déploiement vers l'anneau G0. <em>railway.deploy</em>, <em>posthog.flag.create</em>." },
+        { delay: 1600, role: 'ai', by: 'Codex · 14:43', body: "<strong>Livré.</strong> property-fast-track v0.4 est en ligne derrière <code>pf_orchestrator</code> à 0 %. Ouvrez le canevas pour voir un vrai run." },
       ],
       render: () => `
         <section class="section">
-          <div class="marg"><span class="num">viii.</span>Deploy<br>G0 ring<br>0% rollout</div>
+          <div class="marg"><span class="num">viii.</span>Déploiement<br>anneau G0<br>0 % rollout</div>
           <div class="body" id="deploy-body" style="opacity:0;transform:translateY(8px);transition:opacity 600ms ease,transform 600ms ease">
-            <div style="background:linear-gradient(180deg,#fffbf3,#fff);border:1px solid var(--rule);border-radius:18px;padding:38px 44px;text-align:center">
-              <div style="display:inline-flex;width:52px;height:52px;border-radius:50%;background:#84cc7a;color:#fff;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;box-shadow:0 0 0 8px rgba(132,204,122,0.18)">✓</div>
-              <h3 style="margin:0 0 6px 0;font-family:var(--font-serif);font-weight:500;font-size:32px;letter-spacing:-0.025em;color:var(--ink-strong)">Shipped to G0.</h3>
-              <p style="font-family:var(--font-serif);font-style:italic;font-size:18px;color:var(--ink-mute);margin:0 0 24px 0">property-fast-track v0.4 · build 7f4a-31bd · audit anchor 0xa3·1e</p>
-              <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:24px 0">
-                <div class="approval-tile"><span class="tile-key">Ring</span><span class="tile-val">G0</span><span class="tile-sub">canary · 0% traffic</span></div>
+            <div class="bsim-deploy">
+              <div class="bsim-deploy-check">✓</div>
+              <h3>Livré en <em>G0</em>.</h3>
+              <p class="sub">property-fast-track · v0.4 · build 7f4a-31bd · ancre 0xa3·1e</p>
+              <div class="bsim-deploy-grid">
+                <div class="approval-tile"><span class="tile-key">Anneau</span><span class="tile-val">G0</span><span class="tile-sub">canary · 0 % trafic</span></div>
                 <div class="approval-tile"><span class="tile-key">Flag</span><span class="tile-val">off</span><span class="tile-sub">pf_orchestrator · posthog</span></div>
-                <div class="approval-tile"><span class="tile-key">Audit</span><span class="tile-val">anchored</span><span class="tile-sub">0xa3·1e · external chain</span></div>
-                <div class="approval-tile"><span class="tile-key">Healthcheck</span><span class="tile-val">200</span><span class="tile-sub">latency p50 87ms</span></div>
+                <div class="approval-tile"><span class="tile-key">Audit</span><span class="tile-val">ancré</span><span class="tile-sub">0xa3·1e · chaîne externe</span></div>
+                <div class="approval-tile"><span class="tile-key">Healthcheck</span><span class="tile-val">200</span><span class="tile-sub">latence p50 87 ms</span></div>
               </div>
-              <div style="display:flex;gap:14px;justify-content:center;margin-top:18px">
-                <button class="btn" id="b-promote">Promote to G1 · 5%</button>
-                <a class="btn btn-primary" href="./canvas.html">Open canvas →</a>
+              <div class="bsim-deploy-actions">
+                <button class="btn" id="b-promote">Promouvoir vers G1 · 5 %</button>
+                <a class="btn btn-primary" href="./canvas.html">Ouvrir le canevas →</a>
               </div>
             </div>
           </div>
@@ -998,8 +1002,8 @@ const CodexBuilder = (() => {
       const t = Math.min(1, (now - startMs) / dur);
       tokens = Math.round(startT + (tt - startT) * t);
       cost = +(startC + (ct - startC) * t).toFixed(2);
-      $('bsim-tok').textContent = tokens.toLocaleString() + ' / 80k';
-      $('bsim-cost').textContent = `€${cost.toFixed(2)} / €5.00`;
+      $('bsim-tok').textContent = tokens.toLocaleString('fr-FR') + ' / 80k';
+      $('bsim-cost').textContent = `€${cost.toFixed(2).replace('.', ',')} / €5,00`;
       $('bsim-bar').style.width = (idx / 8 * 100).toFixed(0) + '%';
       if (t < 1) requestAnimationFrame(step);
     }
@@ -1023,7 +1027,7 @@ const CodexBuilder = (() => {
     });
     setRailState(idx);
     setBudget(idx);
-    setRunhead(`RUNNING · MOVEMENT ${idx}/8`, 'azur');
+    setRunhead(`EN COURS · MOUVEMENT ${idx}/8`, 'azur');
     if (m.onRender) m.onRender();
     // Stream chat
     (m.chat || []).forEach(c => {
@@ -1048,8 +1052,9 @@ const CodexBuilder = (() => {
 
   function finish() {
     setRailState(9); // all done
-    setRunhead('SHIPPED · 8/8 MOVEMENTS', 'azur');
-    $('bsim-play').textContent = '▶ Replay simulation';
+    setRunhead('LIVRÉ · 8/8 MOUVEMENTS', 'azur');
+    $('bsim-play').textContent = '▶ Rejouer la simulation';
+    $('bsim-play').disabled = false;
     running = false;
   }
 
@@ -1057,7 +1062,7 @@ const CodexBuilder = (() => {
     if (running) return;
     if (mvIdx >= 8) reset();
     running = true;
-    $('bsim-play').textContent = 'Running…';
+    $('bsim-play').textContent = 'En cours…';
     $('bsim-play').disabled = true;
     advance();
   }
@@ -1071,16 +1076,16 @@ const CodexBuilder = (() => {
     running = false;
     document.querySelectorAll('#bsim-steps li').forEach(li => li.classList.remove('done', 'active'));
     $('bsim-tok').textContent = '0 / 80k';
-    $('bsim-cost').textContent = '€0.00 / €5.00';
+    $('bsim-cost').textContent = '€0,00 / €5,00';
     $('bsim-bar').style.width = '0%';
     $('bsim-chat').innerHTML = '';
     $('bsim-body').innerHTML = '';
-    $('bsim-eyebrow').textContent = 'Movement 0 · Idle';
-    $('bsim-title').innerHTML = 'Press <em>play</em> to compose.';
-    $('bsim-lede').textContent = 'Simulate the eight movements of a pilot composition — from intake through deploy — with fake content streaming end-to-end.';
-    $('bsim-play').textContent = '▶ Play simulation';
+    $('bsim-eyebrow').textContent = 'Mouvement 0 · Au repos';
+    $('bsim-title').innerHTML = 'Lancez la <em>composition</em>.';
+    $('bsim-lede').textContent = "Simulez les huit mouvements d'une composition de pilote — de la prise en charge au déploiement — avec un contenu factice qui se diffuse en bout-en-bout.";
+    $('bsim-play').textContent = '▶ Lancer la simulation';
     $('bsim-play').disabled = false;
-    setRunhead('IDLE · MOVEMENT 0/8', 'yellow');
+    setRunhead('AU REPOS · MOUVEMENT 0/8', 'yellow');
   }
 
   function init() {

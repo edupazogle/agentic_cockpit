@@ -1,0 +1,790 @@
+
+/* ============================================================================
+   BSIM — Builder simulation layout
+   3-column shell · left rail (steps + budget) · center (runhead + body) · right (chat)
+   Matches Canopée chrome: white surfaces, AXA-blue accents, Slash radii.
+   ============================================================================ */
+
+.bsim-shell {
+  display: grid;
+  grid-template-columns: 320px 1fr 380px;
+  height: calc(100dvh - 76px);
+  border-top: 1px solid var(--rule);
+  background: var(--white);
+}
+@media (max-width: 1280px) { .bsim-shell { grid-template-columns: 280px 1fr 340px; } }
+@media (max-width: 1024px) { .bsim-shell { grid-template-columns: 240px 1fr 0; } .bsim-chat-rail { display: none; } }
+
+/* ── LEFT RAIL ─────────────────────────────────────────────────────────── */
+.bsim-rail {
+  background: var(--paper-warm) !important;
+  border-right: 1px solid var(--rule);
+  padding: 32px 24px 28px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.bsim-rail-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--axa-blue);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.bsim-rail-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+  color: var(--gray-1000);
+  margin: 0 0 28px;
+}
+.bsim-rail-title em {
+  font-family: var(--font-italic);
+  font-style: italic !important;
+  font-weight: 500;
+  color: var(--axa-blue);
+  display: block;
+  margin-top: 2px;
+}
+
+/* steps list — Slash discipline, mono index, AXA-blue active bar */
+#bsim-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+#bsim-steps .s {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  padding: 14px 12px 14px 14px;
+  margin: 0 -12px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  cursor: default;
+  transition: background var(--t-fast), padding var(--t-fast);
+}
+#bsim-steps .s::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: transparent;
+  border-radius: 2px;
+  transition: background var(--t-fast);
+}
+#bsim-steps .s .ix {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--gray-500);
+  letter-spacing: 0.05em;
+  padding-top: 3px;
+  text-transform: lowercase;
+}
+#bsim-steps .s .nm {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--gray-1000);
+  line-height: 1.3;
+  display: block;
+}
+#bsim-steps .s .nm em {
+  font-family: var(--font-sans);
+  font-style: normal !important;
+  font-weight: 400;
+  color: var(--gray-500);
+  font-size: 11.5px;
+  display: block;
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+#bsim-steps .s.done .ix { color: var(--color-success); }
+#bsim-steps .s.done .ix::after { content: " ✓"; }
+#bsim-steps .s.done .nm { color: var(--gray-800); }
+#bsim-steps .s.active {
+  background: var(--white);
+  box-shadow: var(--shadow-halo);
+}
+#bsim-steps .s.active::before { background: var(--axa-blue); }
+#bsim-steps .s.active .ix { color: var(--axa-blue); font-weight: 600; }
+#bsim-steps .s.active .nm { color: var(--axa-blue); }
+#bsim-steps .s:not(.done):not(.active) .nm { color: var(--gray-500); }
+
+/* budget panel — pinned to bottom */
+.bsim-budget {
+  margin-top: auto;
+  padding: 16px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bsim-budget-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.bsim-budget-k {
+  color: var(--gray-500);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bsim-budget-v {
+  color: var(--axa-blue);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.bsim-budget-bar {
+  height: 4px;
+  background: var(--gray-80);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.bsim-budget-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--axa-blue), var(--axa-azur));
+  transition: width 700ms var(--ease);
+}
+
+/* ── CENTER CANVAS ─────────────────────────────────────────────────────── */
+.bsim-canvas {
+  background: var(--white) !important;
+  overflow-y: auto;
+  padding: 48px 56px 88px;
+}
+.bsim-runhead {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+.bsim-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--axa-blue);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.bsim-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(34px, 4vw, 52px);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--gray-1000);
+  margin: 0 0 14px;
+}
+.bsim-title em {
+  font-family: var(--font-italic);
+  font-style: italic !important;
+  color: var(--axa-blue);
+  font-weight: 500;
+}
+.bsim-lede {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--gray-500);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.bsim-body {
+  margin-top: 28px;
+  max-width: 920px;
+}
+
+/* shared sub-section grid (margin notes + body) */
+.bsim-body .section {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  margin-top: 0;
+}
+.bsim-body .marg {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  line-height: 1.6;
+}
+.bsim-body .marg .num {
+  font-family: var(--font-mono);
+  font-style: normal !important;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--axa-blue);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  display: block;
+}
+.bsim-body .body h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+  color: var(--gray-1000);
+  margin: 0 0 14px;
+}
+.bsim-body .body h3 em {
+  font-family: var(--font-italic);
+  font-style: italic !important;
+  color: var(--axa-blue);
+  font-weight: 500;
+}
+.bsim-body .body p {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gray-800);
+  margin: 0 0 14px;
+}
+.bsim-body .body p em {
+  font-family: var(--font-mono);
+  font-style: normal !important;
+  font-size: 13px;
+  background: var(--axa-blue-bg);
+  color: var(--axa-blue);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* MOVEMENT I · INTAKE — fields */
+.bsim-body .fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  margin-top: 8px;
+}
+.bsim-body .fields .full { grid-column: span 2; }
+.bsim-body .field-codex {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.bsim-body .field-codex label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--axa-blue);
+  font-weight: 600;
+}
+.bsim-body .field-codex input,
+.bsim-body .field-codex textarea {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--gray-1000);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--gray-140);
+  border-radius: 0;
+  padding: 8px 0;
+  outline: none;
+  transition: border-color var(--t-fast), padding-bottom var(--t-fast);
+}
+.bsim-body .field-codex textarea {
+  min-height: 84px;
+  line-height: 1.55;
+  resize: vertical;
+}
+.bsim-body .field-codex input:focus,
+.bsim-body .field-codex textarea:focus {
+  border-bottom: 2px solid var(--axa-blue);
+  padding-bottom: 7px;
+}
+
+/* MOVEMENT I · drop cap intro paragraph */
+.bsim-body p.dropcap {
+  font-family: var(--font-sans) !important;
+  font-style: normal !important;
+  font-size: 15.5px !important;
+  line-height: 1.65 !important;
+  color: var(--gray-800) !important;
+  border-left: 3px solid var(--axa-blue);
+  padding-left: 18px !important;
+  margin: 14px 0 24px !important;
+}
+.bsim-body p.dropcap::first-letter { all: unset; }
+
+/* MOVEMENT II · CITATIONS */
+.cit-stream { list-style: none; padding: 0; margin: 16px 0 0; }
+.cit-row {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.cit-row > div { flex: 1; }
+.cit-row .tag {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px !important;
+  border-radius: 3px !important;
+}
+
+/* MOVEMENT III · FLOW LIST */
+.bsim-body .flow-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.bsim-body .flow-list .row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  background: var(--white);
+  transition: border-color var(--t-fast);
+}
+.bsim-body .flow-list .row.gate {
+  border-color: rgba(0,0,143,.22);
+  background: var(--axa-blue-bg);
+}
+.bsim-body .flow-list .row .ix {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--gray-500);
+}
+.bsim-body .flow-list .row .name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--gray-1000);
+  letter-spacing: -0.012em;
+}
+.bsim-body .flow-list .row .name em {
+  font-family: var(--font-sans);
+  font-style: normal !important;
+  font-weight: 400;
+  color: var(--gray-500);
+  display: block;
+  font-size: 12.5px;
+  margin-top: 2px;
+}
+.bsim-body .flow-list .row.gate .name { color: var(--axa-blue); }
+.bsim-body .flow-list .row .tag {
+  font-size: 10px !important;
+  padding: 3px 8px !important;
+  border-radius: 3px !important;
+}
+
+/* MOVEMENT IV · APPROVE — capability bundle */
+.bsim-approve {
+  background: var(--paper-warm);
+  border: 1px solid var(--axa-cream);
+  border-radius: var(--radius-md);
+  padding: 28px 32px;
+  margin-top: 8px;
+}
+.bsim-approve h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--axa-blue);
+  margin: 0 0 18px;
+  font-weight: 600;
+}
+.bsim-approve-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.bsim-cap-tile {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+.bsim-cap-tile .k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  display: block;
+  margin-bottom: 6px;
+}
+.bsim-cap-tile .v {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--gray-1000);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.bsim-cap-tile .v code {
+  background: var(--axa-blue-bg);
+  color: var(--axa-blue);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+.bsim-approve-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.bsim-approve-actions .hint {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-500);
+  letter-spacing: 0.04em;
+}
+
+/* MOVEMENT VI · LINT */
+.lint-stream {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lint-row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--gray-800);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.lint-row .lint-pip {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--gray-500);
+  text-align: center;
+}
+.lint-row.ok {
+  border-color: rgba(26,127,55,.28);
+  background: rgba(26,127,55,.04);
+}
+.lint-row.ok .lint-pip { color: var(--color-success); font-weight: 700; }
+.lint-row.ok .lint-text { color: var(--gray-1000); }
+
+/* MOVEMENT VII · PREVIEW */
+.prev-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 28px;
+  padding: 22px 24px;
+  background: var(--paper-warm);
+  border: 1px solid var(--axa-cream);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+}
+.prev-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gray-500);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.prev-node .prev-pip {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gray-140);
+  transition: background var(--t-fast), box-shadow var(--t-fast);
+}
+.prev-node.lit {
+  border-color: var(--axa-blue);
+  color: var(--axa-blue);
+  background: var(--axa-blue-bg);
+}
+.prev-node.lit .prev-pip {
+  background: var(--axa-blue);
+  box-shadow: 0 0 0 3px var(--axa-blue-bg);
+}
+.prev-edge {
+  width: 24px;
+  height: 1px;
+  background: var(--gray-140);
+}
+.prev-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.prev-met {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.prev-met span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+.prev-met strong {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--axa-blue);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* MOVEMENT V · BUILD — code window */
+.bsim-body .body > div[style*="background:var(--ink-strong)"],
+.bsim-codeblock {
+  background: var(--gray-1000) !important;
+  color: #e5e7eb !important;
+  border-radius: var(--radius-sm) !important;
+  margin-top: 16px !important;
+  overflow: hidden;
+}
+.bsim-body pre#b-code {
+  margin: 0;
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+  color: #e5e7eb !important;
+  white-space: pre-wrap;
+}
+
+/* MOVEMENT VIII · DEPLOY — confirmation hero */
+.bsim-deploy {
+  background: linear-gradient(180deg, var(--axa-blue-bg), var(--white));
+  border: 1px solid rgba(0,0,143,.18);
+  border-radius: var(--radius-lg);
+  padding: 48px 36px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.bsim-deploy::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--axa-blue), var(--axa-azur));
+}
+.bsim-deploy-check {
+  display: inline-flex;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--axa-blue);
+  color: var(--white);
+  align-items: center; justify-content: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 0 10px var(--axa-blue-bg), 0 12px 32px rgba(0,0,143,.18);
+}
+.bsim-deploy h3 {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  font-size: 42px !important;
+  letter-spacing: -0.025em !important;
+  color: var(--gray-1000) !important;
+  margin: 0 0 8px !important;
+}
+.bsim-deploy h3 em {
+  font-family: var(--font-italic);
+  font-style: italic !important;
+  color: var(--axa-blue);
+}
+.bsim-deploy .sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+  margin: 0 0 32px;
+}
+.bsim-deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 0 0 28px;
+  text-align: left;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.approval-tile {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.approval-tile .tile-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+.approval-tile .tile-val {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--axa-blue);
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+.approval-tile .tile-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--gray-500);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+.bsim-deploy-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ── RIGHT CHAT RAIL ───────────────────────────────────────────────────── */
+.bsim-chat-rail {
+  background: var(--white) !important;
+  border-left: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.bsim-chat-eyebrow {
+  padding: 22px 24px 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--axa-blue);
+  font-weight: 600;
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; gap: 10px;
+}
+.bsim-chat-eyebrow .pip {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(26,127,55,.18);
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.92); }
+}
+.bsim-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+.bsim-chat .msg-c {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.bsim-chat .msg-c .by {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+.bsim-chat .msg-c .body {
+  font-family: var(--font-sans) !important;
+  font-style: normal !important;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--gray-1000);
+  background: var(--gray-50);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--axa-azur);
+  margin: 0;
+}
+.bsim-chat .msg-c.ai .body {
+  border-left-color: var(--axa-blue);
+}
+.bsim-chat .msg-c .body strong { font-weight: 600; color: var(--axa-blue); }
+.bsim-chat .msg-c .body em {
+  font-family: var(--font-mono);
+  font-style: normal !important;
+  font-size: 12.5px;
+  background: var(--axa-blue-bg);
+  color: var(--axa-blue);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.bsim-chat .msg-c .body code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--axa-blue-bg);
+  color: var(--axa-blue);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.bsim-chat .msg-c .citation {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--gray-500);
+  letter-spacing: 0.04em;
+  padding: 6px 0 0 14px;
+  border-top: none;
+}
+
+/* tag color variants used by builder (yellow/blue/azur on #bsim-tag) */
+.tag.yellow { background: rgba(160, 90, 0, .10); color: var(--color-warning); border-color: rgba(160, 90, 0, .22); }
+.tag.blue { background: var(--axa-blue-bg); color: var(--axa-blue); border-color: rgba(0,0,143,.22); }
+#bsim-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+#bsim-tag .pip {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
