@@ -93,7 +93,7 @@ jobs:
               --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | "  - " + .filename' | head -20)
             gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
               --method POST \
-              --field body=$"❌ **Refused merge.** PR #$PR removes $PROTECTED_FILES file(s) from protected paths:\n\n$FILE_LIST\n\nProtected paths: \`design-proposal/\`, \`app/\`, \`gateway/\`, \`db/migrations/\`, \`flows/\`, \`infra/\`, \`.github/\`. If intentional, audit the diff and reply with \`/force-merge\`."
+              --field body=$'❌ **Refused merge.** PR #'"$PR"' removes '"$PROTECTED_FILES"' file(s) from protected paths:\n\n'"$FILE_LIST"'\n\nProtected paths: `design-proposal/`, `app/`, `gateway/`, `db/migrations/`, `flows/`, `infra/`, `.github/`. If intentional, audit the diff and reply with `/force-merge`.'
             exit 1
           fi
           echo "✅ Deletion guard passed (deletions=$DEL, additions=$ADD, mergeable_state=$MS)"
@@ -224,7 +224,7 @@ jobs:
               --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | "  - " + .filename' | head -20)
             gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
               --method POST \
-              --field body=$"❌ **Refused merge.** PR #$PR removes $PROTECTED_FILES file(s) from protected paths:\n\n$FILE_LIST\n\nManual audit required."
+              --field body=$'❌ **Refused merge.** PR #'"$PR"' removes '"$PROTECTED_FILES"' file(s) from protected paths:\n\n'"$FILE_LIST"'\n\nManual audit required.'
             exit 1
           fi
           echo "✅ Deletion guard passed"
