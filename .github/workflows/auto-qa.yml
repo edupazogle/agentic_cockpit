@@ -1,0 +1,84 @@
+name: Auto-delegate QA to GitHub Copilot
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+    branches: [main]
+
+jobs:
+  delegate-qa:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Find linked Linear issue via branch name
+        id: extract
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Branch: $BRANCH"
+          # Branch format: edupazogle/axa-N-slug
+          ISSUE_KEY=$(echo "$BRANCH" | grep -oE 'axa-[0-9]+' | head -1 | tr '[:lower:]' '[:upper:]' | sed 's/AXA-/AXA-/')
+          echo "Linear issue key: $ISSUE_KEY"
+          echo "issue_key=$ISSUE_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub issue for Copilot QA
+        id: create_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          BRANCH="${{ github.head_ref }}"
+          ISSUE_KEY="${{ steps.extract.outputs.issue_key }}"
+          TITLE="${{ github.event.pull_request.title }}"
+
+          BODY="## QA Review Request (automated)
+
+          **Triggered by:** PR #${PR_NUMBER} opened
+          **Linear issue:** ${ISSUE_KEY}
+          **PR to review:** ${PR_URL}
+          **Branch:** \`${BRANCH}\`
+          **Agent profile:** \`.github/agents/qa-reviewer.agent.md\`
+
+          Please:
+          1. Review all changed files in PR #${PR_NUMBER}
+          2. Post a 4-section QA report (SOLID · Security · Code Quality · Removal Candidates) as a comment on this issue AND on the PR
+          3. State your recommendation: 🟢 Ready / 🟡 Caution / 🔴 Blocker
+
+          Do NOT write any new code or open any new PRs."
+
+          ISSUE_NUMBER=$(gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "[QA] ${ISSUE_KEY} — Review PR #${PR_NUMBER}" \
+            --body "$BODY" \
+            --json number --jq '.number')
+
+          echo "Created issue #$ISSUE_NUMBER"
+          echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Assign Copilot to the QA issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="${{ steps.create_issue.outputs.issue_number }}"
+          gh api "repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/assignees" \
+            --method POST \
+            --field "assignees[]=copilot-swe-agent[bot]" \
+            --raw-field "agent_assignment[target_repo]=${{ github.repository }}" \
+            --raw-field "agent_assignment[base_branch]=main" \
+            --raw-field "agent_assignment[custom_agent]=qa-reviewer"
+          echo "Copilot assigned to issue #$ISSUE_NUMBER"
+
+      - name: Comment on PR with QA issue link
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="${{ steps.create_issue.outputs.issue_number }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          gh pr comment "$PR_NUMBER" \
+            --repo "${{ github.repository }}" \
+            --body "🤖 **GitHub Copilot QA started** — tracking in issue #${ISSUE_NUMBER}. Report will appear there and here once complete."
