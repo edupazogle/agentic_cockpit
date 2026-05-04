@@ -60,6 +60,43 @@ jobs:
           fi
           echo "head_ref=$HEAD_REF" >> "$GITHUB_OUTPUT"
 
+      - name: Deletion guard — block PRs that drop tracked files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=${{ steps.parse.outputs.pr_number }}
+          STATS=$(gh api repos/${{ github.repository }}/pulls/$PR --jq '{deletions, additions, mergeable_state, base_sha: .base.sha, head_sha: .head.sha}')
+          DEL=$(echo "$STATS"  | jq -r '.deletions')
+          ADD=$(echo "$STATS"  | jq -r '.additions')
+          MS=$(echo "$STATS"   | jq -r '.mergeable_state')
+          # Hard fail on >500 net deletions (mass-deletion guardrail)
+          if [ "$DEL" -gt $((ADD + 500)) ]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body="❌ **Refused merge.** PR #$PR has $DEL deletions vs $ADD additions (net delta: $((ADD - DEL))). This exceeds the mass-deletion guardrail (500 lines). Manual review required — comment \`/force-merge\` after auditing the diff if intentional."
+            exit 1
+          fi
+          # Block PRs whose base is behind main (forces rebase)
+          if [ "$MS" = "behind" ] || [ "$MS" = "dirty" ]; then
+            gh api repos/${{ github.repository }}/pulls/$PR/update-branch --method PUT 2>/dev/null || true
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body="⚠️ PR base was behind main (\`$MS\`). I've requested an update; please re-run \`/approve-design\` after CI passes."
+            exit 1
+          fi
+          # Block PRs that delete files in protected paths without compensating additions
+          PROTECTED_FILES=$(gh api repos/${{ github.repository }}/pulls/$PR/files --paginate \
+            --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | .filename' | wc -l)
+          if [ "$PROTECTED_FILES" -gt 0 ]; then
+            FILE_LIST=$(gh api repos/${{ github.repository }}/pulls/$PR/files --paginate \
+              --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | "  - " + .filename' | head -20)
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body=$"❌ **Refused merge.** PR #$PR removes $PROTECTED_FILES file(s) from protected paths:\n\n$FILE_LIST\n\nProtected paths: \`design-proposal/\`, \`app/\`, \`gateway/\`, \`db/migrations/\`, \`flows/\`, \`infra/\`, \`.github/\`. If intentional, audit the diff and reply with \`/force-merge\`."
+            exit 1
+          fi
+          echo "✅ Deletion guard passed (deletions=$DEL, additions=$ADD, mergeable_state=$MS)"
+
       - name: Squash merge frontend PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -160,6 +197,40 @@ jobs:
               --method PATCH --field draft=false
           fi
           echo "head_ref=$HEAD_REF" >> "$GITHUB_OUTPUT"
+
+      - name: Deletion guard — block PRs that drop tracked files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=${{ steps.parse.outputs.pr_number }}
+          STATS=$(gh api repos/${{ github.repository }}/pulls/$PR --jq '{deletions, additions, mergeable_state}')
+          DEL=$(echo "$STATS"  | jq -r '.deletions')
+          ADD=$(echo "$STATS"  | jq -r '.additions')
+          MS=$(echo "$STATS"   | jq -r '.mergeable_state')
+          if [ "$DEL" -gt $((ADD + 500)) ]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body="❌ **Refused merge.** PR #$PR has $DEL deletions vs $ADD additions. Mass-deletion guardrail tripped — manual review required."
+            exit 1
+          fi
+          if [ "$MS" = "behind" ] || [ "$MS" = "dirty" ]; then
+            gh api repos/${{ github.repository }}/pulls/$PR/update-branch --method PUT 2>/dev/null || true
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body="⚠️ PR base was behind main (\`$MS\`). I've requested an update; re-run \`/approve-merge\` after CI passes."
+            exit 1
+          fi
+          PROTECTED_FILES=$(gh api repos/${{ github.repository }}/pulls/$PR/files --paginate \
+            --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | .filename' | wc -l)
+          if [ "$PROTECTED_FILES" -gt 0 ]; then
+            FILE_LIST=$(gh api repos/${{ github.repository }}/pulls/$PR/files --paginate \
+              --jq '.[] | select(.status=="removed") | select(.filename | test("^(design-proposal/|app/|gateway/|db/migrations/|flows/|infra/|.github/)")) | "  - " + .filename' | head -20)
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+              --method POST \
+              --field body=$"❌ **Refused merge.** PR #$PR removes $PROTECTED_FILES file(s) from protected paths:\n\n$FILE_LIST\n\nManual audit required."
+            exit 1
+          fi
+          echo "✅ Deletion guard passed"
 
       - name: Squash merge backend PR
         env:

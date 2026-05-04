@@ -1,0 +1,35 @@
+# GitHub CODEOWNERS — auto-assign reviews per path
+# Docs: https://docs.github.com/en/repositories/managing-your-repositories-settings-and-security/customizing-your-repository/about-code-owners
+#
+# Order matters: later patterns override earlier ones.
+# Combined with branch protection's "Require review from Code Owners",
+# any PR touching these paths requires the owner's approval.
+
+# Default: everything is owned by the repo admin
+*                            @edupazogle
+
+# ─── Frontend / design system ───
+/app/                        @edupazogle
+/components/                 @edupazogle
+/design-proposal/            @edupazogle
+/lib/client/                 @edupazogle
+*.css                        @edupazogle
+*.tsx                        @edupazogle
+
+# ─── Backend gateway (Python) ───
+/gateway/                    @edupazogle
+/lib/server/                 @edupazogle
+
+# ─── Database & infra (high blast radius) ───
+/db/migrations/              @edupazogle
+/infra/                      @edupazogle
+/flows/                      @edupazogle
+
+# ─── CI/CD & agent config (highest blast radius — tightest gate) ───
+/.github/                    @edupazogle
+/.github/workflows/          @edupazogle
+/.github/agents/             @edupazogle
+/.github/CODEOWNERS          @edupazogle
+
+# ─── Docs ───
+/docs/                       @edupazogle
