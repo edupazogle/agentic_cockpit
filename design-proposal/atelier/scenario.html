@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATELIER // SCENARIO RUN — CLM-2026-0042</title>
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- HEADER -->
+    <div class="shell-header">
+      <div class="brand"><span class="glyph"></span>ATELIER®</div>
+      <div class="path">
+        <span>OPS</span><span class="sep">/</span>
+        <span>PILOT // PROPERTY-FAST-TRACK</span><span class="sep">/</span>
+        <span>SCENARIO</span><span class="sep">/</span>
+        <span class="leaf hazard-text">CLM-2026-0042 :: RUN_8C4F :: HITL</span>
+        <span class="dim" style="margin-left:16px;">T+<span data-time>—</span></span>
+      </div>
+      <div class="header-actions row">
+        <button class="btn">PAUSE</button>
+        <button class="btn btn-ghost">RESTART</button>
+        <button class="btn btn-hazard" data-hitl-action="reject">ABORT</button>
+        <span style="width:1px; height:24px; background:var(--rule);"></span>
+        <span class="kbd">⌘</span><span class="kbd">K</span>
+      </div>
+    </div>
+
+    <!-- SUB STATUS -->
+    <div class="shell-substatus">
+      <div>RUN: <strong>run_8c4f3a91</strong></div>
+      <div>STATE: <strong class="hazard">HITL — PAUSED</strong></div>
+      <div>STAGE: <strong>03·DOCS</strong></div>
+      <div>STEP: <strong>08/14</strong></div>
+      <div>ELAPSED: <strong>02:18.640</strong></div>
+      <div>RESERVES: <strong>€2,300</strong></div>
+      <div>OPERATOR: <strong>cw-pool-2</strong></div>
+      <div class="hazard">SLA :: 23H 41M LEFT</div>
+    </div>
+
+    <!-- RAIL -->
+    <aside class="shell-rail">
+      <div class="rail-section">
+        <div class="rail-heading">RUN HISTORY (24H)</div>
+        <div class="rail-item live"><span class="marker"></span><span>run_8c4f… CLM-…0042</span><span class="id">HITL</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>run_71a2… CLM-…0041</span><span class="id">3.1S</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>run_5dee… CLM-…0040</span><span class="id">2.9S</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>run_9b13… CLM-…0039</span><span class="id">4.4S</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>run_3ff5… CLM-…0038</span><span class="id">2.7S</span></div>
+      </div>
+      <div class="rail-section">
+        <div class="rail-heading">EVIDENCE PACKET</div>
+        <div class="rail-item idle"><span class="marker"></span><span>policy.pdf</span><span class="id">2.1MB</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>fnol_voice.wav</span><span class="id">3:14</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>damage_report.pdf</span><span class="id">8 PAGES</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>photos.zip</span><span class="id">12 IMG</span></div>
+      </div>
+      <div class="rail-section">
+        <div class="rail-heading">TRACE</div>
+        <div class="rail-item idle"><span class="marker"></span><span>langfuse :: 9c2f…</span><span class="id">↗</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>chatwoot :: conv 8814</span><span class="id">↗</span></div>
+        <div class="rail-item idle"><span class="marker"></span><span>otel :: 17 spans</span><span class="id">↗</span></div>
+      </div>
+    </aside>
+
+    <!-- CANVAS — STAGE COLUMNS -->
+    <main class="shell-canvas">
+      <div class="canvas">
+        <div class="canvas-frame"><span class="bl"></span><span class="br"></span></div>
+      </div>
+
+      <!-- HITL HAZARD BANNER -->
+      <div class="hitl-banner">
+        <div class="hazard-stripe"></div>
+        <div class="body">
+          <div class="icon">!</div>
+          <div class="copy">
+            <div class="label">/// HUMAN-IN-THE-LOOP REQUIRED — STEP 08 / 14 ///</div>
+            <div class="title">RESERVES €2,300 EXCEED THRESHOLD €2,000</div>
+            <div class="muted" style="font-size:11px; margin-top:2px; text-transform:none; letter-spacing:0;">
+              Severity CAT1, confidence 0.87. Two similar prior cases (CLM-…0024, CLM-…0019) approved.
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-hazard" data-hitl-action="reject">REJECT</button>
+            <button class="btn" data-hitl-action="ask">ASK</button>
+            <button class="btn" data-hitl-action="approve" style="border-color:var(--terminal-green); color:var(--terminal-green);">APPROVE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGES -->
+      <div class="stages" style="top:160px;">
+
+        <section class="stage">
+          <div class="stage-head"><span><span class="num">01</span>NOTIFY</span><span class="lat">412 MS</span></div>
+          <div class="stage-body">
+            <div class="node gate-passed">
+              <div class="node-header"><span class="marker"></span><span>::: TRIGGER</span><span>OK</span></div>
+              <div class="node-body">
+                <div class="node-title">FNOL Webhook</div>
+                <div class="node-meta"><span>POST</span><span>3 MS</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span>G3</span><span class="lat">PASS</span></div>
+            </div>
+            <div class="node gate-passed">
+              <div class="node-header"><span class="marker"></span><span>::: AGENT</span><span>OK</span></div>
+              <div class="node-body">
+                <div class="node-title">Severity Triage</div>
+                <div class="node-meta"><span>nim/llama-3.1</span><span>2.1S</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span>G3</span><span class="lat">CAT1 / 0.87</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage">
+          <div class="stage-head"><span><span class="num">02</span>TRIAGE</span><span class="lat">1.8S</span></div>
+          <div class="stage-body">
+            <div class="node gate-passed">
+              <div class="node-header"><span class="marker"></span><span>::: MCP TOOL</span><span>OK</span></div>
+              <div class="node-body">
+                <div class="node-title">Claims Facade</div>
+                <div class="node-meta"><span>wfmcp03</span><span>412 MS</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span>G3</span><span class="lat">PASS</span></div>
+            </div>
+            <div class="node gate-passed">
+              <div class="node-header"><span class="marker"></span><span>::: AGENT</span><span>OK</span></div>
+              <div class="node-body">
+                <div class="node-title">Policy Cross-check</div>
+                <div class="node-meta"><span>nim/mistral-12b</span><span>0.9S</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span>G3</span><span class="lat">PASS</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage">
+          <div class="stage-head"><span><span class="num">03</span>DOCS<span class="hazard-text" style="margin-left:8px;">// HITL</span></span><span class="lat hazard-text">PAUSED</span></div>
+          <div class="stage-body">
+            <div class="node live">
+              <div class="node-header"><span class="marker"></span><span>::: MCP TOOL</span><span>RUN</span></div>
+              <div class="node-body">
+                <div class="node-title">Docling OCR</div>
+                <div class="node-meta"><span>wf-006</span><span>8.4S</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span>G2</span><span class="lat">96% CONF</span></div>
+            </div>
+            <div class="node hazard selected">
+              <div class="node-header"><span class="marker"></span><span>::: HITL GATE</span><span>HALT</span></div>
+              <div class="node-body">
+                <div class="node-title">Operator Review</div>
+                <div class="node-meta"><span>chatwoot</span><span>conv 8814</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i class="on"></i><i class="on"></i><i class="on"></i><i class="fail"></i></span><span class="hazard-text">PAUSED</span><span class="lat">€2,300</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage">
+          <div class="stage-head"><span><span class="num">04</span>DISPATCH</span><span class="lat dim">PENDING</span></div>
+          <div class="stage-body">
+            <div class="node">
+              <div class="node-header"><span class="marker"></span><span>::: AGENT</span><span>—</span></div>
+              <div class="node-body">
+                <div class="node-title">Reserves Set</div>
+                <div class="node-meta"><span>nim/mistral-12b</span><span>—</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i></i><i></i><i></i><i></i></span><span>WAIT</span><span class="lat">—</span></div>
+            </div>
+            <div class="node">
+              <div class="node-header"><span class="marker"></span><span>::: OUTPUT</span><span>—</span></div>
+              <div class="node-body">
+                <div class="node-title">Dispatch JSON</div>
+                <div class="node-meta"><span>v2</span><span>—</span></div>
+              </div>
+              <div class="node-foot"><span class="gate"><i></i><i></i><i></i><i></i></span><span>WAIT</span><span class="lat">—</span></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- INSPECTOR -->
+    <aside class="shell-inspector">
+      <h3>HITL ITEM :: HZ-2300</h3>
+      <h2>OPERATOR<br />REVIEW</h2>
+      <div class="muted" style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:8px;">RESERVES OVERAGE GATE — REQUIRES TIER-2 APPROVAL</div>
+
+      <div class="tabs">
+        <button class="active">DECISION</button><button>EVIDENCE</button><button>SIMILAR</button><button>AUDIT</button>
+      </div>
+
+      <dl class="dl">
+        <dt>CLAIM</dt><dd>CLM-2026-0042</dd>
+        <dt>POLICY</dt><dd>AXA-FR-PROP-…7714</dd>
+        <dt>SEVERITY</dt><dd>CAT1 / 0.87 conf</dd>
+        <dt>RESERVES</dt><dd class="hazard-text">€2,300</dd>
+        <dt>THRESHOLD</dt><dd>€2,000</dd>
+        <dt>OVERAGE</dt><dd>+15%</dd>
+        <dt>SLA</dt><dd>23H 41M</dd>
+        <dt>OP POOL</dt><dd>tier-2-claims (3 online)</dd>
+      </dl>
+
+      <h3>SIMILAR CASES (2)</h3>
+      <div class="evidence-card">
+        <div class="head"><span>CLM-2026-0024</span><span class="axa">APPROVED</span></div>
+        <div style="font-size:11px;">CAT1 reserves €2,180 — approved by m.rondonneau, 4d ago. Final paid €2,210.</div>
+      </div>
+      <div class="evidence-card">
+        <div class="head"><span>CLM-2026-0019</span><span class="axa">APPROVED</span></div>
+        <div style="font-size:11px;">CAT1 reserves €2,420 — approved by f.lucas, 9d ago. Final paid €2,395.</div>
+      </div>
+
+      <h3>RUN INVARIANTS</h3>
+      <div class="muted" style="font-size:10px; line-height:1.6; letter-spacing:0.06em;">
+        STATE :: HITL → RESUMABLE<br />
+        IDEMPOTENCY :: GUARANTEED VIA hitl_items.token<br />
+        AUDIT :: HASH-CHAINED → 0x9c2f…
+      </div>
+
+      <button class="btn btn-hazard" style="width:100%; margin-top:16px;" data-hitl-action="approve">
+        APPROVE — RESUME RUN
+      </button>
+    </aside>
+
+    <!-- TELEMETRY -->
+    <div class="shell-telemetry">
+      <div class="telemetry-heading">
+        <span>// LIVE TELEMETRY STREAM</span>
+        <span class="muted">PAUSED ON HITL // LAST SPAN gate.G2 // <span class="hazard-text">RESUME REQUIRES OPERATOR INPUT</span></span>
+      </div>
+      <div class="telemetry-stream"></div>
+    </div>
+
+  </div>
+
+  <!-- Palette -->
+  <div class="palette-overlay">
+    <div class="palette">
+      <div class="palette-input"><input type="text" placeholder="TYPE COMMAND..." /><span class="kbd">ESC</span></div>
+      <div class="tabs palette-tabs">
+        <button class="active">ACTION</button><button>RESOURCE</button><button>DOC</button>
+      </div>
+      <div class="palette-results">
+        <div class="palette-result"><span class="marker"></span><div><div>APPROVE HITL HZ-2300</div><div class="meta">REQUIRES JUSTIFICATION</div></div><span class="kbd">A</span></div>
+        <div class="palette-result"><span class="marker"></span><div><div>ESCALATE TO TIER-3</div><div class="meta">PAGES f.lucas</div></div></div>
+        <div class="palette-result"><span class="marker"></span><div><div>OPEN LANGFUSE TRACE</div><div class="meta">EXTERNAL</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./studio.js"></script>
+</body>
+</html>

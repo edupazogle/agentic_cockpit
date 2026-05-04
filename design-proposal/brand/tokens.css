@@ -1,0 +1,137 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   GDAI Agentic Cockpit — Brand Tokens
+   Built on AXA France's Canopée Design System (Slash B2B universe).
+
+   Layer order:
+     1. colors_and_type.css   — raw Canopée tokens (do not edit)
+     2. tokens.css            — cockpit additions + semantic overlays  ← this
+     3. components.css        — class layer that consumes the tokens
+
+   Slash is the right universe for the cockpit: B2B internal back-office,
+   square corners, dense layout, monospace IDs, bottom-shelf button shadow,
+   tabular numerics. Where Apollo and LF are emotive and editorial, Slash
+   is utilitarian and direct — appropriate for an operator console.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@import url("colors_and_type.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined");
+
+:root {
+  /* ───────── COCKPIT RUN STATES ─────────
+     Mirror the scenario_runs state machine: queued → running → (waiting → running)* → completed | failed
+     Hue logic: AXA blue for in-flight, gray for queued, amber-orange for waiting
+     (Canopée's --color-warning), green for completed, red for failed.            */
+
+  --run-queued-fg:     var(--gray-800);
+  --run-queued-bg:     var(--gray-50);
+  --run-queued-border: var(--gray-250);
+
+  --run-running-fg:     var(--axa-blue);
+  --run-running-bg:     var(--axa-blue-bg);
+  --run-running-border: var(--axa-blue-light);
+
+  --run-waiting-fg:     var(--color-warning);
+  --run-waiting-bg:     var(--color-warning-bg);
+  --run-waiting-border: #F4D6CB;
+
+  --run-completed-fg:     var(--color-success);
+  --run-completed-bg:     var(--color-success-bg);
+  --run-completed-border: #C9E8D2;
+
+  --run-failed-fg:     var(--color-error);
+  --run-failed-bg:     var(--color-error-bg);
+  --run-failed-border: #F2C7CD;
+
+  /* HITL queue urgency — same hue family, intensity scale */
+  --hitl-low:    var(--gray-500);
+  --hitl-med:    var(--color-warning);
+  --hitl-high:   var(--color-error);
+
+  /* ───────── LAYOUT ───────── */
+  --container-max:    1432px;  /* Slash widest breakpoint */
+  --container-narrow: 1140px;  /* Slash header width */
+  --topbar-h:         56px;
+  --tabbar-h:         48px;
+  --sidenav-w:        240px;
+
+  /* ───────── PAGE SURFACES ─────────
+     Slash places cards on a #F2F2F2 page bg. Keep it but allow a
+     blue-tinted surface for hero-state moments (a single pinned hero
+     KPI strip, never a full page).                                         */
+  --page-bg:        #F2F2F2;
+  --page-bg-tint:   var(--axa-blue-tint);   /* #F8F8FF */
+  --surface-card:   var(--white);
+  --surface-row-zebra: #FAFAFA;
+  --surface-th:     #F2F2F2;
+
+  /* ───────── BORDERS & SHADOWS — cockpit additions ───────── */
+  --shadow-card-hover: 0 0 0 2px var(--axa-blue), 0 0 9px 0 rgba(0,0,0,0.18);
+  --shadow-modal:      0 24px 60px rgba(0,0,91,.30);
+  --shelf-primary:     inset 0 -2px var(--axa-blue-deeper);
+  --shelf-ghost:       inset 0 -2px var(--axa-blue);
+  --shelf-danger:      inset 0 -2px var(--color-error-dark);
+  --shelf-success:     inset 0 -2px #094F25;
+  --focus-ring:        0 0 0 2px var(--white), 0 0 0 4px var(--axa-blue);
+
+  /* ───────── TYPOGRAPHY — cockpit overlays ─────────
+     Canopée gives us Publico (display) + Source Sans 3 (UI). We add
+     JetBrains Mono for IDs (run/pilot/claim ids, hex traces) which is
+     Slash-appropriate and sharper than ui-monospace at small sizes.        */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Tabular numerics token — applied wherever currency, counters, or IDs
+     line up in tables. Matches Slash's heavy use of fontVariantNumeric. */
+  --num-tabular: tabular-nums;
+
+  /* ───────── DENSITY — Slash is dense ───────── */
+  --row-h-compact: 36px;
+  --row-h-base:    44px;
+  --cell-pad-x:    12px;
+  --cell-pad-y:    10px;
+
+  /* ───────── ICON SIZES (Material Symbols) ───────── */
+  --icon-sm: 18px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+  --icon-hero: 48px;
+}
+
+/* ───────── REDUCED MOTION ─────────
+   Canopée mandates honoring prefers-reduced-motion (clamp transitions
+   to 0.01ms). We apply the same rule globally.                          */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ───────── BASE RESET (cockpit) ───────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--page-bg);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; }
+
+/* Material Symbols default sizing for the cockpit */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: var(--icon-md);
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Numeric / monospace utility — pair with .num for primes, IDs, counters */
+.num   { font-variant-numeric: var(--num-tabular); }
+.mono  { font-family: var(--font-mono); }
+.serif { font-family: var(--font-serif); }
+.display { font-family: var(--font-display); }

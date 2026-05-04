@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atrium — Workspace · GDAI Cockpit</title>
+<link rel="stylesheet" href="./atrium.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand"><span class="brand-glyph"></span> Atrium</a>
+    <nav class="crumbs">
+      <span>AXA · GDAI</span>
+      <span class="sep">/</span>
+      <span>Cockpit</span>
+      <span class="sep">/</span>
+      <span class="leaf">Workspace</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost"><svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="5"/><path d="m11 11 3 3"/></svg>Search <kbd>⌘K</kbd></button>
+      <a class="btn" href="./builder.html">Compose</a>
+      <a class="btn btn-primary" href="./canvas.html">Open canvas →</a>
+    </div>
+  </div>
+</header>
+
+<main class="viewport">
+  <section class="hero reveal">
+    <div class="eyebrow"><span class="dot"></span> Workspace · 14:42 CEST · Wed 13 May</div>
+    <h1 class="display" style="margin-top:18px">A cockpit for AXA's <em>agentic pilots</em>, written like a record book.</h1>
+    <p class="lede" style="margin-top:22px">Atrium is the editorial layer over GDAI's gateway — a living dossier of every claim our agents touch, every decision we ratify, every datum we trust. Authored runs, reviewed handovers, audited evidence.</p>
+
+    <div class="hero-meta reveal">
+      <div class="cell"><div class="label">Active runs</div><div class="value">37</div></div>
+      <div class="cell"><div class="label">Awaiting operator</div><div class="value">04</div></div>
+      <div class="cell"><div class="label">Median latency</div><div class="value">1.4s</div></div>
+      <div class="cell"><div class="label">Eval pass · 7d</div><div class="value">96.2%</div></div>
+    </div>
+  </section>
+
+  <section class="workspace-grid reveal">
+    <div class="workspace-table">
+      <div class="ws-row head">
+        <span>ID</span><span>Scenario</span><span>Owner</span><span>Pass</span><span>Runs</span><span></span>
+      </div>
+
+      <a class="ws-row" href="./canvas.html">
+        <span class="id">PFT-014</span>
+        <div>
+          <div class="title">Property fast track</div>
+          <div class="desc">Auto-triage water-damage claims with photo evidence + adjuster handover.</div>
+          <div style="margin-top:8px;display:flex;gap:6px"><span class="tag green"><span class="pip"></span>G2</span><span class="tag blue"><span class="pip"></span>Langflow</span></div>
+        </div>
+        <span class="num">claire.b</span>
+        <span class="num">98.4%</span>
+        <span class="num">12,481</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="ws-row" href="./canvas.html">
+        <span class="id">MFL-007</span>
+        <div>
+          <div class="title">Motor fleet</div>
+          <div class="desc">Fleet incident triage with telematics + body-shop allocation.</div>
+          <div style="margin-top:8px;display:flex;gap:6px"><span class="tag yellow"><span class="pip"></span>G1</span><span class="tag blue"><span class="pip"></span>Langflow</span></div>
+        </div>
+        <span class="num">marc.l</span>
+        <span class="num">94.8%</span>
+        <span class="num">3,127</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="ws-row" href="./canvas.html">
+        <span class="id">SUB-002</span>
+        <div>
+          <div class="title">Subrogation pre-screen</div>
+          <div class="desc">Identify subrogation candidates from incident notes + damage descriptors.</div>
+          <div style="margin-top:8px;display:flex;gap:6px"><span class="tag"><span class="pip"></span>G0</span><span class="tag"><span class="pip"></span>Preview</span></div>
+        </div>
+        <span class="num">sara.m</span>
+        <span class="num">—</span>
+        <span class="num">214</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="ws-row" href="./builder.html">
+        <span class="id">+ NEW</span>
+        <div>
+          <div class="title" style="color:var(--axa-azur)">Compose a scenario…</div>
+          <div class="desc">Describe the pilot in plain language. Atrium drafts the plan, lints the bundle, runs a sandbox preview.</div>
+        </div>
+        <span></span><span></span><span></span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <aside class="workspace-aside">
+      <div class="aside-card">
+        <div class="eyebrow" style="margin-bottom:14px"><span class="dot" style="background:var(--axa-azur)"></span> Pulse · today</div>
+        <div class="pulse-row"><span class="label">Runs completed</span><span class="value">2,184</span></div>
+        <div class="pulse-row"><span class="label">Auto-resolved</span><span class="value">87.3%</span></div>
+        <div class="pulse-row"><span class="label">Operator queue</span><span class="value">04 · ~14m</span></div>
+        <div class="pulse-row"><span class="label">Cost today</span><span class="value">€41.20</span></div>
+        <div class="pulse-row"><span class="label">P99 latency</span><span class="value">3.2s</span></div>
+      </div>
+
+      <div class="aside-card">
+        <div class="eyebrow" style="margin-bottom:14px"><span class="dot" style="background:var(--pale-yellow-ink)"></span> Needs attention</div>
+        <ul style="display:flex;flex-direction:column;gap:10px;font-size:13px">
+          <li><strong style="color:var(--ink-strong);font-weight:600">CLM-2026-0042</strong><br><span style="color:var(--mute)">Awaiting operator · 08:14 elapsed</span></li>
+          <li><strong style="color:var(--ink-strong);font-weight:600">CLM-2026-0048</strong><br><span style="color:var(--mute)">Eval flagged · tone judge 0.71</span></li>
+          <li><strong style="color:var(--ink-strong);font-weight:600">PFT-014 / canary</strong><br><span style="color:var(--mute)">G2 ladder gate · review by Fri</span></li>
+        </ul>
+      </div>
+
+      <div class="card note">
+        <h4 style="margin-bottom:6px">A note from compliance</h4>
+        <p style="font-size:13px;line-height:1.55">Audit anchor for batch <code style="font-family:var(--font-mono)">2026-W19-04</code> rolled to chain. Verify before EOD.</p>
+      </div>
+    </aside>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="reveal">
+    <div class="eyebrow" style="margin-bottom:14px"><span class="dot"></span> Recent activity</div>
+    <h2 class="serif">Today's record</h2>
+    <p class="lede" style="margin-top:14px">Every action touches the audit chain. The narrative below is generated from Langfuse traces and persisted in <code style="font-family:var(--font-mono);font-size:0.92em">audit_log</code>.</p>
+
+    <div style="margin-top:32px;border-top:1px solid var(--rule)">
+      <div style="padding:18px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline">
+        <span style="font-family:var(--font-mono);font-size:11.5px;color:var(--mute)">14:38:11</span>
+        <div><strong style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--ink-strong)">Operator approved</strong> handover for CLM-2026-0041 — €4,820 reimbursement authorised, NemoClaw notified.</div>
+        <span class="tag green"><span class="pip"></span>resolved</span>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline">
+        <span style="font-family:var(--font-mono);font-size:11.5px;color:var(--mute)">14:36:02</span>
+        <div><strong style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--ink-strong)">PFT-014 paused</strong> at <code style="font-family:var(--font-mono);font-size:0.92em">decide_fast_track</code> — confidence 0.78 below 0.85 floor, routed to operator queue.</div>
+        <span class="tag yellow"><span class="pip"></span>waiting</span>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline">
+        <span style="font-family:var(--font-mono);font-size:11.5px;color:var(--mute)">14:34:47</span>
+        <div><strong style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--ink-strong)">Builder draft saved</strong> for "Subrogation pre-screen" — bundle lint passed, 4 capability declarations, preview ready.</div>
+        <span class="tag blue"><span class="pip"></span>draft</span>
+      </div>
+      <div style="padding:18px 0;display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline">
+        <span style="font-family:var(--font-mono);font-size:11.5px;color:var(--mute)">14:32:19</span>
+        <div><strong style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--ink-strong)">Eval batch</strong> for PFT-014 closed — factual 0.96 / policy 0.98 / tone 0.94. No regressions on golden set.</div>
+        <span class="tag green"><span class="pip"></span>passed</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div>Atrium · taste stack: minimalist-ui + design-taste-frontend · variance 4 · motion 5 · density 6</div>
+    <div>Pilot: gdai-default · Langfuse 7f4a-31bd</div>
+  </footer>
+</main>
+
+<script src="./atrium.js"></script>
+</body>
+</html>

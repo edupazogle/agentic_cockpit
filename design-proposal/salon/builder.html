@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salon · Compose</title>
+<link rel="stylesheet" href="./salon.css">
+<style>
+  .builder-wrap-s { display: grid; grid-template-columns: 296px 1fr 380px; height: calc(100vh - 88px); }
+  .build-rail-s { border-right: 1px solid var(--rule); padding: 22px 22px; overflow-y: auto; background: var(--paper); }
+  .build-rail-s h4 { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 500; }
+  .step-rail-s { display: flex; flex-direction: column; gap: 0; }
+  .step-rail-s .item {
+    display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 13px 4px; align-items: center;
+    border-bottom: 1px dotted var(--rule-soft); cursor: pointer; transition: all 200ms var(--ease);
+    text-align: left; background: transparent;
+  }
+  .step-rail-s .item:last-child { border-bottom: 0; }
+  .step-rail-s .item:hover { background: var(--bone-warm); }
+  .step-rail-s .item .ic-step-s { width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--rule); display: inline-flex; align-items: center; justify-content: center; color: var(--ink-3); background: var(--paper); }
+  .step-rail-s .item .ic-step-s svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+  .step-rail-s .item .ttl { font-family: var(--font-display); font-weight: 500; font-size: 16px; color: var(--ink-1); letter-spacing: -0.018em; }
+  .step-rail-s .item .ttl em { font-style: italic; color: var(--gold-deep); }
+  .step-rail-s .item .sub { font-family: var(--font-display); font-style: italic; font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+  .step-rail-s .item.done .ic-step-s { background: var(--moss-soft); border-color: var(--moss); color: var(--moss); }
+  .step-rail-s .item.done .ttl { color: var(--ink-0); }
+  .step-rail-s .item.active { background: var(--gold-soft); padding-left: 4px; position: relative; }
+  .step-rail-s .item.active::before { content: ""; position: absolute; left: -22px; top: 0; bottom: 0; width: 2px; background: var(--gold); }
+  .step-rail-s .item.active .ic-step-s { background: var(--paper); border-color: var(--gold); color: var(--gold-deep); box-shadow: 0 0 0 4px rgba(212,175,85,0.18); }
+  .step-rail-s .item.active .ttl { color: var(--ink-0); }
+  .step-rail-s .item.locked { opacity: 0.40; cursor: not-allowed; }
+
+  .build-main-s { padding: 36px 48px; overflow-y: auto; }
+  .plan-grid-s { display: grid; grid-template-columns: repeat(5, 240px); gap: 28px; padding: 28px 0; }
+  .plan-step-s {
+    border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); padding: 18px;
+    position: relative; transition: all 200ms var(--ease);
+  }
+  .plan-step-s:hover { border-color: var(--gold); box-shadow: var(--shadow-soft); }
+  .plan-step-s .ic-cell-s { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bone-warm); display: inline-flex; align-items: center; justify-content: center; color: var(--ink-2); margin-bottom: 12px; }
+  .plan-step-s .ic-cell-s svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+  .plan-step-s .name { font-family: var(--font-display); font-weight: 500; font-size: 19px; letter-spacing: -0.020em; color: var(--ink-0); }
+  .plan-step-s .sub { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+  .plan-step-s .body { margin-top: 12px; font-family: var(--font-display); font-size: 13.5px; font-style: italic; color: var(--ink-2); line-height: 1.55; }
+  .plan-step-s::after {
+    content: ""; position: absolute; right: -22px; top: 50%; width: 18px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-leaf) 30%, var(--gold-leaf) 70%, transparent);
+  }
+  .plan-step-s:last-child::after { display: none; }
+
+  .build-chat-s { border-left: 1px solid var(--rule); background: var(--bone); display: flex; flex-direction: column; }
+  .chat-head-s { padding: 18px 24px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; background: var(--paper); }
+  .chat-head-s .ttl { font-family: var(--font-display); font-weight: 500; font-size: 18px; color: var(--ink-0); letter-spacing: -0.020em; }
+  .chat-head-s .ttl em { font-style: italic; color: var(--gold-deep); }
+  .chat-body-s { flex: 1; padding: 22px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+  .msg-s { padding: 14px 16px; border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 4px; }
+  .msg-s.ai { border-left: 2px solid var(--gold); }
+  .msg-s .who { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+  .msg-s .body { font-family: var(--font-display); font-size: 15px; color: var(--ink-1); line-height: 1.55; letter-spacing: -0.012em; }
+  .msg-s .body em { font-style: italic; color: var(--gold-deep); }
+  .msg-s .body strong { font-weight: 600; color: var(--ink-0); font-style: normal; }
+  .chat-input-s { padding: 16px 24px; border-top: 1px solid var(--rule); background: var(--paper); }
+  .chat-input-s textarea { width: 100%; min-height: 64px; resize: vertical; padding: 11px 14px; border: 1px solid var(--rule-soft); background: var(--bone); font-family: var(--font-display); font-size: 14.5px; color: var(--ink-0); outline: none; border-radius: 4px; line-height: 1.5; }
+  .chat-input-s textarea:focus { border-color: var(--gold); }
+  .chat-input-s .row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .chat-input-s kbd { font-family: var(--font-mono); font-size: 9.5px; padding: 1px 5px; border: 1px solid var(--rule); background: var(--bone-warm); color: var(--ink-2); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<header class="masthead-s">
+  <div class="masthead-inner-s">
+    <a class="brand-s" href="./index.html">
+      <span class="name">Salon</span>
+      <span class="vol">Composing · SUB-002 · subrogation · auto-saved 14:38</span>
+    </a>
+    <div class="dateline-s">
+      <span class="dot"></span><span>Drafting · Stage 03 of 08</span>
+      <span style="color:var(--gold)">·</span>
+      <span class="crumb">claire.b · sara.m</span>
+    </div>
+    <nav class="nav-s">
+      <a href="./index.html">Atelier</a>
+      <a href="./scenarios.html">Scenarios</a>
+      <a href="./builder.html" class="active">Compose</a>
+      <a href="./canvas.html">Run</a>
+    </nav>
+    <div style="display:flex;gap:6px">
+      <button class="btn-s sm">Save draft</button>
+      <button class="btn-s sm primary">Preview run →</button>
+    </div>
+  </div>
+</header>
+
+<div class="builder-wrap-s">
+
+  <aside class="build-rail-s">
+    <h4>Composition · 8 stages</h4>
+    <div class="step-rail-s">
+
+      <button class="item done">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span>
+        <span><span class="ttl">Intake</span><span class="sub">brief captured · 14:32</span></span>
+      </button>
+
+      <button class="item done">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+        <span><span class="ttl">Research</span><span class="sub">14 prior cases · 84% recovery</span></span>
+      </button>
+
+      <button class="item active">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></span>
+        <span><span class="ttl">Plan</span><span class="sub">5 steps · agent map drafted</span></span>
+      </button>
+
+      <button class="item locked">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+        <span><span class="ttl">Approve</span><span class="sub">human · pending</span></span>
+      </button>
+
+      <button class="item locked">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg></span>
+        <span><span class="ttl">Build</span><span class="sub">codegen · langflow flow</span></span>
+      </button>
+
+      <button class="item locked">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg></span>
+        <span><span class="ttl">Lint</span><span class="sub">policy · safety judges</span></span>
+      </button>
+
+      <button class="item locked">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+        <span><span class="ttl">Preview</span><span class="sub">synthetic-50 dry-run</span></span>
+      </button>
+
+      <button class="item locked">
+        <span class="ic-step-s"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span>
+        <span><span class="ttl">Deploy</span><span class="sub">canary · gate G0 · 1%</span></span>
+      </button>
+
+    </div>
+
+    <hr class="rule-leaf-s" style="margin: 28px 0 14px">
+
+    <h4>Knowledge linked</h4>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+      <span class="tag-s indigo"><span class="pip"></span>policy MR-118</span>
+      <span class="tag-s indigo"><span class="pip"></span>14 prior subrogation claims</span>
+      <span class="tag-s indigo"><span class="pip"></span>articles L113-2 · L121-12</span>
+      <span class="tag-s gold"><span class="pip"></span>SUB-FR-2 letter template</span>
+    </div>
+  </aside>
+
+  <main class="build-main-s">
+    <span class="eyebrow-s">Stage 03 of 08 · Plan</span>
+    <h1 class="hdline-s h2-s" style="margin-top:14px">An <em>agent map</em><br>for SUB-002.</h1>
+    <p class="lede-s" style="margin-top:14px;font-size:18px;max-width:64ch">
+      NemoClaw drafted five steps from your brief. Tap any step to revise; the assistant
+      on the right will explain the trade-offs and offer alternatives.
+    </p>
+
+    <hr class="rule-leaf-s" style="margin-top:28px">
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:16px">
+      <h3 class="hdline-s h3-s">Five-step subrogation drafter</h3>
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.06em">est. p95 · 5.8s · €2.10 / 1k runs</span>
+    </div>
+
+    <div class="plan-grid-s">
+
+      <div class="plan-step-s">
+        <div class="ic-cell-s"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <div class="name">Ingest</div>
+        <div class="sub">settled-claim webhook</div>
+        <p class="body">Pull settled claim row, validate fault was assigned to a third party, fetch original FNOL evidence bundle.</p>
+      </div>
+
+      <div class="plan-step-s">
+        <div class="ic-cell-s"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+        <div class="name">Match</div>
+        <div class="sub">claims_facade · MCP</div>
+        <p class="body">Lookup third-party insurer + recoverable amount. Falls back to manual queue if uninsured.</p>
+      </div>
+
+      <div class="plan-step-s">
+        <div class="ic-cell-s"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></div>
+        <div class="name">Draft</div>
+        <div class="sub">LetterMint · gpt-4o</div>
+        <p class="body">Compose the subrogation letter from template SUB-FR-2; cite recoverable lines and attach an evidence snapshot.</p>
+      </div>
+
+      <div class="plan-step-s">
+        <div class="ic-cell-s"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg></div>
+        <div class="name">Judge</div>
+        <div class="sub">policy + tone</div>
+        <p class="body">Two judges: policy compliance must clear 0.85, tone must hold "professional · neutral". Otherwise human review.</p>
+      </div>
+
+      <div class="plan-step-s">
+        <div class="ic-cell-s"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="name">Send</div>
+        <div class="sub">chatwoot · email</div>
+        <p class="body">Send certified letter via the insurer-to-insurer mailbox. Open a follow-up task in Chatwoot at T+14 days.</p>
+      </div>
+
+    </div>
+
+    <hr class="rule-leaf-s" style="margin-top:32px">
+
+    <div style="display:flex;gap:8px;margin-top:18px">
+      <button class="btn-s">Re-plan with constraints</button>
+      <button class="btn-s ghost">Add a step</button>
+      <button class="btn-s ghost">Export as JSON</button>
+      <span style="flex:1"></span>
+      <button class="btn-s primary">Approve plan → Build</button>
+    </div>
+
+  </main>
+
+  <aside class="build-chat-s">
+    <div class="chat-head-s">
+      <span class="ttl">NemoClaw <em>· at the desk</em></span>
+      <span class="tag-s moss"><span class="pip"></span>online</span>
+    </div>
+    <div class="chat-body-s">
+      <div class="msg-s">
+        <div class="who">Claire · 14:32</div>
+        <div class="body">Build a subrogation drafter for water-damage claims where fault was assigned to a third party. Use the existing claims_facade lookup and our SUB-FR-2 template.</div>
+      </div>
+      <div class="msg-s ai">
+        <div class="who">NemoClaw · 14:32</div>
+        <div class="body">I found <strong>14 settled claims</strong> from the past six months that fit the brief. They share a clean pattern — facade lookup → recoverable check → letter draft → judge → send. <em>Average recovery rate, 84%.</em></div>
+      </div>
+      <div class="msg-s ai">
+        <div class="who">NemoClaw · 14:33</div>
+        <div class="body">I drafted a five-step plan with two judges (policy + tone). My one concern: <strong>step 4 will be tight</strong> — tone judges run hot on legal letters. Want me to ladder a softer-tone variant for HITL options?</div>
+      </div>
+      <div class="msg-s">
+        <div class="who">Claire · 14:34</div>
+        <div class="body">Yes, prepare two variants for HITL.</div>
+      </div>
+      <div class="msg-s ai">
+        <div class="who">NemoClaw · 14:35</div>
+        <div class="body">Done. <em>Variant A</em> is the formal letter, <em>Variant B</em> is a softer "first contact" version. Both will surface in the operator pane if tone &lt; 0.80. The plan is ready to approve.</div>
+      </div>
+    </div>
+    <div class="chat-input-s">
+      <textarea placeholder="Ask NemoClaw to refine a step…"></textarea>
+      <div class="row">
+        <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.06em"><kbd>⌘</kbd>+<kbd>↵</kbd> to send</span>
+        <button class="btn-s sm primary">Send</button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+</body>
+</html>

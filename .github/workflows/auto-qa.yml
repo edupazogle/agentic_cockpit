@@ -11,7 +11,7 @@ name: Auto-delegate QA to GitHub Copilot
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, synchronize, ready_for_review]
     branches: [main]
 
 jobs:
@@ -100,12 +100,12 @@ jobs:
             Reply `/approve-design` to approve and merge the frontend branch.
             Reply `/request-design-changes` to return to the design skill.
         run: |
-          ISSUE_NUMBER=$(gh issue create \
+          ISSUE_URL=$(gh issue create \
             --repo "${{ github.repository }}" \
             --title "[DesignQA] ${{ steps.classify.outputs.issue_key }} — Review PR #${{ github.event.pull_request.number }}" \
-            --body "$ISSUE_BODY" \
-            --json number --jq '.number')
-          echo "Created DesignQA issue #$ISSUE_NUMBER"
+            --body "$ISSUE_BODY")
+          ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
+          echo "Created DesignQA issue #$ISSUE_NUMBER at $ISSUE_URL"
           echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
       - name: Assign Copilot to [DesignQA] issue
@@ -163,12 +163,12 @@ jobs:
 
           FULL_BODY="${ISSUE_BODY_HEADER}${GATE_NOTE}${ISSUE_BODY_FOOTER}"
 
-          ISSUE_NUMBER=$(gh issue create \
+          ISSUE_URL=$(gh issue create \
             --repo "${{ github.repository }}" \
             --title "[QA] ${{ steps.classify.outputs.issue_key }} — Review PR #${{ github.event.pull_request.number }}" \
-            --body "$FULL_BODY" \
-            --json number --jq '.number')
-          echo "Created QA issue #$ISSUE_NUMBER"
+            --body "$FULL_BODY")
+          ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
+          echo "Created QA issue #$ISSUE_NUMBER at $ISSUE_URL"
           echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
       - name: Assign Copilot to [QA] issue

@@ -1,0 +1,191 @@
+/* AXA France — Canopée Design System */
+/* Tokens extracted from packages/canopee-css (B2C Apollo/LF + B2B Slash) */
+
+@import url("fonts/publico.css");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap");
+
+:root {
+  /* ───────── BRAND CORE ───────── */
+  --axa-blue:        #00008F;  /* Univers Client / Prospect / Slash primary */
+  --axa-blue-dark:   #000072;  /* hover */
+  --axa-blue-deeper: #00005B;  /* active/border-bottom */
+  --axa-blue-mid:    #3333A5;
+  --axa-blue-650:    #5959B6;
+  --axa-blue-light:  #E4E4FF;
+  --axa-blue-bg:     #EEEEFF;
+  --axa-blue-tint:   #F8F8FF;
+
+  /* Slash B2B accent — desaturated indigo */
+  --axa-azur:        #3032C1;
+
+  /* ───────── NEUTRALS (Slash legacy + Apollo/LF) ───────── */
+  --black:           #000000;
+  --white:           #FFFFFF;
+  --gray-1000:       #333333;
+  --gray-800:        #5C5C5C;
+  --gray-500:        #999999;
+  --gray-250:        #CCCCCC;
+  --gray-140:        #E3E3E3;
+  --gray-50:         #F6F6F6;
+
+  /* ───────── SEMANTIC ───────── */
+  --color-success:    #0C7D3B;  /* green-1000 */
+  --color-success-bg: #FAFFFB;
+  --color-error:      #C7102E;  /* red-30 */
+  --color-error-dark: #6D0915;
+  --color-error-bg:   #FFFAFB;
+  --color-warning:    #BC4C2D;  /* orange-1000 */
+  --color-warning-bg: #FFF1EF;
+  --color-info:       #3871B5;  /* cyan-40 */
+
+  /* ───────── BUSINESS / B2B ───────── */
+  --color-business:   #BC4C2D;  /* orange CTA reserved for "Pro" */
+
+  /* ───────── TARIF FAMILY (Apollo product gradients) ───────── */
+  --bluetarif:        #5F61AD;
+  --purplelighttarif: #633A96;
+  --purpletarif:      #5A3976;
+  --purpledarktarif:  #41314D;
+  --greentarif:       #155D70;
+
+  /* ───────── DECORATIVE (B2C Apollo) ───────── */
+  --grape:        #6657F0;
+  --sky:          #88C4E5;
+  --sky-light:    #C7E0EE;
+  --cotton-candy: #FFBCD2;
+  --teal:         #6FB5D2;
+  --sunshine:     #FFFCB8;
+  --sunshine-mid: #F3DD56;
+
+  /* ───────── TYPOGRAPHY FAMILIES ───────── */
+  --font-sans:    "Source Sans 3", "Source Sans Pro", arial, sans-serif;
+  --font-display: "Publico Headline", georgia, "Times New Roman", serif;
+  --font-serif:   "Publico", georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ───────── TYPE SCALE (Apollo desktop) ───────── */
+  --fs-h1:   3rem;     /* 48 */
+  --fs-h2:   2.5rem;   /* 40 */
+  --fs-h3:   2rem;     /* 32 */
+  --fs-h4:   1.5rem;   /* 24 */
+  --fs-lead: 1.125rem; /* 18 */
+  --fs-body: 1rem;     /* 16 */
+  --fs-sm:   0.875rem; /* 14 */
+  --fs-xs:   0.75rem;  /* 12 */
+
+  /* ───────── SEMANTIC TEXT/BG ───────── */
+  --fg-primary:   var(--gray-1000);
+  --fg-secondary: var(--gray-800);
+  --fg-muted:     var(--gray-500);
+  --fg-onbrand:   var(--white);
+  --fg-link:      var(--axa-blue);
+
+  --bg-canvas:    var(--white);
+  --bg-subtle:    var(--gray-50);
+  --bg-tint:      var(--axa-blue-tint);
+  --bg-brand:     var(--axa-blue);
+
+  --border-default: var(--gray-140);
+  --border-strong:  var(--gray-250);
+  --border-brand:   var(--axa-blue);
+
+  /* ───────── SPACING (4px base) ───────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  40px;
+  --sp-8:  48px;
+  --sp-9:  64px;
+  --sp-10: 80px;
+  --sp-11: 120px;
+
+  /* ───────── RADII ───────── */
+  --radius-0:    0;        /* Slash B2B — angular, no rounding on buttons */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-3xl:  32px;
+  --radius-pill: 100vmax;  /* Apollo CTAs */
+
+  /* ───────── ELEVATION ───────── */
+  --shadow-card:   0 0 9px 0 rgba(0,0,0,0.18);   /* Slash card */
+  --shadow-soft:   0 2px 8px 0 rgba(0,0,128,0.15);
+  --shadow-pop:    0 8px 24px -4px rgba(0,0,128,0.20);
+  --shadow-inset:  inset 0 -2px var(--axa-blue-deeper); /* Slash button shelf */
+
+  /* ───────── MOTION ───────── */
+  --t-fast: 0.15s linear;
+  --t-base: 0.2s linear;
+  --t-slow: 0.3s linear;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ───────── BASE TYPOGRAPHY (semantic) ───────── */
+html { font-size: 16px; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--fg-primary);
+  background: var(--bg-canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--axa-blue);
+  margin: 0 0 var(--sp-5);
+}
+h2, .h2 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--axa-blue);
+  margin: 0 0 var(--sp-4);
+}
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--axa-blue);
+  margin: 0 0 var(--sp-4);
+}
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg-primary);
+  margin: 0 0 var(--sp-3);
+}
+p  { margin: 0 0 var(--sp-4); }
+.lead   { font-size: var(--fs-lead); color: var(--fg-secondary); }
+.small  { font-size: var(--fs-sm); }
+.eyebrow { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--axa-blue); }
+.muted  { color: var(--fg-muted); }
+
+a {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--t-base);
+}
+a:hover { color: var(--axa-blue-dark); }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--gray-50);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}

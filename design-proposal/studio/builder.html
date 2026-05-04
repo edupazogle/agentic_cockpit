@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio — Builder · subrogation-v1</title>
+<link rel="stylesheet" href="./studio.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand">Studio <span class="brand-mk">SDX</span></a>
+    <nav class="crumbs">
+      <span>scenarios</span><span class="sep">/</span><span>SUB-002</span><span class="sep">/</span><span class="leaf">spec.editor</span>
+    </nav>
+    <div class="topbar-actions">
+      <span class="tag"><span class="pip"></span>draft · autosaved 12s</span>
+      <button class="btn">Lint</button>
+      <button class="btn">Preview run</button>
+      <a class="btn btn-primary" href="./canvas.html">Deploy G0 →</a>
+    </div>
+  </div>
+</header>
+
+<div class="builder-shell">
+
+  <!-- LEFT RAIL — design-system steps -->
+  <aside class="builder-rail">
+    <div class="rail-head">SCENARIO · SUB-002</div>
+    <h2>Subrogation triage</h2>
+
+    <div class="steps-s">
+      <div class="step done"><span class="ic"></span><div class="num">01</div><div class="name">Intake<em>spec the input contract</em></div></div>
+      <div class="step done"><span class="ic"></span><div class="num">02</div><div class="name">Research<em>policy + jurisprudence</em></div></div>
+      <div class="step active"><span class="ic"></span><div class="num">03</div><div class="name">Plan<em>node graph & invariants</em></div></div>
+      <div class="step"><span class="ic"></span><div class="num">04</div><div class="name">Approve<em>review & sign-off</em></div></div>
+      <div class="step"><span class="ic"></span><div class="num">05</div><div class="name">Build<em>generate flow + tests</em></div></div>
+      <div class="step"><span class="ic"></span><div class="num">06</div><div class="name">Lint<em>schema + invariants</em></div></div>
+      <div class="step"><span class="ic"></span><div class="num">07</div><div class="name">Preview<em>synthetic 50-case run</em></div></div>
+      <div class="step"><span class="ic"></span><div class="num">08</div><div class="name">Deploy<em>G0 · shadow</em></div></div>
+    </div>
+
+    <div class="budget-card">
+      <div class="lbl">SLA · COST · LATENCY</div>
+      <div class="row"><span class="k">sla</span><span>15min</span></div>
+      <div class="row"><span class="k">cost.target</span><span>€0.020</span></div>
+      <div class="row"><span class="k">cost.est</span><span>€0.018</span></div>
+      <div class="bar"><i style="width:62%"></i></div>
+      <div class="row"><span class="k">p95.target</span><span>15.0s</span></div>
+      <div class="row"><span class="k">p95.est</span><span>11.8s</span></div>
+      <div class="bar"><i style="width:78%"></i></div>
+    </div>
+
+    <div style="margin-top:16px;font-family:var(--font-mono);font-size:11px;color:var(--fg-3);line-height:1.6">
+      step.03 of 08<br>
+      auto-advance enabled<br>
+      <kbd>⌘</kbd>+<kbd>↵</kbd> to approve
+    </div>
+  </aside>
+
+  <!-- CENTER — spec sections -->
+  <section class="builder-main">
+    <div class="header">
+      <div>
+        <span class="eyebrow"><span class="pip"></span>step 03 · plan</span>
+        <h1>Compose the flow.</h1>
+        <p class="sub">Each node is a typed function. Studio infers the schema from upstream outputs — you only declare what changes.</p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm">Diff</button>
+        <button class="btn btn-sm">History</button>
+      </div>
+    </div>
+
+    <!-- Section 01 — Identity -->
+    <article class="spec-section">
+      <div class="sh">
+        <div class="ttl"><span class="ix">§ 01</span> Scenario identity</div>
+        <span class="type-badge">scenario.config</span>
+      </div>
+      <div class="sb">
+        <div class="field-grid-s">
+          <div class="field-s">
+            <label>id <span class="type-badge">string · readonly</span></label>
+            <input type="text" value="SUB-002 · subrogation" readonly style="font-family:var(--font-mono);font-size:12.5px;color:var(--fg-2)">
+          </div>
+          <div class="field-s">
+            <label>display_name <span class="type-badge">string</span></label>
+            <input type="text" value="Subrogation triage">
+          </div>
+          <div class="field-s full">
+            <label>summary <span class="type-badge">string · ≤140</span></label>
+            <textarea>Identifies third-party liability in motor claims; matches against insurer-of-record registry and prepares a recovery packet for legal.</textarea>
+          </div>
+          <div class="field-s">
+            <label>owner <span class="type-badge">user_id</span></label>
+            <select><option>sara.m</option><option>claire.b</option><option>marc.l</option></select>
+          </div>
+          <div class="field-s">
+            <label>sla <span class="type-badge">enum</span></label>
+            <select><option>15min</option><option>1h</option><option>24h</option></select>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Section 02 — Type contracts -->
+    <article class="spec-section">
+      <div class="sh">
+        <div class="ttl"><span class="ix">§ 02</span> Type contracts</div>
+        <div style="display:flex;gap:6px">
+          <span class="type-badge input">input</span>
+          <span class="type-badge output">output</span>
+        </div>
+      </div>
+      <div class="sb">
+        <div class="code-block">
+          <div class="head"><span style="color:rgba(245,244,242,0.7);font-size:11px">contracts.ts</span><span class="lbl">3 lines suggested</span></div>
+          <div class="body">
+<span class="k">type</span> Input = {<br>
+&nbsp;&nbsp;claim_id: <span class="s">`CLM-${number}-${number}`</span>;<br>
+&nbsp;&nbsp;loss_date: ISODate;<br>
+&nbsp;&nbsp;<span class="hl">parties_involved: Party[]; <span class="c">// suggested by AI</span></span><br>
+&nbsp;&nbsp;police_report?: URL;<br>
+};<br><br>
+<span class="k">type</span> Output = {<br>
+&nbsp;&nbsp;recoverable: <span class="k">boolean</span>;<br>
+&nbsp;&nbsp;liable_party_id: UUID | <span class="k">null</span>;<br>
+&nbsp;&nbsp;recovery_amount_eur: <span class="k">number</span>;<br>
+&nbsp;&nbsp;packet_url: URL;<br>
+};<br>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Section 03 — Flow -->
+    <article class="spec-section">
+      <div class="sh">
+        <div class="ttl"><span class="ix">§ 03</span> Flow definition</div>
+        <span class="type-badge tool">5 nodes · 1 gate</span>
+      </div>
+      <div class="sb">
+        <div class="flow-spec">
+          <div class="row">
+            <span class="ix">01</span>
+            <div class="nm">Intake claim<em>tool · claims_facade.get(claim_id) → ClaimRecord</em></div>
+            <span class="type-badge tool">tool</span>
+            <span class="type-badge output">ClaimRecord</span>
+          </div>
+          <div class="row">
+            <span class="ix">02</span>
+            <div class="nm">Identify parties<em>llm.extract · NemoClaw — parties_involved[] → []Party</em></div>
+            <span class="type-badge tool">llm</span>
+            <span class="type-badge output">Party[]</span>
+          </div>
+          <div class="row gate">
+            <span class="ix">03</span>
+            <div class="nm">Decide recoverability<em>llm.judge · floor 0.80 — escalate to operator if below</em></div>
+            <span class="type-badge gate">gate</span>
+            <span class="type-badge output">Verdict | "hitl"</span>
+          </div>
+          <div class="row">
+            <span class="ix">04</span>
+            <div class="nm">Match insurer-of-record<em>tool · ior_registry.lookup(party) → Insurer</em></div>
+            <span class="type-badge tool">tool</span>
+            <span class="type-badge output">Insurer</span>
+          </div>
+          <div class="row">
+            <span class="ix">05</span>
+            <div class="nm">Generate recovery packet<em>tool · docling.compose(template, ctx) → PDF + audit row</em></div>
+            <span class="type-badge tool">tool</span>
+            <span class="type-badge output">PacketURL</span>
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <button class="btn btn-sm">+ Add node</button>
+          <button class="btn btn-sm btn-ghost">Open in canvas →</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Section 04 — Invariants -->
+    <article class="spec-section">
+      <div class="sh">
+        <div class="ttl"><span class="ix">§ 04</span> Invariants</div>
+        <span class="type-badge">3 declared</span>
+      </div>
+      <div class="sb">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:10px 14px;background:var(--ink-1);border:1px solid var(--ink-rule);border-radius:8px;align-items:center">
+            <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--pale-green-ink);background:var(--pale-green);padding:2px 6px;border-radius:3px">INV-01</span>
+            <div style="font-size:13px;color:var(--fg-1)">Every recovery packet must include a signed audit row in <span style="font-family:var(--font-mono);font-size:12px">audit_log</span> before delivery.</div>
+            <span class="tag green"><span class="pip"></span>passing</span>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:10px 14px;background:var(--ink-1);border:1px solid var(--ink-rule);border-radius:8px;align-items:center">
+            <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--pale-green-ink);background:var(--pale-green);padding:2px 6px;border-radius:3px">INV-02</span>
+            <div style="font-size:13px;color:var(--fg-1)">No PII may appear in trace inputs/outputs (enforced by OTel collector).</div>
+            <span class="tag green"><span class="pip"></span>passing</span>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:10px 14px;background:var(--ink-1);border:1px solid var(--ink-rule);border-radius:8px;align-items:center">
+            <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--pale-yellow-ink);background:var(--pale-yellow);padding:2px 6px;border-radius:3px">INV-03</span>
+            <div style="font-size:13px;color:var(--fg-1)">Confidence floor must be ≥ 0.80 — current draft is <span style="font-family:var(--font-mono);font-size:12px">0.75</span>.</div>
+            <span class="tag yellow"><span class="pip"></span>warning</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- RIGHT — AI co-architect -->
+  <aside class="chat-s">
+    <div class="head">
+      <div>
+        <div class="name">Co-architect</div>
+        <div class="role">claude-3.7 · sub-002 context · 8k tokens</div>
+      </div>
+      <button class="btn btn-sm btn-ghost">⋯</button>
+    </div>
+
+    <div class="stream">
+      <div class="msg-s">
+        <div class="av">SM</div>
+        <div class="body">
+          <div class="who"><span class="who-name">sara.m</span><span>· 14:31</span></div>
+          Add a step that figures out who is liable when the claim mentions multiple drivers.
+        </div>
+      </div>
+
+      <div class="msg-s ai">
+        <div class="av">CO</div>
+        <div class="body">
+          <div class="who"><span class="who-name">co-architect</span><span>· 14:31</span></div>
+          Inserted node <strong>02 · Identify parties</strong>. I added <span style="font-family:var(--font-mono);font-size:12px">parties_involved: Party[]</span> to the input contract — the existing schema didn't carry it.
+          <div class="tool-call">
+            <span class="pill">canopée_lookup</span>
+            party_schema(...) → Party[]
+          </div>
+        </div>
+      </div>
+
+      <div class="msg-s ai">
+        <div class="av">CO</div>
+        <div class="body">
+          <div class="who"><span class="who-name">co-architect</span><span>· 14:32</span></div>
+          One thing to flag: invariant <strong>INV-03</strong> is currently warning. Subrogation has historically required a 0.80 floor for recoverability decisions — I'd recommend raising the gate. Want me to adjust?
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <button class="btn btn-sm btn-primary">Raise to 0.80</button>
+            <button class="btn btn-sm">Keep 0.75</button>
+            <button class="btn btn-sm btn-ghost">Show audit basis</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg-s">
+        <div class="av">SM</div>
+        <div class="body">
+          <div class="who"><span class="who-name">sara.m</span><span>· 14:33</span></div>
+          Raise it. And generate the synthetic dataset for preview.
+        </div>
+      </div>
+
+      <div class="msg-s ai">
+        <div class="av">CO</div>
+        <div class="body">
+          <div class="who"><span class="who-name">co-architect</span><span>· 14:33</span></div>
+          Done. Floor → 0.80, INV-03 passing. Synth-data factory queued for 50 cases.
+          <div class="tool-call">
+            <span class="pill">synth_factory</span>
+            generate(scenario="SUB-002", n=50) → seed:7c4a
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer-s">
+      <div class="input">
+        <textarea rows="2" placeholder="Refine the spec with intent — co-architect handles the schema."></textarea>
+        <button class="btn btn-sm btn-primary">Send</button>
+      </div>
+      <div class="hints"><kbd>⌘</kbd><kbd>↵</kbd> send · <kbd>/</kbd> command · <kbd>@</kbd> reference node</div>
+    </div>
+  </aside>
+</div>
+
+</body>
+</html>

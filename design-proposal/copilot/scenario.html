@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Run 7f4a-31bd · Copilot</title>
+  <link rel="stylesheet" href="./copilot.css" />
+</head>
+<body>
+
+  <div class="island">
+    <a class="logo" href="./index.html"><span class="glyph"></span>Copilot</a>
+    <nav>
+      <a href="./index.html">Atlas</a>
+      <a href="./scenario.html" class="active">Run</a>
+      <a href="./diff.html">Diff</a>
+      <a href="#">Insights</a>
+    </nav>
+    <div class="actions">
+      <span class="tag wait"><span class="pip"></span>HITL · 2:14</span>
+      <button class="btn btn-glass">
+        Open trace
+        <span class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <main class="viewport">
+
+    <section class="split">
+
+      <!-- LEFT · CHAT -->
+      <aside class="chat reveal">
+        <div class="bezel-outer">
+          <div class="bezel-inner">
+
+            <header class="chat-header">
+              <div>
+                <div class="heading">Run 7f4a-31bd</div>
+                <div class="sub">CLM-2026-0042 · Property Fast-Track v27</div>
+              </div>
+              <span class="tag wait"><span class="pip"></span>Paused</span>
+            </header>
+
+            <div class="chat-stream" id="stream">
+
+              <div class="msg agent" style="animation-delay: 0ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot · run analyst</div>
+                  <p>Run is paused at gate <strong>G2 · reserves overage</strong>. Reserves estimate is <strong style="color: var(--azur);">€2 300</strong> — €300 above the current threshold of €2 000. Eight documents extracted with 96% confidence. KYC verified.</p>
+                  <span class="tool-call"><span class="dot"></span>langfuse.read · 14 spans</span>
+                </div>
+              </div>
+
+              <div class="msg user" style="animation-delay: 200ms;">
+                <div class="avatar">MR</div>
+                <div class="body">
+                  <div class="name">m.rondonneau</div>
+                  <p>Show me the documents and the reasoning behind the €2 300 estimate.</p>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 400ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot</div>
+                  <p>Eight invoices &amp; quotations from accredited artisans. The reserves were computed from line-items: roof tiles (€1 420), guttering (€640), labour (€240). Storm event MFR-2026-0314 is corroborated by Météo-France.</p>
+                  <span class="tool-call"><span class="dot"></span>wf006.docling · 8 docs</span>
+                  <span class="tool-call" style="margin-left: 6px;"><span class="dot"></span>wfmcp03.claims_facade</span>
+                </div>
+              </div>
+
+              <div class="msg user" style="animation-delay: 600ms;">
+                <div class="avatar">MR</div>
+                <div class="body">
+                  <div class="name">m.rondonneau</div>
+                  <p>How did similar claims in the last 90 days resolve?</p>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 800ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot</div>
+                  <p>Six similar storm-damage claims. Five approved at recommended estimate (avg outcome €2 280, no over-reserve). One escalated for KYC mismatch — N/A here. Approval at €2 300 fits the modal pattern.</p>
+                  <span class="tool-call"><span class="dot"></span>supabase.query · 6 rows</span>
+                </div>
+              </div>
+
+              <div class="msg agent" style="animation-delay: 1000ms;">
+                <div class="avatar">◆</div>
+                <div class="body">
+                  <div class="name">copilot · ready</div>
+                  <p>You can approve from the canvas, or I can prepare the justification text and reason code automatically.<span class="cursor"></span></p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="composer">
+              <div class="input-shell">
+                <textarea placeholder="Ask Copilot · ⌘ Enter to send"></textarea>
+                <button class="send" aria-label="Send">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              <div class="hints">
+                <span><kbd>⌘</kbd> <kbd>K</kbd> Palette</span>
+                <span><kbd>↩</kbd> Send</span>
+                <span><kbd>⇧</kbd> <kbd>↩</kbd> New line</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT · CANVAS -->
+      <section class="canvas">
+
+        <article class="bezel-outer reveal">
+          <div class="bezel-inner hero-block">
+            <span class="eyebrow"><span class="pulse"></span>Run 7f4a-31bd · awaiting operator</span>
+            <h1 class="display" style="font-size: clamp(36px, 4.6vw, 64px); margin-top: 22px;">CLM-2026-0042</h1>
+            <p class="lede">
+              Storm damage · Île-de-France · policyholder Marc Dubois · KYC verified.
+              Reserves estimate of <span style="color: var(--azur);">€2 300</span> exceeds the €2 000 gate by 15%.
+              Approval will resume the run and dispatch to "Toiture du Marais" within 5 days.
+            </p>
+
+            <div class="meta-strip">
+              <div class="cell">
+                <div class="label">Reserves</div>
+                <div class="value azur">€2 300</div>
+              </div>
+              <div class="cell">
+                <div class="label">Confidence</div>
+                <div class="value">0.91</div>
+              </div>
+              <div class="cell">
+                <div class="label">Documents</div>
+                <div class="value">8 / 8</div>
+              </div>
+              <div class="cell">
+                <div class="label">Similar cases</div>
+                <div class="value emerald">6</div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 36px; gap: 8px;">
+              <button class="btn btn-primary">
+                Approve at €2 300
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="m6 12 4 4 8-8"/></svg>
+                </span>
+              </button>
+              <button class="btn btn-glass">
+                Reject &amp; close
+                <span class="icon-circle">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M6 6l12 12M6 18 18 6"/></svg>
+                </span>
+              </button>
+              <button class="btn-ghost">Ask for clarification</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="bezel-outer reveal">
+          <div class="bezel-inner">
+            <div class="row between" style="padding: 22px 32px; border-bottom: 1px solid var(--hair-soft);">
+              <div>
+                <h3 class="serif" style="font-size: 18px;">Run timeline</h3>
+                <div class="muted" style="font-family: var(--font-mono); font-size: 11px; margin-top: 4px;">14 spans · trace 7f4a-31bd · 02:14 elapsed</div>
+              </div>
+              <span class="tag azur"><span class="pip"></span>Live</span>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-row done">
+                <span class="ts">02:11:48</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">FNOL intake</div><div class="desc">channel: web · severity: CAT1 · conf 0.87</div></div>
+                <span class="dur">0.4 s</span>
+              </div>
+              <div class="timeline-row done">
+                <span class="ts">02:11:53</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Triage</div><div class="desc">wfmcp03.claims_facade.fetch · policy AXA-FR-PROP-…7714</div></div>
+                <span class="dur">1.2 s</span>
+              </div>
+              <div class="timeline-row done">
+                <span class="ts">02:13:02</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Documents extracted</div><div class="desc">wf006.docling · 8 / 8 docs · 96% conf</div></div>
+                <span class="dur">68 s</span>
+              </div>
+              <div class="timeline-row done">
+                <span class="ts">02:13:51</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Reserves computed</div><div class="desc">€2 300 · roof / guttering / labour breakdown</div></div>
+                <span class="dur">3.1 s</span>
+              </div>
+              <div class="timeline-row live">
+                <span class="ts">02:13:54</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Gate G2 · reserves overage</div><div class="desc">PAUSE · ChatWoot conv 8814 opened · operator m.rondonneau</div></div>
+                <span class="dur">live</span>
+              </div>
+              <div class="timeline-row queued">
+                <span class="ts">—</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Dispatch</div><div class="desc">wfmcp02.dispatch · "Toiture du Marais" · queued</div></div>
+                <span class="dur">queued</span>
+              </div>
+              <div class="timeline-row queued">
+                <span class="ts">—</span>
+                <div class="marker"></div>
+                <div class="body"><div class="name">Audit seal</div><div class="desc">audit_log · hash chain commit</div></div>
+                <span class="dur">queued</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="bezel-outer reveal">
+          <div class="bezel-inner" style="padding: 28px 32px;">
+            <div class="row between" style="margin-bottom: 18px;">
+              <div>
+                <span class="eyebrow">Provenance</span>
+                <h3 class="serif" style="font-size: 18px; margin-top: 8px;">Audit chain · who has touched this run</h3>
+              </div>
+            </div>
+            <div class="col" style="gap: 14px; font-family: var(--font-mono); font-size: 12.5px;">
+              <div class="row between" style="border-bottom: 1px solid var(--hair-soft); padding-bottom: 10px;">
+                <span class="muted">02:11:48</span>
+                <span>scenario.run.create · langflow</span>
+                <span class="muted">trace 7f4a-31bd</span>
+              </div>
+              <div class="row between" style="border-bottom: 1px solid var(--hair-soft); padding-bottom: 10px;">
+                <span class="muted">02:13:54</span>
+                <span>hitl.handover.open · gateway</span>
+                <span class="muted">conv 8814</span>
+              </div>
+              <div class="row between" style="border-bottom: 1px solid var(--hair-soft); padding-bottom: 10px;">
+                <span class="muted">02:13:55</span>
+                <span>chatwoot.assign · m.rondonneau</span>
+                <span class="muted">tier-2</span>
+              </div>
+              <div class="row between">
+                <span class="muted">hash</span>
+                <span class="soft">0x9c2f… → 0x4e21… → <span style="color: var(--ink-bright);">0x7a83…</span></span>
+                <span class="muted">verified</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+    </section>
+
+    <footer class="foot">
+      <span>© 2026 GDAI · Internal use · Copilot prototype</span>
+      <span><a href="../index.html">Compare approaches</a></span>
+    </footer>
+
+  </main>
+
+  <script src="./copilot.js"></script>
+</body>
+</html>

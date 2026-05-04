@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atrium — Builder · Compose pilot</title>
+<link rel="stylesheet" href="./atrium.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand"><span class="brand-glyph"></span> Atrium</a>
+    <nav class="crumbs">
+      <span>Workspace</span><span class="sep">/</span>
+      <span>Compose</span><span class="sep">/</span>
+      <span class="leaf">Property fast track · v0.4 draft</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost"><kbd>⌘</kbd><kbd>S</kbd> saved 12s ago</button>
+      <button class="btn">Cancel</button>
+      <button class="btn btn-primary">Build & lint →</button>
+    </div>
+  </div>
+</header>
+
+<div class="builder-shell">
+
+  <!-- LEFT RAIL: vertical stepper -->
+  <aside class="builder-rail">
+    <div class="eyebrow" style="margin-bottom:18px"><span class="dot" style="background:var(--axa-azur)"></span> Compose</div>
+    <h3 class="serif" style="font-family:var(--font-serif);font-weight:500;font-size:24px;letter-spacing:-0.022em;color:var(--ink-strong);margin-bottom:24px">Property fast track</h3>
+
+    <ol class="steps">
+      <li class="step done">
+        <span class="num">01 · Intake</span>
+        <span class="name">Persona & purpose</span>
+        <span class="meta">Adjuster handles water-damage claims under €10k</span>
+      </li>
+      <li class="step done">
+        <span class="num">02 · Research</span>
+        <span class="name">Citations</span>
+        <span class="meta">12 sources from FFA, ACPR, AXA policy</span>
+      </li>
+      <li class="step active">
+        <span class="num">03 · Plan</span>
+        <span class="name">Flow & data shape</span>
+        <span class="meta">5 nodes · 2 HITL gates · 3 tools</span>
+      </li>
+      <li class="step">
+        <span class="num">04 · Approve</span>
+        <span class="name">Sign-off the plan</span>
+      </li>
+      <li class="step">
+        <span class="num">05 · Build</span>
+        <span class="name">Generate bundle</span>
+      </li>
+      <li class="step">
+        <span class="num">06 · Lint</span>
+        <span class="name">Capability + egress</span>
+      </li>
+      <li class="step">
+        <span class="num">07 · Preview</span>
+        <span class="name">Sandbox run</span>
+      </li>
+      <li class="step">
+        <span class="num">08 · Deploy</span>
+        <span class="name">Ship to G0</span>
+      </li>
+    </ol>
+
+    <div class="aside-card" style="margin-top:32px;padding:14px">
+      <div class="eyebrow" style="margin-bottom:10px"><span class="dot" style="background:var(--pale-yellow-ink)"></span> Budget</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--mute)">Tokens used</span><span style="font-family:var(--font-mono);color:var(--ink-strong)">28,402 / 80,000</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--mute)">Cost</span><span style="font-family:var(--font-mono);color:var(--ink-strong)">€1.42 / €5.00</span></div>
+        <div style="height:4px;background:var(--rule);border-radius:2px;margin-top:4px;overflow:hidden"><div style="width:35%;height:100%;background:var(--axa-azur)"></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CENTRE: Plan preview -->
+  <main class="builder-main">
+    <div class="eyebrow" style="margin-bottom:14px"><span class="dot" style="background:var(--axa-azur)"></span> Step 03 · Plan</div>
+    <h1 class="serif">A plan, drafted from your intent.</h1>
+    <p class="sub">Atrium has researched 12 sources and proposed a 5-node flow with two human gates. Review each section below — every change is reflected on the right.</p>
+
+    <section class="section-card">
+      <div class="section-head">
+        <h3>Persona</h3>
+        <span class="tag blue"><span class="pip"></span>3 citations</span>
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <label>Operator role</label>
+          <input value="Property adjuster — fast-track claims under €10,000">
+        </div>
+        <div class="field">
+          <label>Volume target</label>
+          <input value="~120 claims/day · per region">
+        </div>
+        <div class="field full">
+          <label>Promise</label>
+          <textarea>Triage water-damage claims with photo evidence. Auto-resolve high-confidence cases under €4,000. Escalate ambiguous cases to a human adjuster within 90 seconds with full context.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <h3>Flow</h3>
+        <button class="btn btn-ghost">Open in canvas →</button>
+      </div>
+      <p style="color:var(--mute);font-size:13.5px;margin-bottom:14px">Atrium proposes 5 nodes. The two highlighted require operator approval before completing.</p>
+
+      <ol style="display:flex;flex-direction:column;gap:8px;counter-reset:step">
+        <li style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2)">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--mute);align-self:center">01</span>
+          <div><strong style="font-family:var(--font-serif);font-weight:500;font-size:15px">Intake claim</strong><br><span style="font-size:12.5px;color:var(--mute)">Receive payload from claims_facade.create_claim</span></div>
+          <span class="tag blue"><span class="pip"></span>tool</span>
+        </li>
+        <li style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2)">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--mute);align-self:center">02</span>
+          <div><strong style="font-family:var(--font-serif);font-weight:500;font-size:15px">Extract evidence</strong><br><span style="font-size:12.5px;color:var(--mute)">Docling parse photos + invoice → structured facts</span></div>
+          <span class="tag blue"><span class="pip"></span>tool</span>
+        </li>
+        <li style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 16px;border:1px solid var(--axa-azur);border-radius:8px;background:var(--axa-azur-soft)">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--axa-azur);align-self:center;font-weight:600">03</span>
+          <div><strong style="font-family:var(--font-serif);font-weight:500;font-size:15px;color:var(--ink-strong)">Decide fast-track</strong><br><span style="font-size:12.5px;color:var(--ink)">LLM judge with NemoClaw policy. If confidence &lt; 0.85 → human gate.</span></div>
+          <span class="tag yellow"><span class="pip"></span>HITL gate</span>
+        </li>
+        <li style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 16px;border:1px solid var(--axa-azur);border-radius:8px;background:var(--axa-azur-soft)">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--axa-azur);align-self:center;font-weight:600">04</span>
+          <div><strong style="font-family:var(--font-serif);font-weight:500;font-size:15px;color:var(--ink-strong)">Operator handover</strong><br><span style="font-size:12.5px;color:var(--ink)">Bridge to Chatwoot conv with packet (claim, evidence, options, deadline).</span></div>
+          <span class="tag yellow"><span class="pip"></span>HITL gate</span>
+        </li>
+        <li style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2)">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--mute);align-self:center">05</span>
+          <div><strong style="font-family:var(--font-serif);font-weight:500;font-size:15px">Settle & log</strong><br><span style="font-size:12.5px;color:var(--mute)">Write resolution, anchor audit hash, notify customer.</span></div>
+          <span class="tag blue"><span class="pip"></span>tool</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <h3>Bundle preview</h3>
+        <span class="tag green"><span class="pip"></span>Lint expected to pass</span>
+      </div>
+      <div class="live-preview">
+        <div class="head"><span class="dot"></span><span class="dot" style="background:rgba(255,255,255,0.4)"></span><span class="dot" style="background:rgba(255,255,255,0.6)"></span><span class="label">flow.json · property-fast-track · v0.4-draft</span></div>
+        <div class="body">
+<pre style="margin:0;font-family:inherit"><span class="c">// Generated by Atrium Builder · 14:42:08</span>
+<span class="k">"name"</span>: <span class="s">"property-fast-track"</span>,
+<span class="k">"version"</span>: <span class="s">"0.4"</span>,
+<span class="k">"capability_manifest"</span>: {
+  <span class="k">"egress"</span>: [<span class="s">"chatwoot.gdai.private"</span>, <span class="s">"langfuse.gdai.private"</span>],
+  <span class="k">"tools"</span>: [<span class="s">"claims_facade.*"</span>, <span class="s">"docling.parse"</span>, <span class="s">"nemoclaw.policy"</span>]
+},
+<span class="k">"nodes"</span>: [
+  { <span class="k">"id"</span>: <span class="s">"intake"</span>, <span class="k">"type"</span>: <span class="s">"tool.claims_facade.create_claim"</span> },
+  { <span class="k">"id"</span>: <span class="s">"extract"</span>, <span class="k">"type"</span>: <span class="s">"tool.docling.parse"</span> },
+  { <span class="k">"id"</span>: <span class="s">"decide"</span>, <span class="k">"type"</span>: <span class="s">"llm.nemoclaw.judge"</span>, <span class="k">"hitl_floor"</span>: <span class="s">"0.85"</span> },
+  { <span class="k">"id"</span>: <span class="s">"handover"</span>, <span class="k">"type"</span>: <span class="s">"hitl.chatwoot"</span>, <span class="k">"sla_minutes"</span>: <span class="s">15</span> },
+  { <span class="k">"id"</span>: <span class="s">"settle"</span>, <span class="k">"type"</span>: <span class="s">"tool.claims_facade.resolve"</span> }
+]</pre>
+        </div>
+      </div>
+    </section>
+
+    <div style="display:flex;gap:10px;margin-top:24px;justify-content:flex-end">
+      <button class="btn">Iterate plan</button>
+      <button class="btn btn-primary">Approve & build →</button>
+    </div>
+
+    <div style="height:60px"></div>
+  </main>
+
+  <!-- RIGHT: AI conversation -->
+  <aside class="chat-rail">
+    <div class="head">
+      <span class="role">Atrium · co-author</span>
+      <span class="name">Drafting in conversation</span>
+    </div>
+    <div class="stream">
+      <div class="msg">
+        <div class="avatar">CB</div>
+        <div class="body">
+          <div class="who">Claire B.</div>
+          I want a fast-track for water-damage claims under €10k. Auto-resolve clean cases, escalate when policy or amount is ambiguous.
+        </div>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">A</div>
+        <div class="body">
+          <div class="who">Atrium</div>
+          Captured. Two questions: (1) confidence floor for auto-resolve — I'll start at 0.85 unless you prefer stricter. (2) HITL deadline before the queue escalates — 15 minutes is current AXA SLA. Adjust?
+          <span class="tool">⏵ web_search_insurance · ACPR Art. L113-2</span>
+        </div>
+      </div>
+      <div class="msg">
+        <div class="avatar">CB</div>
+        <div class="body">
+          <div class="who">Claire B.</div>
+          0.85 is fine. SLA 15 min, then bump priority badge after 8 min idle.
+        </div>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">A</div>
+        <div class="body">
+          <div class="who">Atrium</div>
+          Logged. Plan drafted with 5 nodes and 2 HITL gates. The bundle lint expects to pass — capability manifest declares only the 3 internal tools, no egress beyond your private domains. Open the canvas to see the topology, or approve to build.
+        </div>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">A</div>
+        <div class="body">
+          <div class="who">Atrium · proactive</div>
+          One concern: photos sometimes contain plate numbers. Shall I add an anti-PII validator on the Docling output before LLM sees it?
+          <div style="margin-top:10px;display:flex;gap:6px">
+            <button class="btn" style="padding:5px 10px;font-size:12px">Yes, add it</button>
+            <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px">Skip</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="composer">
+      <div class="input">
+        <textarea rows="2" placeholder="Reply to Atrium…"></textarea>
+        <button class="btn btn-primary btn-icon"><svg viewBox="0 0 16 16"><path d="m3 8 10-5-3 10-2-4-5-1z"/></svg></button>
+      </div>
+      <div class="hints"><span><kbd>⌘</kbd><kbd>↵</kbd> send</span><span><kbd>/</kbd> commands</span><span><kbd>@</kbd> mention</span></div>
+    </div>
+  </aside>
+
+</div>
+
+<script src="./atrium.js"></script>
+</body>
+</html>

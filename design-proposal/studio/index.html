@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio — Workspace</title>
+<link rel="stylesheet" href="./studio.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand">Studio <span class="brand-mk">SDX</span></a>
+    <nav class="crumbs">
+      <span>workspace</span><span class="sep">/</span><span class="leaf">overview</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost"><kbd>⌘</kbd><kbd>K</kbd> Search</button>
+      <a class="btn" href="./canvas.html">Canvas →</a>
+      <a class="btn btn-primary" href="./builder.html">New scenario</a>
+    </div>
+  </div>
+</header>
+
+<main class="viewport">
+
+  <section class="hero-s">
+    <div>
+      <span class="eyebrow"><span class="pip"></span>workspace · gdai-default · production</span>
+      <h1 class="display" style="margin-top:18px">A spec for every <em>scenario</em>.<br>Built like a design system.</h1>
+      <p class="lede" style="margin-top:18px">Studio treats each agent as a documented schema — typed inputs, typed outputs, declared dependencies. Reading a scenario should feel like reading the API. Building one should feel like writing the spec.</p>
+      <div style="margin-top:24px;display:flex;gap:8px">
+        <a class="btn btn-primary" href="./builder.html">+ Scenario</a>
+        <button class="btn">Browse templates</button>
+        <button class="btn btn-ghost">Read the docs ↗</button>
+      </div>
+    </div>
+    <aside class="hero-stats">
+      <div class="row"><span class="lbl">scenarios.live</span><span class="val">7</span><span class="delta">+1</span></div>
+      <div class="row"><span class="lbl">runs.7d</span><span class="val">15,822</span><span class="delta">+8.3%</span></div>
+      <div class="row"><span class="lbl">success.7d</span><span class="val">96.2%</span><span class="delta">+0.4pp</span></div>
+      <div class="row"><span class="lbl">hitl.open</span><span class="val">3</span><span class="delta">−1</span></div>
+      <div class="row"><span class="lbl">cost.7d</span><span class="val">€312.18</span><span class="delta down">+€18</span></div>
+    </aside>
+  </section>
+
+  <section style="margin-top:32px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <span class="eyebrow"><span class="pip"></span>schemas · 3 active · 1 draft</span>
+        <h2 class="serif" style="margin-top:8px">Scenarios as schemas</h2>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-sm">All</button>
+        <button class="btn btn-sm btn-ghost">Active</button>
+        <button class="btn btn-sm btn-ghost">Draft</button>
+        <button class="btn btn-sm btn-ghost">Archived</button>
+      </div>
+    </div>
+
+    <div class="workspace-s">
+
+      <a href="./canvas.html" class="schema-card">
+        <div class="head">
+          <div class="meta">
+            <div class="id">PFT-014 · property-fast-track</div>
+            <div class="name">Property fast track <em style="font-style:italic;color:var(--fg-3);font-weight:400">v3</em></div>
+            <div class="desc">Auto-triages residential water-damage claims under €5K — extracts evidence, judges fast-track eligibility, escalates to operator below confidence floor.</div>
+          </div>
+          <span class="tag green"><span class="pip"></span>G2 · canary</span>
+        </div>
+        <div class="body">
+          <div class="field"><div class="k">success.7d</div><div class="v">98.4%</div></div>
+          <div class="field"><div class="k">runs.7d</div><div class="v">12,481</div></div>
+          <div class="field"><div class="k">p95</div><div class="v mono">12.4s</div></div>
+          <div class="field"><div class="k">cost.run</div><div class="v mono">€0.018</div></div>
+        </div>
+        <div class="foot">
+          <span>owner · claire.b</span>
+          <span>updated · 2h ago</span>
+        </div>
+      </a>
+
+      <a href="#" class="schema-card">
+        <div class="head">
+          <div class="meta">
+            <div class="id">MFL-007 · motor-fleet</div>
+            <div class="name">Motor fleet validator</div>
+            <div class="desc">Ingests telematics packets and validates fleet-policy compliance; routes harsh-braking outliers to body-shop directory and notifies fleet manager.</div>
+          </div>
+          <span class="tag yellow"><span class="pip"></span>G1 · pilot</span>
+        </div>
+        <div class="body">
+          <div class="field"><div class="k">success.7d</div><div class="v">94.8%</div></div>
+          <div class="field"><div class="k">runs.7d</div><div class="v">3,127</div></div>
+          <div class="field"><div class="k">p95</div><div class="v mono">8.1s</div></div>
+          <div class="field"><div class="k">cost.run</div><div class="v mono">€0.011</div></div>
+        </div>
+        <div class="foot"><span>owner · marc.l</span><span>updated · 5h ago</span></div>
+      </a>
+
+      <a href="#" class="schema-card">
+        <div class="head">
+          <div class="meta">
+            <div class="id">SUB-002 · subrogation</div>
+            <div class="name">Subrogation triage <em style="font-style:italic;color:var(--fg-3);font-weight:400">draft</em></div>
+            <div class="desc">Identifies third-party liability in motor claims; matches against insurer-of-record registry and prepares recovery packet.</div>
+          </div>
+          <span class="tag"><span class="pip"></span>G0 · draft</span>
+        </div>
+        <div class="body">
+          <div class="field"><div class="k">success.7d</div><div class="v">—</div></div>
+          <div class="field"><div class="k">runs.7d</div><div class="v">214 (test)</div></div>
+          <div class="field"><div class="k">p95</div><div class="v mono">—</div></div>
+          <div class="field"><div class="k">cost.run</div><div class="v mono">—</div></div>
+        </div>
+        <div class="foot"><span>owner · sara.m</span><span>created · yesterday</span></div>
+      </a>
+
+      <a href="./builder.html" class="schema-card add">
+        <div style="text-align:center">
+          <div class="text">+ New scenario</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--fg-3);margin-top:6px">⌘N · from template or blank</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section style="margin-top:48px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <span class="eyebrow"><span class="pip"></span>activity log · last 12 entries</span>
+        <h2 class="serif" style="margin-top:8px;font-size:24px">Recent</h2>
+      </div>
+      <button class="btn btn-sm btn-ghost">Filter ↓</button>
+    </div>
+
+    <div class="spec-table">
+      <div class="head">
+        <span>time</span><span>actor</span><span>event</span><span>scope</span>
+      </div>
+      <div class="row">
+        <span class="ts">14:42:12</span>
+        <span class="id">claire.b</span>
+        <span class="desc">Approved partial settlement <strong>€3,400</strong> for <strong>CLM-2026-0042</strong> · cited Art. L113-2</span>
+        <span class="tag green"><span class="pip"></span>resolved</span>
+      </div>
+      <div class="row">
+        <span class="ts">14:36:09</span>
+        <span class="id">system</span>
+        <span class="desc">HITL escalation opened on <strong>PFT-014</strong> · confidence 0.78 below floor 0.85</span>
+        <span class="tag yellow"><span class="pip"></span>hitl</span>
+      </div>
+      <div class="row">
+        <span class="ts">13:08:51</span>
+        <span class="id">marc.l</span>
+        <span class="desc">Promoted <strong>MFL-007</strong> from G0 → G1 · canary at 5%</span>
+        <span class="tag blue"><span class="pip"></span>canary</span>
+      </div>
+      <div class="row">
+        <span class="ts">11:22:18</span>
+        <span class="id">claire.b</span>
+        <span class="desc">Edited eval rubric for <strong>PFT-014</strong> · added "tone empathy" judge</span>
+        <span class="tag"><span class="pip"></span>config</span>
+      </div>
+      <div class="row">
+        <span class="ts">09:14:04</span>
+        <span class="id">sara.m</span>
+        <span class="desc">Created scenario <strong>SUB-002 · subrogation</strong> from template <em style="font-family:var(--font-display);font-style:italic">claims-triage-v1</em></span>
+        <span class="tag"><span class="pip"></span>created</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:18px">
+    <div style="background:var(--ink-0);border:1px solid var(--ink-rule);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--shadow-1)">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--ink-rule);display:flex;justify-content:space-between;align-items:center;background:var(--ink-1)">
+        <div><span class="eyebrow">scenario · pft-014</span><div style="font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.018em;margin-top:4px">Public type signature</div></div>
+        <button class="btn btn-sm btn-ghost">Copy</button>
+      </div>
+      <div class="code-block" style="border-radius:0">
+        <div class="head"><span style="color:rgba(245,244,242,0.7);font-size:11px">scenario.ts</span><span class="lbl">studio · auto-generated</span></div>
+        <div class="body">
+<span class="c">// Inferred from flow definition + canopée schema</span><br>
+<span class="k">export interface</span> PropertyFastTrack {<br>
+&nbsp;&nbsp;<span class="c">/** Source claim from claims_facade */</span><br>
+&nbsp;&nbsp;input: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;claim_id: <span class="s">`CLM-${number}-${number}`</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;amount: <span class="k">number</span>; <span class="c">// EUR cents</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;incident_type: <span class="s">'water'</span> | <span class="s">'fire'</span> | <span class="s">'theft'</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;photos: URL[];<br>
+&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;<span class="c">/** Decision payload, signed and audit-anchored */</span><br>
+&nbsp;&nbsp;output: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verdict: <span class="s">'approved'</span> | <span class="s">'partial'</span> | <span class="s">'denied'</span> | <span class="hl"><span class="s">'hitl'</span></span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;confidence: <span class="k">number</span>; <span class="c">// 0..1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;trace_id: UUID;<br>
+&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;sla: <span class="s">'15min'</span>;<br>
+&nbsp;&nbsp;canopée_version: <span class="s">'v3.2.1'</span>;<br>
+}<br>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--ink-0);border:1px solid var(--ink-rule);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow-1)">
+      <span class="eyebrow"><span class="pip"></span>system · today</span>
+      <h3 style="font-family:var(--font-display);font-weight:500;font-size:24px;letter-spacing:-0.025em;margin-top:8px;line-height:1.2">Three things to do.</h3>
+      <ol style="margin-top:18px;display:flex;flex-direction:column;gap:14px">
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-3);padding-top:1px">01</span>
+          <div>
+            <div style="font-weight:500;color:var(--fg-0)">Review HITL on CLM-2026-0042</div>
+            <div style="font-size:12.5px;color:var(--fg-2);margin-top:2px">Opened 8m ago · SLA 7m left · NemoClaw 0.78</div>
+          </div>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-3);padding-top:1px">02</span>
+          <div>
+            <div style="font-weight:500;color:var(--fg-0)">Rubric drift on PFT-014</div>
+            <div style="font-size:12.5px;color:var(--fg-2);margin-top:2px">Tone judge variance up 0.12 · suggest reseed dataset</div>
+          </div>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-3);padding-top:1px">03</span>
+          <div>
+            <div style="font-weight:500;color:var(--fg-0)">SUB-002 needs a Langfuse trace</div>
+            <div style="font-size:12.5px;color:var(--fg-2);margin-top:2px">Run synthetic-1 to seed evals</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>STUDIO · DESIGN-SYSTEM-AS-PRODUCT</span>
+    <span>round 2 · proposal 03</span>
+    <span>Newsreader · Inter · JetBrains Mono</span>
+  </footer>
+</main>
+
+</body>
+</html>

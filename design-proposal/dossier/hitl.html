@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HITL · CLM-2026-0042 — Dossier</title>
+  <link rel="stylesheet" href="./dossier.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html"><span class="brand-glyph"></span>Dossier</a>
+      <nav class="crumbs">
+        <a href="./index.html">Pilots</a>
+        <span class="sep">/</span>
+        <span>Property Fast-Track</span>
+        <span class="sep">/</span>
+        <span class="leaf">CLM-2026-0042 · review</span>
+      </nav>
+      <div class="topbar-actions">
+        <span class="tag yellow"><span class="dot"></span>Awaiting decision · 02:14 elapsed</span>
+        <button class="btn">Open trace</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="viewport">
+
+    <section class="hero reveal" style="padding-bottom: 40px;">
+      <span class="eyebrow">Run · 7f4a-31bd · Tier 2 · SLA 24 h</span>
+      <h1 class="display" style="margin-top: 12px;">CLM-2026-0042</h1>
+      <p class="lede" style="max-width: 64ch;">
+        Reserves estimate exceeds the €2 000 threshold. The agent has paused for operator approval —
+        all evidence below was assembled by Property Fast-Track v27.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="label">Reserves</div>
+          <div class="value">€2 300</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Confidence</div>
+          <div class="value">0.91</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Documents</div>
+          <div class="value">8 / 8</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Similar cases</div>
+          <div class="value">6 found</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <div class="decision-grid">
+
+      <!-- LEFT — EVIDENCE -->
+      <div class="evidence-stack">
+
+        <article class="card reveal">
+          <span class="eyebrow">Claim summary · auto-extracted</span>
+          <h2 class="serif" style="font-size: 24px; margin-top: 12px;">Storm damage · Île-de-France</h2>
+          <p style="margin-top: 12px; color: var(--ink); line-height: 1.7;">
+            Policyholder reports roof tile and guttering damage following the 14 March storm event.
+            Eight invoices and quotations from accredited artisans submitted. Docling extraction
+            complete with 96% confidence; no missing fields flagged.
+          </p>
+
+          <dl style="margin-top: 24px;">
+            <div class="fact-row">
+              <dt>Policyholder</dt>
+              <dd>Marc Dubois (verified · KYC level 2)</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Policy</dt>
+              <dd><span style="font-family: var(--font-mono); font-size: 13px;">AXA-FR-PROP-…7714</span> · standing 4 yr · no prior claims</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Coverage</dt>
+              <dd>Multirisques habitation · franchise €150 · plafond €25 000</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Event date</dt>
+              <dd>14 March 2026 · matches Météo-France storm code MFR-2026-0314</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Reserves estimate</dt>
+              <dd><span class="strong" style="color: var(--ink-strong);">€2 300</span> &nbsp;<span class="tag yellow"><span class="dot"></span>Above threshold</span></dd>
+            </div>
+            <div class="fact-row">
+              <dt>Recommendation</dt>
+              <dd>Approve at €2 300 · dispatch to "Toiture du Marais" (preferred · SLA 5 d)</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="card reveal">
+          <h3 style="margin-bottom: 16px;">Why the agent paused</h3>
+          <p style="color: var(--mute); line-height: 1.7;">
+            Gate G2 — reserves overage — was crossed during step 03 (documents extraction).
+            The claim is otherwise low-friction: KYC verified, weather event matches, all documents
+            present. Per scenario v27, claims above €2 000 always require operator countersign.
+          </p>
+          <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;">
+            <div style="background: var(--surface); padding: 16px;">
+              <div class="eyebrow" style="font-size: 11px;">Trigger</div>
+              <div style="margin-top: 6px; font-family: var(--font-mono); font-size: 13px;">reserves_estimate &gt; 2 000</div>
+            </div>
+            <div style="background: var(--surface); padding: 16px;">
+              <div class="eyebrow" style="font-size: 11px;">Outcome</div>
+              <div style="margin-top: 6px; font-family: var(--font-mono); font-size: 13px;">PAUSE · tier-2 hand-off</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3 style="margin-bottom: 16px;">Six similar cases · last 90 days</h3>
+
+          <div class="similar-case">
+            <div class="title">CLM-2026-0029 · €2 145 · approved 14 d ago</div>
+            <div style="font-size: 13px; color: var(--mute);">
+              Storm event MFR-2026-0301 · same coverage tier · approved without modification by f.lucas
+            </div>
+          </div>
+          <div class="similar-case">
+            <div class="title">CLM-2026-0017 · €2 410 · approved 28 d ago</div>
+            <div style="font-size: 13px; color: var(--mute);">
+              Routed to alternate artisan due to capacity; outcome favourable · 3 d closure
+            </div>
+          </div>
+          <div class="similar-case">
+            <div class="title">CLM-2025-3104 · €2 580 · approved 42 d ago</div>
+            <div style="font-size: 13px; color: var(--mute);">
+              Adjusted estimate down to €2 200 after second site visit · operator note attached
+            </div>
+          </div>
+          <div class="similar-case">
+            <div class="title">CLM-2025-3099 · €2 050 · escalated 44 d ago</div>
+            <div style="font-size: 13px; color: var(--mute);">
+              Escalated to Tier 3 due to KYC mismatch — N/A here (KYC verified)
+            </div>
+          </div>
+          <button class="btn btn-ghost" style="padding-left: 0; margin-top: 8px;">View 2 more similar cases →</button>
+        </article>
+
+        <article class="card reveal">
+          <h3 style="margin-bottom: 16px;">Audit · who has touched this run</h3>
+          <dl>
+            <div class="fact-row">
+              <dt>Run created</dt>
+              <dd>02:11:48 UTC by Property Fast-Track v27 · trace <span style="font-family: var(--font-mono); font-size: 13px;">7f4a-31bd</span></dd>
+            </div>
+            <div class="fact-row">
+              <dt>Documents extracted</dt>
+              <dd>02:13:02 UTC · wf006 / Docling</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Reserves computed</dt>
+              <dd>02:13:51 UTC · wfmcp03 / claims_facade</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Hand-off opened</dt>
+              <dd>02:13:54 UTC · ChatWoot conv 8814 · assigned to current operator</dd>
+            </div>
+            <div class="fact-row">
+              <dt>Audit hash</dt>
+              <dd style="font-family: var(--font-mono); font-size: 13px; color: var(--mute);">0x7a83fe…0091 (chain verified)</dd>
+            </div>
+          </dl>
+        </article>
+
+      </div>
+
+      <!-- RIGHT — STICKY DECISION -->
+      <aside class="decision-actions">
+
+        <div class="card">
+          <span class="eyebrow">Operator decision</span>
+          <h3 style="margin: 12px 0 4px;">Choose an outcome</h3>
+          <p style="font-size: 13px; color: var(--mute); line-height: 1.6; margin-bottom: 20px;">
+            Your decision resumes the Langflow run. Justification is captured to <code style="font-family: var(--font-mono); font-size: 12px;">audit_log</code>.
+          </p>
+
+          <div class="actions" style="display: grid; gap: 8px;">
+            <button class="btn-primary btn" data-decision="approve" style="justify-content: center;">Approve at €2 300</button>
+            <button class="btn" data-decision="reject" style="justify-content: center;">Reject &amp; close as fraud-risk</button>
+            <button class="btn btn-ghost" data-decision="ask" style="justify-content: center;">Ask for clarification</button>
+          </div>
+
+          <div class="divider-thin"></div>
+
+          <label style="font-size: 12px; color: var(--mute); display: block; margin-bottom: 8px;">Justification (will be stored)</label>
+          <textarea placeholder="Reason for decision · auto-pre-filled from precedent" style="min-height: 96px;">Reserves match Q1 norm for storm-event property claims at this coverage tier. KYC verified, weather event corroborated, no prior claims. Approving at recommended estimate.</textarea>
+
+          <label style="font-size: 12px; color: var(--mute); display: block; margin: 16px 0 8px;">Reason code</label>
+          <select>
+            <option>policy_normal · within bounds</option>
+            <option>policy_exception · documented</option>
+            <option>fraud_suspected</option>
+            <option>data_incomplete</option>
+          </select>
+        </div>
+
+        <div class="card" style="background: var(--canvas);">
+          <span class="eyebrow">Run state</span>
+          <dl style="margin-top: 12px;">
+            <div class="fact-row">
+              <dt>Status</dt>
+              <dd><span class="tag yellow"><span class="dot"></span>waiting</span></dd>
+            </div>
+            <div class="fact-row">
+              <dt>Step</dt>
+              <dd>03 · Docs &amp; reserves</dd>
+            </div>
+            <div class="fact-row">
+              <dt>SLA elapsed</dt>
+              <dd>02:14 of 24:00</dd>
+            </div>
+          </dl>
+        </div>
+
+      </aside>
+    </div>
+
+    <footer style="border-top: 1px solid var(--rule); padding: 32px 0; margin-top: 96px; display: flex; justify-content: space-between; font-size: 13px; color: var(--mute);">
+      <span>© 2026 GDAI · Internal use · Dossier prototype</span>
+      <span><a href="../index.html">Compare other approaches →</a></span>
+    </footer>
+
+  </main>
+
+  <script src="./dossier.js"></script>
+</body>
+</html>
