@@ -11,6 +11,24 @@ Takes a sprint issue from Linear, reviews dependencies, creates a git branch, pr
 
 `/deliver AXA-N` = full lifecycle: **review → branch → plan → implement → verify → report**. Never skip a phase. Never deliver without a plan written and approved.
 
+## MANDATORY: Always run the formal lifecycle
+
+**Any request to "deliver", "implement", "build", or "execute" a plan or feature MUST go through this full lifecycle. No exceptions.**
+
+If the user points at a plan doc, feature, or design — and there is no Linear issue ID yet — you MUST:
+1. Run the `sprint` skill first to convert the plan into Linear issues + sprint docs.
+2. Then run this `deliver` skill on the resulting `AXA-N` issue ID.
+
+Never implement work directly without a Linear issue, a sprint doc, and a git branch. If you skip any of these, you are not delivering — you are hacking.
+
+**Trigger phrases that ALWAYS require this full lifecycle:**
+- "deliver X"
+- "implement X"  
+- "build X"
+- "execute the plan for X"
+- "test and deliver X"
+- "create X" (when X is a feature, sprint, or plan)
+
 ## Prerequisites
 
 - Linear MCP server authenticated
