@@ -110,6 +110,7 @@ jobs:
 
       - name: Assign Copilot to [DesignQA] issue
         if: steps.classify.outputs.pr_type == 'frontend' || steps.classify.outputs.pr_type == 'mixed'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -173,6 +174,7 @@ jobs:
 
       - name: Assign Copilot to [QA] issue
         if: steps.classify.outputs.pr_type == 'backend' || steps.classify.outputs.pr_type == 'mixed'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
