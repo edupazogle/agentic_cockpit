@@ -1,0 +1,31 @@
+/* Publico Headline — AXA primary serif (B2C universes) */
+@font-face {
+  font-family: "Publico Headline";
+  src: url("PublicoHeadlineWeb-Light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Publico Headline";
+  src: url("PublicoHeadlineWeb-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Publico Headline";
+  src: url("PublicoHeadlineWeb-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Publico Headline";
+  src: url("PublicoHeadlineWeb-Extrabold.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Publico Headline";
+  src: url("PublicoHeadlineWeb-Black.woff2") format("woff2");
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Publico";
+  src: url("PublicoHeadlineWeb-Roman.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}

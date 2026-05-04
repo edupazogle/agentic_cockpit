@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Codex — Canevas · PFT-014 / 7f4a-31bd</title>
+<link rel="stylesheet" href="./codex.css">
+</head>
+<body class="canvas-page">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand">Codex <span class="brand-mark">CKPT</span></a>
+    <nav class="crumbs">
+      <span>PFT–014</span><span>·</span><span>property fast track</span><span>·</span><span class="leaf">7f4a-31bd</span>
+    </nav>
+    <div class="topbar-actions">
+      <span class="tag yellow" id="rh-status-tag"><span class="pip"></span><span id="rh-status-text">IDLE · READY · 00:00</span></span>
+      <button class="btn" id="rh-replay-top">Replay</button>
+      <a class="btn btn-primary" href="./builder.html">Edit flow →</a>
+    </div>
+  </div>
+</header>
+
+<div class="canvas-shell-c">
+  <div class="canvas-bg-c"></div>
+
+  <header class="runhead-c" id="runhead-c">
+    <div class="rh-id">
+      <span class="rh-eyebrow">Run</span>
+      <span class="rh-title">Property Fast-Track <em>· CLM-2026-0042</em></span>
+    </div>
+    <div class="rh-progress" id="rh-progress" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"></div>
+    <div class="rh-meta">
+      <span class="rh-meta-col"><span class="rh-meta-lab">stage</span><span class="rh-meta-val" id="rh-stage">— · idle</span></span>
+      <span class="rh-meta-col"><span class="rh-meta-lab">elapsed</span><span class="rh-meta-val mono" id="rh-elapsed">00.0s</span></span>
+      <span class="rh-meta-col"><span class="rh-meta-lab">SLA</span><span class="rh-meta-val mono" id="rh-sla">10:00</span></span>
+      <span class="rh-meta-col"><span class="rh-meta-lab">cost</span><span class="rh-meta-val mono" id="rh-cost">€0.000</span></span>
+    </div>
+    <div class="rh-actions">
+      <button class="rh-btn" id="rh-play" title="Play full flow">
+        <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor"><path d="M0 0v13l11-6.5L0 0z"/></svg>
+        <span>Play</span>
+      </button>
+      <button class="rh-btn" id="rh-pause" title="Pause" hidden>
+        <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor"><rect x="0" y="0" width="4" height="13"/><rect x="7" y="0" width="4" height="13"/></svg>
+        <span>Pause</span>
+      </button>
+      <button class="rh-btn ghost" id="rh-replay" title="Reset and replay">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11.5 6.5a5 5 0 11-1.5-3.5"/><polyline points="11 0.5 11.5 3.5 8.5 3.5"/></svg>
+        <span>Replay</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="canvas-pan-c" id="pan-c">
+    <svg class="edges-c" id="edges-c" preserveAspectRatio="none"></svg>
+    <svg class="particles-c" id="particles-c" preserveAspectRatio="none"></svg>
+
+    <!-- All 8 nodes in a single horizontal flow on an INFINITE canvas.
+         Logical order 1→2→3→4→5→6→7→8 left-to-right, with subtle
+         vertical jitter for organic feel (Studio-style). The canvas
+         extends well past the viewport — pan/zoom to see all. -->
+    <article class="node-c queued" id="cn-presenter" data-step="1" data-kind="voice" style="left:40px;top:80px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="6" y="2" width="4" height="8" rx="2"/><path d="M3 8a5 5 0 0010 0M8 13v2"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Presenter</span><em class="nm-sub">voice · greet & intake</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>persona</span><span class="v">Sophie · FNOL</span></div>
+        <div class="row"><span>channel</span><span class="v">voice · ElevenLabs</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued" id="cn-rachel" data-step="2" data-kind="agent" style="left:400px;top:40px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H7l-3 2v-2H4a2 2 0 01-2-2V4z"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Rachel · FNOL</span><em class="nm-sub">agent · capture facts</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>claim</span><span class="v">CLM-2026-0042</span></div>
+        <div class="row"><span>incident</span><span class="v">water · ceiling</span></div>
+        <div class="row"><span>MCP</span><span class="v">claims_facade</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued" id="cn-atlas" data-step="3" data-kind="llm" style="left:760px;top:120px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M12.8 3.2l-1.4 1.4M4.6 11.4l-1.4 1.4"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Atlas · triage</span><em class="nm-sub">llm · severity & reserve</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>severity</span><span class="v" data-field="severity">—</span></div>
+        <div class="row"><span>reserve</span><span class="v" data-field="reserve">—</span></div>
+        <div class="row"><span>MCP</span><span class="v">weather · property</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued hitl" id="cn-reserve" data-step="4" data-kind="hitl" data-hitl="reserve" style="left:1120px;top:60px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="10" height="7" rx="1"/><path d="M5 7V4a3 3 0 016 0v3"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Reserve gate</span><em class="nm-sub">hitl · operator approval</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>floor</span><span class="v">€2,000</span></div>
+        <div class="row"><span>requested</span><span class="v" data-field="requested">—</span></div>
+        <div class="row"><span>operator</span><span class="v">claire.b</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="hitl-siren"></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <!-- 5..8 continue right -->
+    <article class="node-c queued" id="cn-docling" data-step="5" data-kind="tool" style="left:1480px;top:140px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 13l4-4M9 5l3-3M11 4l1 1M14 7l1 1M5 9l-2 2M2 12l1 1"/><circle cx="11" cy="5" r="1.6"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Harry · vendor</span><em class="nm-sub">tool · dispatch & book</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>vendor</span><span class="v" data-field="vendor">—</span></div>
+        <div class="row"><span>booking</span><span class="v" data-field="booking">—</span></div>
+        <div class="row"><span>MCP</span><span class="v">wfmcp02-04</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued" id="cn-adjuster" data-step="7" data-kind="agent" style="left:248px;top:200px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="2" width="10" height="13" rx="1"/><path d="M6 1h4v2H6zM5 7h6M5 10h6M5 13h4"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Adjuster</span><em class="nm-sub">agent · compile dossier</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>verdict</span><span class="v" data-field="verdict">—</span></div>
+        <div class="row"><span>amount</span><span class="v" data-field="amount">—</span></div>
+        <div class="row"><span>MCP</span><span class="v">chatwoot · post</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued hitl" id="cn-hermes" data-step="6" data-kind="hitl" data-hitl="hermes" style="left:472px;top:200px">
+      <span class="handle in"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="10" height="7" rx="1"/><path d="M5 7V4a3 3 0 016 0v3"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Hermes review</span><em class="nm-sub">hitl · dossier handover</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>dossier</span><span class="v" data-field="dossier">—</span></div>
+        <div class="row"><span>SLA</span><span class="v">15 min</span></div>
+        <div class="row"><span>operator</span><span class="v">— · queue</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="hitl-siren"></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+    <article class="node-c queued" id="cn-docling" data-step="5" data-kind="tool" style="left:696px;top:200px">
+      <span class="handle in vertical"></span><span class="handle out"></span>
+      <div class="nh">
+        <span class="ni"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 2h6l3 3v9H4V2z"/><path d="M10 2v3h3M6 8h5M6 11h5"/></svg></span>
+        <div class="nm-wrap"><span class="nm">Docling</span><em class="nm-sub">tool · evidence parse</em></div>
+        <span class="status-pill"><span class="pip"></span><span class="sl">queued</span></span>
+      </div>
+      <div class="nb">
+        <div class="row"><span>photos</span><span class="v" data-field="photos">—</span></div>
+        <div class="row"><span>invoice</span><span class="v" data-field="invoice">—</span></div>
+        <div class="row"><span>MCP</span><span class="v">wf006 · docling</span></div>
+      </div>
+      <div class="nf"><span class="nf-time">—</span><span class="nf-ms">queued</span></div>
+      <div class="mcp-halo"></div>
+    </article>
+
+  </div>
+
+  <!-- MCP toast cluster — appears on demand -->
+  <div class="mcp-toast-cluster" id="mcp-toast-cluster"></div>
+
+  <!-- Zoom + minimap (kept; minimap remains a thumbnail, no overlap with inspector) -->
+  <div class="zoombar-c">
+    <button class="b" data-zc="out">−</button>
+    <span class="r">100%</span>
+    <button class="b" data-zc="in">+</button>
+    <button class="b" data-zc="fit" style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;padding:6px 12px">FIT</button>
+  </div>
+
+  <!-- HITL banner (slides in only when SIM hits a wait state) -->
+  <aside class="hitl-banner" id="hitl-banner" hidden>
+    <div class="hb-left">
+      <div class="hb-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="6" y="11" width="12" height="9" rx="1"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>
+      </div>
+      <div class="hb-eyebrow">Awaiting decision · <span id="hb-node">Reserve gate</span></div>
+      <h4 class="hb-title" id="hb-title">Operator approval needed</h4>
+      <p class="hb-desc" id="hb-desc">Atlas estimated reserve at <strong id="hb-amount">€4,820</strong> — above the <strong>€2,000</strong> floor. Approve to proceed to evidence extraction, or decline with reason.</p>
+
+      <div class="hb-rationale">
+        <div class="hb-rat-h">Why approve</div>
+        <ul class="hb-rat-list" id="hb-rat-list">
+          <li>Severity <strong>HIGH</strong> · weather corroborates burst event (heavy rain · overnight)</li>
+          <li>Property pre-check: <strong>active policy</strong>, water clause included, no recent claims</li>
+          <li>Reserve €4,820 fits within <strong>category band C</strong> (€3k–€7k) for shared-space damage</li>
+        </ul>
+      </div>
+
+      <div class="hb-evidence">
+        <div class="hb-ev-h">Evidence collected</div>
+        <div class="hb-ev-row"><span class="hb-ev-tag">photo</span><span>3 photos · OCR &gt; 0.91 · no PII</span></div>
+        <div class="hb-ev-row"><span class="hb-ev-tag">invoice</span><span>Plomberie Lyon · €4,820 · 14 line items</span></div>
+        <div class="hb-ev-row"><span class="hb-ev-tag">policy</span><span>CTR-01142 · water clause · active</span></div>
+      </div>
+
+      <div class="hb-options" id="hb-options">
+        <button class="hb-opt selected" data-opt="approve" data-amount="4820"><strong>Approve · €4,820</strong><em>full reserve · vendor matches</em></button>
+        <button class="hb-opt" data-opt="partial" data-amount="3400"><strong>Approve partial · €3,400</strong><em>cap shared-space per L113-2</em></button>
+        <button class="hb-opt" data-opt="more" data-amount="0"><strong>Request more</strong><em>building syndic statement</em></button>
+      </div>
+    </div>
+    <div class="hb-actions">
+      <button class="btn btn-ghost" id="hb-decline" data-act="decline">Decline</button>
+      <button class="btn btn-primary" id="hb-approve" data-act="approve">Approve →</button>
+    </div>
+  </aside>
+
+  <!-- INSPECTOR right rail -->
+  <aside class="inspector-c open" id="inspector-c">
+    <header class="ins-head">
+      <div>
+        <div class="ins-eyebrow">Inspector</div>
+        <h3 class="ins-title" id="ins-title">Run · Property Fast-Track</h3>
+        <div class="ins-sub" id="ins-sub">click any step to inspect · 8 nodes · 4 MCPs · 2 HITL gates</div>
+      </div>
+      <button class="ins-close" id="ins-close" title="Close">×</button>
+    </header>
+    <nav class="ins-tabs" id="ins-tabs">
+      <button class="ins-tab active" data-itab="evidence">Evidence</button>
+      <button class="ins-tab" data-itab="trace">Trace</button>
+      <button class="ins-tab" data-itab="history">History</button>
+    </nav>
+    <div class="ins-body" id="ins-body">
+      <section class="ins-pane active" data-ipane="evidence" id="ins-evidence">
+        <div class="ins-block">
+          <div class="ins-block-h">Run summary</div>
+          <p class="ins-summary">Property Fast-Track is a 8-step claim flow combining 3 agents, 1 LLM, 2 tools and 2 HITL gates. <strong>Click Play</strong> to simulate end-to-end.</p>
+        </div>
+        <div class="ins-block">
+          <div class="ins-block-h">Photo evidence</div>
+          <div class="ins-ev"><strong>Photo 01</strong> · ceiling damage<em>1.2 MB · OCR 0.97 · no PII</em></div>
+          <div class="ins-ev"><strong>Photo 02</strong> · pipe joint<em>0.8 MB · OCR 0.94 · no PII</em></div>
+          <div class="ins-ev"><strong>Photo 03</strong> · floor pooling<em>1.1 MB · OCR 0.91 · no PII</em></div>
+        </div>
+        <div class="ins-block">
+          <div class="ins-block-h">Documents</div>
+          <div class="ins-ev"><strong>Invoice</strong> · Plomberie Lyon<em>€4,820 · 14 line items · vendor approved</em></div>
+          <div class="ins-ev"><strong>Policy</strong> · CTR-01142<em>active · water clause included</em></div>
+        </div>
+      </section>
+      <section class="ins-pane" data-ipane="trace">
+        <div class="ins-block">
+          <div class="ins-block-h">Langfuse trace</div>
+          <div class="ins-trace">
+            <span class="ins-tr-id">7f4a-31bd</span>
+            <span class="ins-tr-link">↗ Open in Langfuse</span>
+          </div>
+        </div>
+        <div class="ins-block">
+          <div class="ins-block-h">Spans (this step)</div>
+          <ol class="ins-spans" id="ins-spans">
+            <li><span class="sp-name">run.start</span><span class="sp-d">—</span></li>
+          </ol>
+        </div>
+      </section>
+      <section class="ins-pane" data-ipane="history">
+        <div class="ins-block">
+          <div class="ins-block-h">Past runs</div>
+          <div class="ins-hist"><span class="hi-id">7f3c-aa12</span><span class="hi-d">3 days ago</span><span class="hi-r">approved €5,200</span></div>
+          <div class="ins-hist"><span class="hi-id">7e98-bb34</span><span class="hi-d">9 days ago</span><span class="hi-r">approved partial €3,400</span></div>
+          <div class="ins-hist"><span class="hi-id">7d72-cc56</span><span class="hi-d">14 days ago</span><span class="hi-r">declined · req. syndic</span></div>
+        </div>
+      </section>
+    </div>
+  </aside>
+
+  <!-- ACTIVITY pane -->
+  <aside class="activity-c" id="activity-c">
+    <header class="act-head" id="act-toggle">
+      <div class="act-eyebrow">Activity</div>
+      <h4 class="act-title">Run timeline · <span id="act-count">0 entries</span></h4>
+      <span class="act-chev" aria-hidden="true">▾</span>
+    </header>
+    <ol class="act-list" id="act-list"></ol>
+  </aside>
+</div>
+
+<script src="./codex.js"></script>
+<script>
+  const pan = document.getElementById('pan-c');
+  initCanvasC(pan);
+  CodexSim.init();
+</script>
+</body>
+</html>

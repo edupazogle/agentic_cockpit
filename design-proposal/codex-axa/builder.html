@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Codex — Composer un pilote</title>
+<link rel="stylesheet" href="./codex.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand">Codex <span class="brand-mark">CKPT</span></a>
+    <nav class="crumbs">
+      <a href="./scenarios.html" style="text-decoration:none;color:inherit">Scénarios</a><span>·</span>
+      <span>Builder</span><span>·</span><span class="leaf">Property Fast-Track · simulation</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost"><kbd>⌘</kbd><kbd>S</kbd> · saved 12s</button>
+      <span class="tag yellow" id="bsim-tag" style="font-family:var(--font-mono);font-size:11px"><span class="pip"></span><span id="bsim-tag-text">IDLE · MOVEMENT 0/8</span></span>
+      <button class="btn" id="bsim-reset">Reset</button>
+      <button class="btn btn-primary" id="bsim-play">▶ Play simulation</button>
+    </div>
+  </div>
+</header>
+
+<main class="bsim-shell">
+
+  <!-- ── LEFT RAIL · movement steps + budget ── -->
+  <aside class="bsim-rail">
+    <div class="bsim-rail-eyebrow">Pilot composition</div>
+    <h2 class="bsim-rail-title">Eight movements<br/><em>from intake to deploy.</em></h2>
+    <ol class="steps-codex" id="bsim-steps">
+      <li class="s" data-mv="1"><span class="ix">i.</span><span class="nm">Intake <em>persona &amp; purpose</em></span></li>
+      <li class="s" data-mv="2"><span class="ix">ii.</span><span class="nm">Research <em>citations · 12 sources</em></span></li>
+      <li class="s" data-mv="3"><span class="ix">iii.</span><span class="nm">Plan <em>flow &amp; data shape</em></span></li>
+      <li class="s" data-mv="4"><span class="ix">iv.</span><span class="nm">Approve <em>operator sign-off</em></span></li>
+      <li class="s" data-mv="5"><span class="ix">v.</span><span class="nm">Build <em>flow.json + agents</em></span></li>
+      <li class="s" data-mv="6"><span class="ix">vi.</span><span class="nm">Lint <em>contracts &amp; safety</em></span></li>
+      <li class="s" data-mv="7"><span class="ix">vii.</span><span class="nm">Preview <em>sandbox replay</em></span></li>
+      <li class="s" data-mv="8"><span class="ix">viii.</span><span class="nm">Deploy <em>G0 canary</em></span></li>
+    </ol>
+
+    <div class="bsim-budget">
+      <div class="bsim-budget-row">
+        <span class="bsim-budget-k">tokens</span>
+        <span class="bsim-budget-v" id="bsim-tok">0 / 80k</span>
+      </div>
+      <div class="bsim-budget-row">
+        <span class="bsim-budget-k">cost</span>
+        <span class="bsim-budget-v" id="bsim-cost">€0.00 / €5.00</span>
+      </div>
+      <div class="bsim-budget-bar"><span id="bsim-bar" style="width:0%"></span></div>
+    </div>
+  </aside>
+
+  <!-- ── CENTER · runhead + body ── -->
+  <section class="bsim-canvas" id="bsim-canvas">
+    <div class="bsim-runhead">
+      <div class="bsim-eyebrow" id="bsim-eyebrow">Movement 0 · Idle</div>
+      <h1 class="bsim-title" id="bsim-title">Lancez la <em>composition</em>.</h1>
+      <p class="bsim-lede" id="bsim-lede">Simulez les huit mouvements d'une composition de pilote — de la prise en charge au déploiement — avec un contenu factice qui se diffuse en bout-en-bout.</p>
+    </div>
+    <div class="bsim-body" id="bsim-body"></div>
+  </section>
+
+  <!-- ── RIGHT RAIL · chat stream ── -->
+  <aside class="bsim-chat-rail">
+    <div class="bsim-chat-eyebrow">Compose chat <span class="pip"></span></div>
+    <div class="bsim-chat" id="bsim-chat"></div>
+  </aside>
+
+</main>
+
+<script src="./codex.js"></script>
+<script>CodexBuilder.init();</script>
+</body>
+</html>

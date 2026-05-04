@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Codex — Scénarios</title>
+<link rel="stylesheet" href="./codex.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="brand">Codex <span class="brand-mark">CKPT</span></a>
+    <nav class="crumbs">
+      <span>AXA</span><span>·</span><span>GDAI</span><span>·</span><span class="leaf">Scénarios</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost"><kbd>⌘</kbd><kbd>K</kbd></button>
+      <a class="btn" href="./builder.html">Composer</a>
+      <a class="btn btn-primary" href="./canvas.html">Ouvrir le canevas →</a>
+    </div>
+  </div>
+</header>
+
+<main class="scen-shell">
+
+  <span class="hero-eyebrow" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);display:inline-flex;align-items:center;gap:8px">
+    <span style="display:inline-block;width:6px;height:6px;border-radius:999px;background:var(--axa-azur);animation:c-pulse-pip 1.4s ease-in-out infinite"></span>
+    № 02 · A catalog · 13 May, 2026
+  </span>
+
+  <h1 class="scen-h1" style="margin-top:18px">Six scénarios.<br><em>Une seule table de sinistres.</em></h1>
+  <p class="scen-lede">
+    Pilots compose, run, and learn here. Live runs glow at the seam; canaries
+    carry a yellow ribbon; drafts wait quietly on the bench. Click any card to
+    open the canvas — the ones in motion are <em>actually moving</em>.
+  </p>
+
+  <div class="scen-toolbar">
+    <button class="seg active">All <span style="opacity:0.5;margin-left:6px">06</span></button>
+    <button class="seg">Live <span style="opacity:0.5;margin-left:6px">02</span></button>
+    <button class="seg">Canary <span style="opacity:0.5;margin-left:6px">01</span></button>
+    <button class="seg">Drafts <span style="opacity:0.5;margin-left:6px">02</span></button>
+    <button class="seg">Stable <span style="opacity:0.5;margin-left:6px">01</span></button>
+    <span class="grow"></span>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input placeholder="Search scenarios">
+    </div>
+    <a class="btn btn-primary" href="./builder.html">+ New scenario</a>
+  </div>
+
+  <section class="scen-grid">
+
+    <!-- LIVE — PFT-014 -->
+    <a class="scen-card live" href="./canvas.html">
+      <div class="scen-head">
+        <span class="scen-id">PFT–014 · v3.2</span>
+        <span class="scen-tag live">● Live · 1 in HITL</span>
+      </div>
+      <h3>Property fast track <em>— water damage triage</em></h3>
+      <p class="scen-blurb">Auto-triages residential water-damage claims under €5,000. Two HITL gates: a confidence floor on the LLM judge, and an operator handover for cases below the cap. Canopée schema, claims_facade lookup, docling parse, NemoClaw decide.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Auto-resolved · 24h</div><div class="val">87.3<span style="font-size:14px">%</span></div><div class="sub">12,481 month</div></div>
+        <div class="scen-stat"><div class="lab">Median latency</div><div class="val">1.4<span style="font-size:14px">s</span></div><div class="sub">p95 3.2s</div></div>
+        <div class="scen-stat"><div class="lab">Eval pass · 7d</div><div class="val">96.2<span style="font-size:14px">%</span></div><div class="sub">120 cases</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip mcp">claims_facade</span>
+        <span class="chip mcp">docling</span>
+        <span class="chip mcp">chatwoot</span>
+        <span class="chip">policy.evaluate</span>
+        <span class="chip">audit.anchor</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext">Last run · <b>2 m ago</b> · 04 in queue</span>
+        <span class="arrow">Open →</span>
+      </div>
+    </a>
+
+    <!-- CANARY — MFL-007 -->
+    <a class="scen-card" href="./canvas.html">
+      <div class="scen-head">
+        <span class="scen-id">MFL–007 · v0.8</span>
+        <span class="scen-tag canary">⚑ Canary · 5%</span>
+      </div>
+      <h3>Motor fleet <em>— harsh-braking advisory</em></h3>
+      <p class="scen-blurb">Synthesizes telematics packets, body-shop directory matches, and vehicle records into a coaching note for fleet managers. Currently in 5% canary on synthetic dataset; promotion to 25% pending Q1 audit sign-off.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Auto-resolved · 24h</div><div class="val">72.1<span style="font-size:14px">%</span></div><div class="sub">428 events</div></div>
+        <div class="scen-stat"><div class="lab">Median latency</div><div class="val">2.8<span style="font-size:14px">s</span></div><div class="sub">p95 5.4s</div></div>
+        <div class="scen-stat"><div class="lab">Eval pass · 7d</div><div class="val">88.6<span style="font-size:14px">%</span></div><div class="sub">20 cases</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip mcp">telematics</span>
+        <span class="chip mcp">bodyshop_dir</span>
+        <span class="chip">vehicle.lookup</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext">Last run · <b>11 m ago</b> · canary @ 5%</span>
+        <span class="arrow">Open →</span>
+      </div>
+    </a>
+
+    <!-- LIVE — SUB-002 -->
+    <a class="scen-card live" href="./canvas.html">
+      <div class="scen-head">
+        <span class="scen-id">SUB–002 · v1.4</span>
+        <span class="scen-tag live">● Live · 2 in HITL</span>
+      </div>
+      <h3>Subrogation triage <em>— third-party recovery</em></h3>
+      <p class="scen-blurb">Identifies subrogation candidates from settled claims, drafts demand letters from policy + accident reports, routes to the recovery operators. Ten-day turnaround target. Conservative HITL: every letter draft reviewed.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Recovered · MTD</div><div class="val">€86<span style="font-size:14px">k</span></div><div class="sub">42 cases</div></div>
+        <div class="scen-stat"><div class="lab">Median draft</div><div class="val">8<span style="font-size:14px">s</span></div><div class="sub">p95 14s</div></div>
+        <div class="scen-stat"><div class="lab">Approval rate</div><div class="val">91<span style="font-size:14px">%</span></div><div class="sub">7d</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip mcp">claims_facade</span>
+        <span class="chip mcp">docling</span>
+        <span class="chip">recovery_db</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext">Last run · <b>4 m ago</b> · 02 in queue</span>
+        <span class="arrow">Open →</span>
+      </div>
+    </a>
+
+    <!-- DRAFT — REC-001 -->
+    <a class="scen-card" href="./builder.html">
+      <div class="scen-head">
+        <span class="scen-id">REC–001 · v0.1</span>
+        <span class="scen-tag draft">✎ Drafting</span>
+      </div>
+      <h3>Reconnaissance NPS <em>— sentiment from intake</em></h3>
+      <p class="scen-blurb">Reads intake messages from chat + email, scores sentiment + urgency, routes high-risk cases to a senior operator before triage. Currently building: 3 of 8 nodes wired, no MCP attachments yet.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Nodes wired</div><div class="val">3<span style="font-size:14px"> / 8</span></div><div class="sub">draft</div></div>
+        <div class="scen-stat"><div class="lab">Last edit</div><div class="val">12<span style="font-size:14px">m</span></div><div class="sub">ago · marc.l</div></div>
+        <div class="scen-stat"><div class="lab">Eval cases</div><div class="val">0</div><div class="sub">not started</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip">sentiment</span>
+        <span class="chip">routing</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext"><b>Resume in builder</b></span>
+        <span class="arrow">Compose →</span>
+      </div>
+    </a>
+
+    <!-- DRAFT — KYC-005 -->
+    <a class="scen-card" href="./builder.html">
+      <div class="scen-head">
+        <span class="scen-id">KYC–005 · v0.2</span>
+        <span class="scen-tag draft">✎ Drafting</span>
+      </div>
+      <h3>KYC refresh <em>— policyholder verify</em></h3>
+      <p class="scen-blurb">Pulls flagged policyholder records, runs ID verification + sanctions check, surfaces conflicts to compliance with full evidence trail. Hard-gated: no auto-resolve. Awaiting compliance team review of decision flowchart.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Nodes wired</div><div class="val">5<span style="font-size:14px"> / 6</span></div><div class="sub">draft</div></div>
+        <div class="scen-stat"><div class="lab">Last edit</div><div class="val">2<span style="font-size:14px">d</span></div><div class="sub">ago · claire.b</div></div>
+        <div class="scen-stat"><div class="lab">Eval cases</div><div class="val">8</div><div class="sub">synthetic</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip mcp">id_verify</span>
+        <span class="chip mcp">sanctions</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext"><b>Resume in builder</b></span>
+        <span class="arrow">Compose →</span>
+      </div>
+    </a>
+
+    <!-- STABLE — NPS-003 -->
+    <a class="scen-card" href="./canvas.html">
+      <div class="scen-head">
+        <span class="scen-id">NPS–003 · v2.1</span>
+        <span class="scen-tag stable">✓ Stable</span>
+      </div>
+      <h3>NPS follow-up <em>— closed-claim survey</em></h3>
+      <p class="scen-blurb">Sends a tailored NPS survey to claimants 7 days after settlement. Personalises the prompt from claim outcome + sentiment. Routes &lt;6 scores to retention. Ran 14k cases in stable; promoted from canary in March.</p>
+
+      <div class="scen-stats">
+        <div class="scen-stat"><div class="lab">Sent · 30d</div><div class="val">14<span style="font-size:14px">.2k</span></div><div class="sub">no HITL</div></div>
+        <div class="scen-stat"><div class="lab">Response rate</div><div class="val">42<span style="font-size:14px">%</span></div><div class="sub">+9 pts</div></div>
+        <div class="scen-stat"><div class="lab">Eval pass</div><div class="val">99.1<span style="font-size:14px">%</span></div><div class="sub">120 cases</div></div>
+      </div>
+
+      <div class="scen-chips">
+        <span class="chip agent">NemoClaw</span>
+        <span class="chip mcp">claims_facade</span>
+        <span class="chip mcp">comms</span>
+        <span class="chip">crm.sync</span>
+      </div>
+
+      <div class="scen-foot">
+        <span class="ftext">Last run · <b>23 s ago</b> · stable</span>
+        <span class="arrow">Open →</span>
+      </div>
+    </a>
+
+  </section>
+
+  <p style="margin-top:64px;font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--ink-mute);text-align:center;border-top:1px solid var(--rule);padding-top:24px;letter-spacing:-0.005em">
+    Six of forty-three. Use <kbd style="font-family:var(--font-mono);font-size:10.5px;border:1px solid var(--rule);padding:2px 6px;border-radius:4px;color:var(--ink-strong)">⌘ K</kbd> to find one by claim ID, agent, or MCP.
+  </p>
+
+</main>
+
+<script src="./codex.js"></script>
+<script>
+  // segmented filter (visual only; full filter would route)
+  document.querySelectorAll('.scen-toolbar .seg').forEach(s => s.addEventListener('click', () => {
+    document.querySelectorAll('.scen-toolbar .seg').forEach(x => x.classList.remove('active'));
+    s.classList.add('active');
+  }));
+</script>
+</body>
+</html>
