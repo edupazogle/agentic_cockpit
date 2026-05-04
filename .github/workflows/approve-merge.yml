@@ -156,14 +156,9 @@ jobs:
       - name: Check linked [DesignQA] issue is closed (frontend gate)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          # Find any open [DesignQA] issue that references the same sprint/PR
-          # Strategy: search for [DesignQA] issues that are still open in this repo
-          ISSUE_BODY="${{ github.event.issue.body }}"
-          
-          # Check if the issue body mentions a DesignQA gate requirement
           if echo "$ISSUE_BODY" | grep -q "DesignQA"; then
-            # Extract the linked [DesignQA] issue number from the body
             DESIGNQA_NUM=$(echo "$ISSUE_BODY" | grep -oP '(?<=issue #)\d+' | head -1)
             if [[ -n "$DESIGNQA_NUM" ]]; then
               DESIGNQA_STATE=$(gh api repos/${{ github.repository }}/issues/$DESIGNQA_NUM \
