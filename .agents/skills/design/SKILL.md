@@ -7,6 +7,30 @@ description: "Production-grade visual design skill for the GDAI Agentic Cockpit.
 
 > **Hand-built editorial software**, not a SaaS dashboard template. Every screen reads like a print spread first, an app second.
 
+## 0. Sub-skill loader (read before anything else)
+
+The `taste/` folder contains 12 sub-skills. **Only the stack below is in scope for this project.** Do not auto-load anything outside it without explicit instruction.
+
+### Default stack — load on every design task
+| Sub-skill | Path | Why it's in |
+|---|---|---|
+| `design-taste-frontend` | `.agents/skills/taste/design-taste-frontend/SKILL.md` | Senior UI/UX engineer with metric-based rules + component architecture. Backbone. |
+| `redesign-existing-projects` | `.agents/skills/taste/redesign-existing-projects/SKILL.md` | We iterate on existing pages every round (codex/atrium/atelier evolutions). |
+| `image-to-code` | `.agents/skills/taste/image-to-code/SKILL.md` | Mandatory whenever a Railway/AXA/Vercel screenshot lives in `docs/misc/` — encode the visual signal, never paraphrase. |
+| `full-output-enforcement` | `.agents/skills/taste/full-output-enforcement/SKILL.md` | Stops mid-file truncation on big CSS / animation dumps. No styling opinions, pure plumbing. |
+| `minimalist-ui` | `.agents/skills/taste/minimalist-ui/SKILL.md` | The only taste-style skill that matches AXA Canopée (warm mono, flat bento, no gradients). |
+
+### Conditional stack — load only when the trigger fires
+| Sub-skill | Trigger |
+|---|---|
+| `high-end-visual-design` | Polishing dossier-grade cards or a "make it feel premium" pass; do not stack with `minimalist-ui` for the same component. |
+| `gpt-taste` | Marketing / public-facing pages with GSAP scroll-triggered hero motion (e.g. partner deck, public pilot explainer). Never on cockpit shell. |
+| `brandkit` | Producing brand-board, identity-deck or visual-world boards (e.g. for a stakeholder review or pitch). Not for in-app screens. |
+
+> Anything not listed in the default or conditional tables is out of scope. The folder only contains skills that are in scope, so do not invent or pull in others.
+
+---
+
 This skill is the **operational distillation** of what worked across rounds 1–5 of the cockpit/builder design experiments. Use it before touching CSS, before sketching a component, and before asking taste-questions of a sub-agent. It composes:
 
 - **Codex editorial** — serif headlines, mono microcopy, pillar-sectioned long-form pages.

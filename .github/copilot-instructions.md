@@ -17,19 +17,30 @@ Any request to **deliver**, **implement**, **build**, **execute**, or **test and
 
 ## Skills to load before working in a domain
 
-| Task | Load skill |
-|------|-----------|
-| Any delivery/implementation | `deliver` + `sprint` |
-| UI / design | `design` |
-| Design QA | `designqa` |
-| Supabase / DB | `supabase` |
-| Railway / infra | `railway` |
-| n8n workflows | `n8n/*` |
-| Langflow | `langflow/runtime` |
-| HITL | `chatwoot` |
-| Tracing | `langfuse` + `otel` |
+**Always load the hub SKILL.md first.** Hubs route to sub-skills via decision trees. Never load all sub-skills upfront.
 
-Always `ls /home/mr_e/agentic/.agents/skills/` to discover available skills before working in an unfamiliar domain.
+| Task | Load hub | Key sub-skills (loaded on demand) |
+|---|---|---|
+| Any delivery/implementation | `deliver` + `sprint` | designqa-reviewer (frontend), qa-reviewer (backend) |
+| Brainstorm / ideate | `brainstorming` | — |
+| UI / visual design | `design` | `brandkit`, `design-taste-frontend`, `minimalist-ui`, etc. |
+| Design QA | `designqa` | — |
+| Supabase / DB | `supabase` | — |
+| Railway / infra | `railway` | — |
+| n8n workflows | `n8n` | `n8n-code-javascript`, `n8n-workflow-patterns`, etc. |
+| Langflow runtime | `langflow` | `runtime`, `flows-api`, `hitl-resume`, `components`, `custom-components` |
+| Langflow code review | `langflow` | `backend-code-review`, `frontend-code-review`, etc. |
+| HITL / Chatwoot | `chatwoot` | — |
+| Tracing / Langfuse | `langfuse` | — |
+| Feature flags | `posthog` | — |
+| Telemetry | `otel` | — |
+| Skill authoring / code review | `agent-toolkit` | `skill-forge`, `skill-judge`, `code-review-expert` |
+| Experiments | `experimentation` | — |
+| Repo conventions | `agentic-cockpit` | — |
+
+Discovery: `ls /home/mr_e/agentic/.agents/skills/`
+Load hub: Read `.agents/skills/<domain>/SKILL.md`
+Load sub-skill: Read `.agents/skills/<domain>/<sub-skill>/SKILL.md`
 
 ## Hard constraints (never override without explicit user instruction)
 
