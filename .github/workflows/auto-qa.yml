@@ -78,39 +78,33 @@ jobs:
         if: steps.classify.outputs.pr_type == 'frontend' || steps.classify.outputs.pr_type == 'mixed'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: |
+            ## Design QA Review Request (automated)
+
+            **Triggered by:** PR #${{ github.event.pull_request.number }} opened
+            **Linear issue:** ${{ steps.classify.outputs.issue_key }}
+            **PR:** ${{ github.event.pull_request.html_url }}
+            **Branch:** `${{ github.head_ref }}`
+            **Agent profile:** `.github/agents/designqa-reviewer.agent.md`
+            **URL to review:** (agent: check PR description or sprint doc for the surface URL)
+
+            ### Pipeline the agent MUST run (in order)
+            1. `shoot.py` — screenshots at 1440 / 1024 / 375 px
+            2. `axe.py` — a11y audit (exit 1 = FAIL, stop)
+            3. `diff.py` — visual regression vs baselines
+            4. `viewimage` every PNG — mandatory
+            5. `report.py` — assemble report.md
+            6. If FAIL: fix and re-run. Do NOT post verdict until PASS.
+            7. On PASS: `figma_export.py` → `linear_sync.py` → post verdict here.
+
+            Reply `/approve-design` to approve and merge the frontend branch.
+            Reply `/request-design-changes` to return to the design skill.
         run: |
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          PR_URL="${{ github.event.pull_request.html_url }}"
-          BRANCH="${{ github.head_ref }}"
-          ISSUE_KEY="${{ steps.classify.outputs.issue_key }}"
-
-          BODY="## Design QA Review Request (automated)
-
-**Triggered by:** PR #${PR_NUMBER} opened
-**Linear issue:** ${ISSUE_KEY}
-**PR:** ${PR_URL}
-**Branch:** \`${BRANCH}\`
-**Agent profile:** \`.github/agents/designqa-reviewer.agent.md\`
-**URL to review:** (agent: check PR description or sprint doc for the surface URL)
-
-### Pipeline the agent MUST run (in order)
-1. \`shoot.py\` — screenshots at 1440 / 1024 / 375 px
-2. \`axe.py\` — a11y audit (exit 1 = FAIL, stop)
-3. \`diff.py\` — visual regression vs baselines
-4. \`viewimage\` every PNG — mandatory
-5. \`report.py\` — assemble report.md
-6. If FAIL: fix and re-run. Do NOT post verdict until PASS.
-7. On PASS: \`figma_export.py\` → \`linear_sync.py\` → post verdict here.
-
-Reply \`/approve-design\` to approve and merge the frontend branch.
-Reply \`/request-design-changes\` to return to the design skill."
-
           ISSUE_NUMBER=$(gh issue create \
             --repo "${{ github.repository }}" \
-            --title "[DesignQA] ${ISSUE_KEY} — Review PR #${PR_NUMBER}" \
-            --body "$BODY" \
+            --title "[DesignQA] ${{ steps.classify.outputs.issue_key }} — Review PR #${{ github.event.pull_request.number }}" \
+            --body "$ISSUE_BODY" \
             --json number --jq '.number')
-
           echo "Created DesignQA issue #$ISSUE_NUMBER"
           echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
@@ -133,52 +127,47 @@ Reply \`/request-design-changes\` to return to the design skill."
         if: steps.classify.outputs.pr_type == 'backend' || steps.classify.outputs.pr_type == 'mixed'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY_HEADER: |
+            ## QA Review Request (automated)
+
+            **Triggered by:** PR #${{ github.event.pull_request.number }} opened
+            **Linear issue:** ${{ steps.classify.outputs.issue_key }}
+            **PR:** ${{ github.event.pull_request.html_url }}
+            **Branch:** `${{ github.head_ref }}`
+            **Agent profile:** `.github/agents/qa-reviewer.agent.md`
+          ISSUE_BODY_FOOTER: |
+            ### Review scope
+            This is a **backend / wiring PR**. In addition to code quality, verify:
+            - UI surfaces wired to real API calls (no hard-coded mock data remaining)
+            - Gateway endpoints match the wire format spec (JSON, ISO-8601 timestamps, UUIDv4 IDs)
+            - State machine transitions correct (queued → running → waiting → completed/failed)
+            - No direct Supabase or LLM calls from the Next.js tier
+
+            Please:
+            1. Review all changed files in PR #${{ github.event.pull_request.number }}
+            2. Post a 5-section QA report (SOLID · Security · Code Quality · Functional Integration · Removal Candidates)
+            3. State recommendation: 🟢 Ready / 🟡 Caution / 🔴 Blocker
+
+            Reply `/approve-merge` to merge (gate check runs automatically).
+            Reply `/request-changes` to return to In Progress.
         run: |
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          PR_URL="${{ github.event.pull_request.html_url }}"
-          BRANCH="${{ github.head_ref }}"
-          ISSUE_KEY="${{ steps.classify.outputs.issue_key }}"
           LINKED_FRONTEND_KEY="${{ steps.classify.outputs.linked_frontend_key }}"
           DESIGNQA_ISSUE="${{ steps.create_designqa_issue.outputs.issue_number }}"
 
-          # Gate note: for backend PRs we record the linked frontend DesignQA issue
           GATE_NOTE=""
           if [[ -n "$LINKED_FRONTEND_KEY" ]]; then
-            GATE_NOTE="**⚠️ Merge gate:** the frontend DesignQA for ${LINKED_FRONTEND_KEY} must be approved (issue closed) before this backend PR can merge."
+            GATE_NOTE=$'**⚠️ Merge gate:** the frontend DesignQA for '"${LINKED_FRONTEND_KEY}"$' must be approved (issue closed) before this backend PR can merge.\n'
           elif [[ -n "$DESIGNQA_ISSUE" ]]; then
-            GATE_NOTE="**⚠️ Merge gate:** DesignQA issue #${DESIGNQA_ISSUE} must be closed (approved) before this PR can merge."
+            GATE_NOTE=$'**⚠️ Merge gate:** DesignQA issue #'"${DESIGNQA_ISSUE}"$' must be closed (approved) before this PR can merge.\n'
           fi
 
-          BODY="## QA Review Request (automated)
-
-**Triggered by:** PR #${PR_NUMBER} opened
-**Linear issue:** ${ISSUE_KEY}
-**PR:** ${PR_URL}
-**Branch:** \`${BRANCH}\`
-**Agent profile:** \`.github/agents/qa-reviewer.agent.md\`
-${GATE_NOTE}
-
-### Review scope
-This is a **backend / wiring PR**. In addition to code quality, verify:
-- UI surfaces wired to real API calls (no hard-coded mock data remaining)
-- Gateway endpoints match the wire format spec (JSON, ISO-8601 timestamps, UUIDv4 IDs)
-- State machine transitions correct (queued → running → waiting → completed/failed)
-- No direct Supabase or LLM calls from the Next.js tier
-
-Please:
-1. Review all changed files in PR #${PR_NUMBER}
-2. Post a 5-section QA report (SOLID · Security · Code Quality · Functional Integration · Removal Candidates)
-3. State recommendation: 🟢 Ready / 🟡 Caution / 🔴 Blocker
-
-Reply \`/approve-merge\` to merge (gate check runs automatically).
-Reply \`/request-changes\` to return to In Progress."
+          FULL_BODY="${ISSUE_BODY_HEADER}${GATE_NOTE}${ISSUE_BODY_FOOTER}"
 
           ISSUE_NUMBER=$(gh issue create \
             --repo "${{ github.repository }}" \
-            --title "[QA] ${ISSUE_KEY} — Review PR #${PR_NUMBER}" \
-            --body "$BODY" \
+            --title "[QA] ${{ steps.classify.outputs.issue_key }} — Review PR #${{ github.event.pull_request.number }}" \
+            --body "$FULL_BODY" \
             --json number --jq '.number')
-
           echo "Created QA issue #$ISSUE_NUMBER"
           echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
