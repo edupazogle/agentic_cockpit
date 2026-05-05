@@ -592,359 +592,753 @@ const CodexBuilder = (() => {
   let waitingApprove = false;
   let tokens = 0, cost = 0;
 
-  const TOKEN_TARGETS = [0, 4200, 12800, 21500, 24000, 31200, 36400, 42100, 46800];
-  const COST_TARGETS  = [0, 0.21, 0.64, 1.07, 1.20, 1.56, 1.82, 2.10, 2.34];
+  const TOKEN_TARGETS = [0, 5200, 14800, 23500, 31000, 41200, 48400, 58100, 64800];
+  const COST_TARGETS  = [0, 0.26, 0.74, 1.17, 1.55, 2.06, 2.42, 2.90, 3.24];
 
   const MOVEMENTS = [
     null, // 1-indexed
-    { // 1 INTAKE
-      eyebrow: 'Mouvement I · Prise en charge',
-      title: 'Un persona, <em>par son nom</em>.',
-      lede: "Codex écoute l'opératrice derrière la requête, le périmètre de son travail, et la promesse que le pilote doit tenir.",
-      duration: 4200,
+    { // 1 PERSONAS & AS-IS JOURNEY
+      eyebrow: 'MOUVEMENT I · L\'AS-IS',
+      title: 'Vos personas, vos systèmes, <em>leur journée.</em>',
+      lede: "Avant de penser agentique, mettons à plat ce qui se passe vraiment aujourd'hui — vos conseillers, leurs outils, leur temps, leurs frictions.",
+      duration: 4800,
       chat: [
-        { delay: 200, role: 'human', by: 'Claire B. · 14:38', body: "Je veux une voie express pour les sinistres dégât-des-eaux sous 10 k€. Auto-résolution des cas nets, escalade dès que la police ou le montant est ambigu." },
-        { delay: 1600, role: 'ai', by: 'Codex · 14:38', body: "Noté. Je démarre à un seuil de confiance <strong>0,85</strong> et un SLA de <strong>15 minutes</strong> — les deux ajustables.", citation: '↳ web_search_insurance · ACPR Art. L113-2' },
-        { delay: 3200, role: 'human', by: 'Claire B. · 14:39', body: "0,85, ça me va. SLA 15 min — mais badge prioritaire après 8 minutes d'inactivité." },
+        { delay: 300, role: 'ai', by: 'Codex · 14:38', body: "Je dessine ce que je comprends de votre process. Vous corrigez, je suis. J'ai posé <strong>5 personas</strong> et <strong>12 nœuds de parcours</strong> depuis notre conversation. Ajustez librement.", citation: '↳ corpus_search · AXA FR motor playbook' },
+        { delay: 2200, role: 'ai', by: 'Codex · 14:39', body: "Votre <em>AHT</em> actuel sur Genesys — avez-vous le chiffre ? Je vois la médiane FFA pour un plateau Lyon à <strong>12 min</strong>, mais votre configuration peut différer." },
+        { delay: 4000, role: 'human', by: 'Sophie M. · 14:39', body: "AHT plateau : 11 min 40 en moyenne sur les 3 derniers mois. Le dépannage seul prend entre 3 et 5 min supplémentaires." },
       ],
       render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">i.</span>Persona<br>3 citations<br>L113-2 ACPR</div>
-          <div class="body">
-            <h3>L'experte, <em>par son nom</em>.</h3>
-            <p class="dropcap">Claire B. est experte dommages aux biens. Elle traite environ 120 sinistres dégât-des-eaux par jour sur sa région. Elle veut que l'agent expédie les cas évidents sous 4 000 € — ceux qu'elle approuverait en trente secondes — et garde les cas ambigus sur son bureau avec un dossier exploitable en un clin d'œil.</p>
-            <div class="fields">
-              <div class="field-codex"><label>Rôle opérateur</label><input id="bf-role" value="" data-target="Experte dommages aux biens"></div>
-              <div class="field-codex"><label>Région · périmètre</label><input id="bf-scope" value="" data-target="FR · particuliers · ≤ 10 000 €"></div>
-              <div class="field-codex full"><label>Promesse</label><textarea id="bf-promise" data-target="Trier les sinistres dégât-des-eaux avec preuves photo. Auto-résoudre les cas à haute confiance sous 4 000 €. Escalader les cas ambigus en moins de 90 s avec un dossier complet."></textarea></div>
+        <div class="mv-personas">
+          <div class="personas-grid">
+            <div class="persona-card">
+              <div class="persona-icon">👩</div>
+              <div class="persona-info">
+                <div class="persona-name">Sophie M.</div>
+                <div class="persona-role">Conseillère FNOL · Plateau Lyon</div>
+                <div class="persona-kpi">≈ 140 appels/jour · NPS 38</div>
+                <div class="persona-tools">Genesys · Salesforce SC · Guidewire</div>
+              </div>
             </div>
+            <div class="persona-card">
+              <div class="persona-icon">👨</div>
+              <div class="persona-info">
+                <div class="persona-name">Marc T.</div>
+                <div class="persona-role">Régulateur dépanneuse</div>
+                <div class="persona-kpi">≈ 95 dispatches/jour</div>
+                <div class="persona-tools">Portail vendor Allianz Trade-Towed</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-icon">🕵️</div>
+              <div class="persona-info">
+                <div class="persona-name">Hugo R.</div>
+                <div class="persona-role">Inspecteur sinistres</div>
+                <div class="persona-kpi">≈ 28 dossiers/jour</div>
+                <div class="persona-tools">Guidewire ClaimCenter · email</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-icon">🧑</div>
+              <div class="persona-info">
+                <div class="persona-name">Le sinistré</div>
+                <div class="persona-role">Client AXA · conducteur</div>
+                <div class="persona-kpi">Attentes : clarté · rapidité · NPS</div>
+                <div class="persona-tools">Téléphone · email · app AXA</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-icon">🔐</div>
+              <div class="persona-info">
+                <div class="persona-name">IT / Sécurité</div>
+                <div class="persona-role">Gardien des intégrations</div>
+                <div class="persona-kpi">Guidewire + Salesforce auth</div>
+                <div class="persona-tools">Azure AD · API Gateway · SIEM</div>
+              </div>
+            </div>
+            <div class="persona-add-cta">+ Ajouter un persona · <em>je remplis les champs</em></div>
           </div>
-        </section>`,
+          <div class="journey-section">
+            <div class="journey-eyebrow">Parcours as-is · 12 nœuds · 2 voies</div>
+            <div class="journey-strip" id="journey-nodes"></div>
+          </div>
+        </div>`,
       onRender: () => {
-        // Type each field in sequence
-        const fills = [['bf-role', 0], ['bf-scope', 700], ['bf-promise', 1400]];
-        fills.forEach(([id, dly]) => {
-          const t = setTimeout(() => typeInto($(id), $(id).dataset.target), dly);
+        const nodes = [
+          { actor: 'client', label: 'Appelle AXA · attente 4-7 min', tool: '☎️', pain: '11% abandon', kind: 'pain' },
+          { actor: 'sophie', label: 'Identifie client · lookup Guidewire · 90 s', tool: 'GW', pain: 'jongle 4 systèmes', kind: 'pain' },
+          { actor: 'sophie', label: 'Collecte faits accident · form Salesforce · 4-6 min', tool: 'SF', pain: 'client répète', kind: 'pain' },
+          { actor: 'sophie', label: 'Questions fraude · heuristiques manuelles · 2 min', tool: '📋', pain: 'incohérent', kind: 'pain' },
+          { actor: 'sophie', label: 'Dispatch dépannage · email/tél → Marc · 3-5 min', tool: '📧', pain: 'pas de statut live', kind: 'pain' },
+          { actor: 'marc', label: 'Assigne vendor · portail · 5-12 min', tool: '🚛', pain: 'ETA imprécis', kind: 'pain' },
+          { actor: 'client', label: 'Reçoit confirmation · email · variable', tool: '📩', pain: 'anxiété · pas de carte', kind: 'pain' },
+          { actor: 'sophie', label: 'Crée dossier sinistre · Guidewire · 6-8 min', tool: 'GW', pain: 're-saisie données', kind: 'pain' },
+          { actor: 'hugo', label: 'Reprend dossier le lendemain · GW + email · 35 min', tool: 'GW', pain: 'pièces manquantes', kind: 'pain' },
+        ];
+        const strip = document.getElementById('journey-nodes');
+        if (!strip) return;
+        nodes.forEach((n, i) => {
+          const t = setTimeout(() => {
+            const div = document.createElement('div');
+            div.className = `journey-node journey-actor-${n.actor}`;
+            div.style.cssText = 'opacity:0;transform:translateX(-6px);transition:opacity 280ms ease,transform 280ms ease';
+            div.innerHTML = `<span class="jn-tool">${n.tool}</span><div class="jn-body"><span class="jn-label">${n.label}</span><span class="jn-pain" title="${n.pain}">⚠ ${n.pain}</span></div>`;
+            strip.appendChild(div);
+            requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateX(0)'; });
+          }, 400 + i * 300);
           timers.push(t);
         });
       },
     },
     { // 2 RESEARCH
-      eyebrow: 'Mouvement II · Recherche',
-      title: 'Douze sources, <em>lues pour vous</em>.',
-      lede: "Codex parcourt textes de polices, mémos régulateurs et cohortes historiques. Chaque citation atterrit avec une ancre vérifiable.",
-      duration: 4400,
+      eyebrow: 'MOUVEMENT II · RECHERCHE',
+      title: 'Le terrain, <em>avant les promesses.</em>',
+      lede: "J'ai cherché ce que disent les régulateurs, votre marché, et vos cohortes historiques. Voici ce qui contraint, et trois défis que je vois venir.",
+      duration: 5200,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:39', body: "Recherche dans le corpus polices et archives régulateur. <em>web_search_insurance</em>, <em>nemoclaw.policy</em>, <em>axa_corpus.search</em>." },
-        { delay: 2400, role: 'ai', by: 'Codex · 14:40', body: "Douze sources pertinentes. Trois portent un langage <strong>contraignant</strong> — signalées dans le manifeste." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:40', body: "Recherche en cours — <em>web_search_insurance</em>, <em>regulator_lookup</em>, <em>corpus_search</em>. 12 à 18 sources attendues.", citation: '↳ ACPR · RGPD Art.22 · EU AI Act Art.50 · FFA 2024' },
+        { delay: 4200, role: 'ai', by: 'Codex · 14:41', body: "<strong>3 défis que je vois venir.</strong> Deux contraintes réglementaires bloquantes, et un écart volume à vérifier avant de fonder le cas d'affaires." },
       ],
       render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">ii.</span>Citations<br>12 sources<br>3 contraignantes</div>
-          <div class="body">
-            <h3>Le corpus, en douze citations.</h3>
-            <p>Codex distingue les sources <em>contraignantes</em> (régulateur, texte de police) des sources <em>contextuelles</em> (livres blancs, heuristiques internes). Seules les contraignantes peuvent contraindre le juge LLM.</p>
-            <ul id="cit-list" class="cit-stream"></ul>
+        <div class="mv-research">
+          <div class="research-cols">
+            <div class="research-citations">
+              <div class="research-eyebrow">Citations · 12 sources</div>
+              <ul id="cit-list" class="cit-stream"></ul>
+            </div>
+            <div class="research-challenges">
+              <div class="research-eyebrow">Défis identifiés</div>
+              <div id="challenge-list"></div>
+            </div>
           </div>
-        </section>`,
+        </div>`,
       onRender: () => {
-        const items = [
-          { tag: 'contraignant', kind: 'yellow', title: 'ACPR — Article L113-2', sub: "Code des assurances · obligations d'information" },
-          { tag: 'contraignant', kind: 'yellow', title: 'AXA Property — Police v2024.3', sub: 'clause dégât-des-eaux 4.1.2 · seuil 10 k€' },
-          { tag: 'contraignant', kind: 'yellow', title: 'RGPD Art. 22', sub: "décision automatisée · droit à la revue humaine" },
-          { tag: 'contexte', kind: 'blue', title: 'FFA — Rapport annuel 2024', sub: 'volumes dégât-des-eaux · médianes régionales' },
-          { tag: 'contexte', kind: 'blue', title: 'AXA interne — Cohorte triage 2023', sub: '47 k sinistres clos · précision auto-résolution 0,93' },
-          { tag: 'contexte', kind: 'blue', title: 'IFACI — Audit IA', sub: "règles d'échantillonnage · revues post-hoc" },
-          { tag: 'contexte', kind: 'blue', title: 'NemoClaw — Compilateur de polices v1.4', sub: 'précédence des règles · seuils de confiance' },
-          { tag: 'contexte', kind: 'blue', title: 'Docling — Schémas preuves photo', sub: 'extraction factures · redaction PII par défaut' },
-          { tag: 'contexte', kind: 'blue', title: 'Chatwoot — Passation opérateur', sub: 'échelle SLA · timers d\'inactivité' },
-          { tag: 'contexte', kind: 'blue', title: 'Langfuse — Rubriques d\'évaluation', sub: 'factuel · police · ton · audit-ready' },
-          { tag: 'contexte', kind: 'blue', title: 'AXA EU — Playbook règlement', sub: 'voie express sub-4 k€ · SLA 90 s' },
-          { tag: 'contexte', kind: 'blue', title: 'Property fast-track v0.3', sub: 'pilote précédent · mémo retours' },
+        const citations = [
+          { tag: 'contraignant', kind: 'yellow', title: 'RGPD Art. 22 — Décision automatisée', sub: 'droit à la revue humaine · tout refus auto exige doc humaine' },
+          { tag: 'contraignant', kind: 'yellow', title: 'EU AI Act Art. 50 — Disclosure IA', sub: 'mention obligatoire «agent automatisé» en début d’appel' },
+          { tag: 'contraignant', kind: 'yellow', title: 'Code assurances Art. L121-12', sub: 'subrogation · délais contestation sinistre moteur' },
+          { tag: 'contexte', kind: 'blue', title: 'FFA — Rapport annuel 2024', sub: 'FNOL moteur · médiane Lyon 38 conseillers → 9 200/mois' },
+          { tag: 'contexte', kind: 'blue', title: 'ACPR — L113-2 obligations info', sub: 'information assurée avant décision d’indemnisation' },
+          { tag: 'contexte', kind: 'blue', title: 'CNIL — Guidance IA décision 2024-03', sub: 'revue humaine documentée exigée · impact significatif' },
+          { tag: 'contexte', kind: 'blue', title: 'ElevenLabs — EU AI Act compliance', sub: 'disclosure script · délai d’énoncé < 3 secondes appel' },
+          { tag: 'contexte', kind: 'blue', title: 'FFA — Taux fraude moteur 2024', sub: '3,2 % fraude déclarée · 8-12 % suspicion plateau' },
+          { tag: 'contexte', kind: 'blue', title: 'Genesys — SLA rétention appel', sub: 'AHT médiane 11m40 · abandon > 4 min = -18 pts NPS' },
+          { tag: 'contexte', kind: 'blue', title: 'AXA — Playbook Motor FR 2024', sub: 'flux tow dispatch · SLA 90 s acknowledgement client' },
+          { tag: 'contexte', kind: 'blue', title: 'Guidewire — ClaimCenter API v10', sub: 'création sinistre · lookup police · booleans fraude' },
+          { tag: 'contexte', kind: 'blue', title: 'ARCOM — Février 2025 IA vocale', sub: 'agent vocal IA = système IA à haut risque art. 6 AI Act' },
         ];
-        const list = $('cit-list');
-        if (!list) return;
-        items.forEach((it, i) => {
-          const t = setTimeout(() => {
-            const li = document.createElement('li');
-            li.className = 'cit-row';
-            li.style.cssText = 'opacity:0;transform:translateY(6px);transition:opacity 320ms ease,transform 320ms ease';
-            li.innerHTML = `
-              <span class="tag ${it.kind}"><span class="pip"></span>${it.tag}</span>
-              <div><div style="font-family:var(--font-display);font-weight:500;font-size:15.5px;color:var(--gray-1000);letter-spacing:-0.01em">${it.title}</div><div style="font-size:12px;color:var(--gray-500);font-family:var(--font-mono);margin-top:3px">${it.sub}</div></div>`;
-            list.appendChild(li);
-            requestAnimationFrame(() => { li.style.opacity = '1'; li.style.transform = 'translateY(0)'; });
-          }, 200 + i * 280);
-          timers.push(t);
-        });
+        const challenges = [
+          { icon: '⚖️', title: 'RGPD Art. 22 — décision auto à impact significatif', body: "Tout refus auto > €X exige une revue humaine documentée. Pénalité CNIL jusqu’à 4 % CA mondial.", source: 'RGPD Art. 22(3) · CNIL guidance 2024-03' },
+          { icon: '🎙️', title: 'Disclosure ElevenLabs en début d’appel', body: "L'EU AI Act exige mention explicite «vous parlez à un agent automatisé» dans les 3 premières secondes. Amende administrative sinon.", source: 'AI Act Art. 50 · ARCOM fév. 2025' },
+          { icon: '📊', title: 'Distorsion volume Genesys', body: "Vous m'avez donné 12 000 FNOL/mois — la médiane FFA pour un plateau Lyon 38 conseillers est ~ 9 200. À vérifier avant de fonder le cas d'affaires.", source: 'FFA rapport 2024 p. 47' },
+        ];
+        const list = document.getElementById('cit-list');
+        if (list) {
+          citations.forEach((it, i) => {
+            const t = setTimeout(() => {
+              const li = document.createElement('li');
+              li.className = 'cit-row';
+              li.style.cssText = 'opacity:0;transform:translateY(6px);transition:opacity 300ms ease,transform 300ms ease';
+              li.innerHTML = `<span class="tag ${it.kind}"><span class="pip"></span>${it.tag}</span><div><div class="cit-title">${it.title}</div><div class="cit-sub">${it.sub}</div></div>`;
+              list.appendChild(li);
+              requestAnimationFrame(() => { li.style.opacity = '1'; li.style.transform = 'translateY(0)'; });
+            }, 200 + i * 260);
+            timers.push(t);
+          });
+        }
+        const clist = document.getElementById('challenge-list');
+        if (clist) {
+          challenges.forEach((c, i) => {
+            const t = setTimeout(() => {
+              const div = document.createElement('div');
+              div.className = 'challenge-card';
+              div.style.cssText = 'opacity:0;transform:translateX(8px);transition:opacity 380ms ease,transform 380ms ease';
+              div.innerHTML = `<div class="challenge-icon">${c.icon}</div><div class="challenge-body"><div class="challenge-title">${c.title}</div><div class="challenge-text">${c.body}</div><div class="challenge-source">↳ ${c.source}</div></div>`;
+              clist.appendChild(div);
+              requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateX(0)'; });
+            }, 1800 + i * 600);
+            timers.push(t);
+          });
+        }
       },
     },
     { // 3 PLAN
-      eyebrow: 'Mouvement III · Plan',
-      title: 'Un flux, en <em>cinq étapes</em>.',
-      lede: 'Codex esquisse la topologie — cinq nœuds, deux portes humaines. Chaque ligne se révèle au rythme du raisonnement.',
-      duration: 3600,
+      eyebrow: 'MOUVEMENT III · PLAN',
+      title: 'Un flux <em>conçu, pas hérité.</em>',
+      lede: "14 nœuds, 4 portes humaines. Chaque porte porte le coût d'erreur que vous m'avez confirmé, sa source, et la phrase d'impact si vous la sautez.",
+      duration: 4200,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:40', body: "Brouillon de topologie. Deux portes HITL : escalade par confiance, et signoff opérateur final si montant > 4 k€." },
+        { delay: 200, role: 'ai', by: 'Codex · 14:42', body: "J'ai esquissé le flux to-be à partir de votre parcours, des citations et des contraintes que vous avez confirmées. 4 portes HITL, 4 étapes IA. Dites-moi laquelle remettre en question.", citation: '↳ RGPD Art.22 · clamp porte C obligatoire' },
+        { delay: 3200, role: 'ai', by: 'Codex · 14:43', body: "Je ne peux pas écarter en silence une porte contraignante. Soit on la garde, soit on change le règlement." },
       ],
       render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">iii.</span>Flux<br>5 nœuds<br>2 portes HITL</div>
-          <div class="body">
-            <h3>Un flux, en cinq étapes.</h3>
-            <p>Les deux étapes en italique sont des <em>portes HITL</em> — elles mettent le run en pause et passent la main à un opérateur avec un dossier structuré. Tout le reste s'exécute sans intervention humaine, jusqu'à ce que la preuve l'exige.</p>
-            <div id="flow-list" class="flow-list"></div>
-          </div>
-        </section>`,
+        <div class="mv-plan">
+          <div class="flow-eyebrow">TO-BE · 14 nœuds · 4 portes HITL</div>
+          <div id="flow-nodes-plan" class="flow-nodes-list"></div>
+        </div>`,
       onRender: () => {
-        const rows = [
-          { ix: 'i.', name: 'Réception sinistre', sub: 'tool · claims_facade.create_claim', tag: 'tool', kind: 'blue' },
-          { ix: 'ii.', name: 'Extraction des preuves', sub: 'tool · docling.parse · photos + facture → faits structurés', tag: 'tool', kind: 'blue' },
-          { ix: 'iii.', name: 'Décider voie express', sub: 'llm.judge · NemoClaw · seuil 0,85', tag: 'porte HITL', kind: 'yellow', gate: true },
-          { ix: 'iv.', name: 'Passation opérateur', sub: 'hitl.chatwoot · dossier · SLA 15 min', tag: 'porte HITL', kind: 'yellow', gate: true },
-          { ix: 'v.', name: 'Régler & journaliser', sub: 'tool · claims_facade.resolve · audit ancré', tag: 'tool', kind: 'blue' },
+        const nodes = [
+          { ix: 'i.', name: 'Agent vocal ElevenLabs répond', sub: 'outil · disclosure EU AI Act Art.50 · 0 attente', tag: 'outil', kind: 'blue', icon: '🔌' },
+          { ix: 'ii.', name: 'Classification intention IA', sub: 'ia · intent classifier · Guidewire lookup', tag: 'IA', kind: 'azur', icon: '✨' },
+          { ix: 'iii.', name: 'Lookup police Guidewire', sub: 'outil · ClaimCenter API v10 · policy lookup', tag: 'outil', kind: 'blue', icon: '🔌' },
+          { ix: 'iv.', name: 'Score fraude IA (rubrique)', sub: 'ia créative · seuil 0,65 · rubrique Langfuse', tag: 'IA · créatif', kind: 'azur', icon: '🪄' },
+          { ix: 'v.', name: '⚠ Porte A — fraude > 0,65 → Sophie', sub: 'HITL · €4 800/err · SLA 90 s · citation RGPD', tag: 'PORTE HITL', kind: 'amber', gate: true, cost: '€4 800/err' },
+          { ix: 'vi.', name: 'Évaluation sévérité IA', sub: 'ia · photo damage + NLP → sévérité', tag: 'IA', kind: 'azur', icon: '✨' },
+          { ix: 'vii.', name: 'SMS Twilio + carte OSM live', sub: 'outil · Twilio · confirmation ETA + lien carte', tag: 'outil', kind: 'blue', icon: '🔌' },
+          { ix: 'viii.', name: 'Dispatch dépannage n8n', sub: 'outil · n8n choré → provider réel', tag: 'outil', kind: 'blue', icon: '🔌' },
+          { ix: 'ix.', name: '⚠ Porte B — sévérité haute → Hugo < 5 min', sub: 'HITL · €25 000/err · SLA 5 min · citation FFA', tag: 'PORTE HITL', kind: 'amber', gate: true, cost: '€25 000/err' },
+          { ix: 'x.', name: 'Lettre client auto-rédigée IA', sub: 'ia créative · tone analysis → rédaction personnalisée', tag: 'IA · créatif', kind: 'azur', icon: '🪄' },
+          { ix: 'xi.', name: '⚠ Porte C — sinistre > €4 000 → manager (RGPD Art.22)', sub: 'HITL · réglementaire obligatoire · citation RGPD Art.22(3)', tag: 'PORTE HITL', kind: 'amber', gate: true, cost: 'réglementaire' },
+          { ix: 'xii.', name: 'Compilation dossier IA', sub: 'ia · all facts + evidence → dossier structuré', tag: 'IA', kind: 'azur', icon: '✨' },
+          { ix: 'xiii.', name: '⚠ Porte D — revue adjuster avant règlement', sub: 'HITL · €8 200/err · SLA 4 h · pièces manquantes', tag: 'PORTE HITL', kind: 'amber', gate: true, cost: '€8 200/err' },
+          { ix: 'xiv.', name: 'Mise à jour Salesforce + Guidewire', sub: 'outil · settlement update · audit ancré', tag: 'outil', kind: 'blue', icon: '🔌' },
         ];
-        const list = $('flow-list');
+        const list = document.getElementById('flow-nodes-plan');
         if (!list) return;
-        rows.forEach((r, i) => {
-          const t = setTimeout(() => {
-            const div = document.createElement('div');
-            div.className = 'row' + (r.gate ? ' gate' : '');
-            div.style.cssText = 'opacity:0;transform:translateY(6px);transition:opacity 320ms ease,transform 320ms ease';
-            div.innerHTML = `<span class="ix">${r.ix}</span><div><span class="name">${r.name}<em>${r.sub}</em></span></div><span class="tag ${r.kind}"><span class="pip"></span>${r.tag}</span>`;
-            list.appendChild(div);
-            requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
-          }, 200 + i * 540);
-          timers.push(t);
-        });
-      },
-    },
-    { // 4 APPROVE
-      eyebrow: 'Mouvement IV · Approbation',
-      title: 'Une pause, pour <em>signoff opérateur</em>.',
-      lede: "Avant qu'un seul octet ne quitte le planificateur, Claire revoit le bundle : manifeste de capacités, allow-list de sortie, portes HITL. Approuve pour construire, ou itère à voix haute.",
-      duration: 0,
-      chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Plan prêt pour signoff. Le bundle déclare <strong>trois outils internes</strong>, <strong>deux hôtes de sortie privés</strong>, et <strong>deux portes HITL</strong>. Approuve pour construire." },
-      ],
-      render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">iv.</span>Signoff<br>capacités +<br>sortie + HITL</div>
-          <div class="body">
-            <h3>Le bundle, en attente de <em>votre</em> approbation.</h3>
-            <div class="bsim-approve">
-              <h4>Manifeste de capacités · v0.4-rc</h4>
-              <div class="bsim-approve-grid">
-                <div class="bsim-cap-tile"><span class="k">Outils déclarés</span><span class="v">3 · <code>claims_facade.*</code> · <code>docling.parse</code> · <code>nemoclaw.policy</code></span></div>
-                <div class="bsim-cap-tile"><span class="k">Sortie · allow-list</span><span class="v">2 · <code>chatwoot.gdai.private</code> · <code>langfuse.gdai.private</code></span></div>
-                <div class="bsim-cap-tile"><span class="k">Portes HITL</span><span class="v">2 · seuil 0,85 · SLA 15 min</span></div>
-                <div class="bsim-cap-tile"><span class="k">Ancre d'audit</span><span class="v">on · <code>audit_external_anchor</code></span></div>
-                <div class="bsim-cap-tile"><span class="k">Budget pilote</span><span class="v">80 k tokens · 5,00 €</span></div>
-                <div class="bsim-cap-tile"><span class="k">PII</span><span class="v">redaction par défaut</span></div>
-              </div>
-              <div class="bsim-approve-actions">
-                <span class="hint">En attente de Claire B. · 14:41</span>
-                <button class="btn" id="b-iter">Itérer le plan</button>
-                <button class="btn btn-primary" id="b-approve">Approuver &amp; construire →</button>
-              </div>
-            </div>
-          </div>
-        </section>`,
-      onRender: () => {
-        waitingApprove = true;
-        setRunhead('PAUSE · SIGNOFF OPÉRATEUR', 'yellow');
-        setNavState();
-        const ap = $('b-approve');
-        if (ap) ap.addEventListener('click', () => {
-          if (!waitingApprove) return;
-          waitingApprove = false;
-          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Approuvé. Construis-le.' });
-          setRunhead(`MOUVEMENT 4/8 · APPROUVÉ`, 'azur');
-          ap.textContent = '✓ Approuvé';
-          ap.disabled = true;
-          const it = $('b-iter'); if (it) it.disabled = true;
-          setNavState();
-        });
-        const it = $('b-iter');
-        if (it) it.addEventListener('click', () => {
-          appendChat({ role: 'human', by: 'Claire B. · 14:41', body: 'Resserre d\'abord le seuil à 0,88.' });
-          setTimeout(() => appendChat({ role: 'ai', by: 'Codex · 14:41', body: 'Noté. Seuil → 0,88. Plan reconstruit.' }), 800);
-        });
-      },
-    },
-    { // 5 BUILD
-      eyebrow: 'Mouvement V · Construction',
-      title: 'Un bundle, <em>compilé</em>.',
-      lede: "Codex génère flow.json, le manifeste de capacités, et le stub d'ancre d'audit. Regardez-le se taper, ligne par ligne.",
-      duration: 5200,
-      chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:41', body: "Compilation flow.json. Topologie, manifeste, stub d'ancre." },
-        { delay: 3600, role: 'ai', by: 'Codex · 14:42', body: "Bundle compilé. <strong>2 847 octets</strong>. Manifeste signé, prêt pour le lint." },
-      ],
-      render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">v.</span>Bundle<br>flow.json<br>2 847 octets</div>
-          <div class="body">
-            <h3>Le bundle, ligne par ligne.</h3>
-            <div class="bsim-codeblock">
-              <div style="padding:12px 22px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
-                <span style="width:9px;height:9px;border-radius:999px;background:#fb6f57"></span>
-                <span style="width:9px;height:9px;border-radius:999px;background:#f6c64d"></span>
-                <span style="width:9px;height:9px;border-radius:999px;background:#84cc7a"></span>
-                <span style="margin-left:auto;color:rgba(245,244,242,0.5);font-size:11px;letter-spacing:0.06em;font-family:var(--font-mono)">flow.json · property-fast-track · v0.4-build</span>
-              </div>
-              <div style="padding:24px 28px;min-height:280px"><pre id="b-code"></pre></div>
-            </div>
-          </div>
-        </section>`,
-      onRender: () => {
-        const code = `// Généré par Codex Builder · 14:42:08
-{
-  "name": "property-fast-track",
-  "version": "0.4",
-  "capability_manifest": {
-    "egress": ["chatwoot.gdai.private", "langfuse.gdai.private"],
-    "tools":  ["claims_facade.*", "docling.parse", "nemoclaw.policy"],
-    "hitl":   ["chatwoot.gdai.private"],
-    "audit":  "audit_external_anchor"
-  },
-  "nodes": [
-    { "id": "intake",   "kind": "tool", "ref": "claims_facade.create_claim" },
-    { "id": "extract",  "kind": "tool", "ref": "docling.parse" },
-    { "id": "decide",   "kind": "llm",  "judge": "nemoclaw.policy", "floor": 0.85 },
-    { "id": "handover", "kind": "hitl", "channel": "chatwoot", "sla_min": 15 },
-    { "id": "settle",   "kind": "tool", "ref": "claims_facade.resolve" }
-  ],
-  "edges": [
-    "intake → extract",
-    "extract → decide",
-    "decide.low_conf → handover",
-    "decide.high_conf → settle",
-    "handover → settle"
-  ]
-}`;
-        typeInto($('b-code'), code, 14);
-      },
-    },
-    { // 6 LINT
-      eyebrow: 'Mouvement VI · Lint',
-      title: 'Six invariants, <em>tous verts</em>.',
-      lede: "Six contrôles. Le manifeste doit déclarer chaque outil appelé, chaque hôte de sortie, et zéro secret littéral. Chaque ✓ est un invariant.",
-      duration: 3200,
-      chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:42', body: "Lint des capacités en cours. Six contrôles." },
-        { delay: 2800, role: 'ai', by: 'Codex · 14:42', body: "Tous les contrôles verts. Bundle prêt à signer." },
-      ],
-      render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">vi.</span>Lint<br>6 contrôles<br>0 erreur</div>
-          <div class="body">
-            <h3>Le lint, six invariants forts.</h3>
-            <div id="lint-list" class="lint-stream"></div>
-          </div>
-        </section>`,
-      onRender: () => {
-        const checks = [
-          'Chaque outil référencé dans les nœuds est déclaré dans capability_manifest.tools',
-          'Chaque hôte de sortie appelé est listé dans capability_manifest.egress',
-          'Aucun secret littéral (clé API, token) embarqué dans flow.json',
-          'La porte HITL chatwoot est liée à un domaine privé',
-          'Stratégie d\'ancre d\'audit ∈ { external, internal, none }',
-          'Seuil du juge LLM ∈ [0,50 ; 0,99] — courant 0,85 ✓',
-        ];
-        const list = $('lint-list');
-        if (!list) return;
-        checks.forEach((c, i) => {
-          const t = setTimeout(() => {
-            const row = document.createElement('div');
-            row.className = 'lint-row';
-            row.innerHTML = `<span class="lint-pip">⏳</span><span class="lint-text">${c}</span>`;
-            list.appendChild(row);
-            const t2 = setTimeout(() => {
-              row.classList.add('ok');
-              row.querySelector('.lint-pip').textContent = '✓';
-            }, 320);
-            timers.push(t2);
-          }, 220 + i * 360);
-          timers.push(t);
-        });
-      },
-    },
-    { // 7 PREVIEW
-      eyebrow: 'Mouvement VII · Aperçu',
-      title: 'Un sandbox, <em>cinq nœuds allumés</em>.',
-      lede: "Codex passe un sinistre synthétique dans le pilote, en bac à sable scellé. Chaque nœud s'allume. Tokens, latence, coût — tout est mesuré.",
-      duration: 4400,
-      chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Sandbox lancé. Sinistre <code>CLM-SYN-001</code> · 3 200 € dégât-des-eaux · synthétique." },
-        { delay: 3600, role: 'ai', by: 'Codex · 14:43', body: "Run terminé. Auto-résolu. Latence p50 = 4,1 s · coût 0,024 € · 2 840 tokens." },
-      ],
-      render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">vii.</span>Sandbox<br>synthétique<br>CLM-SYN-001</div>
-          <div class="body">
-            <h3>Un run synthétique, de bout en bout.</h3>
-            <div id="prev-track" class="prev-track"></div>
-            <div id="prev-metrics" class="prev-metrics"></div>
-          </div>
-        </section>`,
-      onRender: () => {
-        const track = $('prev-track');
-        const nodes = ['intake', 'extract', 'decide', 'settle'];
-        track.innerHTML = nodes.map(n => `<div class="prev-node" data-n="${n}"><span class="prev-pip"></span><span class="prev-name">${n}</span></div>`).join('<span class="prev-edge"></span>');
         nodes.forEach((n, i) => {
           const t = setTimeout(() => {
-            const el = track.querySelector(`[data-n="${n}"]`);
-            if (el) el.classList.add('lit');
-          }, 400 + i * 700);
+            const div = document.createElement('div');
+            div.className = `flow-node-row${n.gate ? ' gate-node' : ''}`;
+            div.style.cssText = 'opacity:0;transform:translateY(5px);transition:opacity 280ms ease,transform 280ms ease';
+            const costChip = n.cost ? `<span class="cost-chip">${n.cost}</span>` : '';
+            const icon = n.icon || '';
+            div.innerHTML = `<span class="fn-ix">${n.ix}</span><span class="fn-icon">${icon}</span><div class="fn-body"><span class="fn-name">${n.name}</span><span class="fn-sub">${n.sub}</span></div>${costChip}<span class="tag ${n.kind} fn-tag"><span class="pip"></span>${n.tag}</span>`;
+            list.appendChild(div);
+            requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+          }, 180 + i * 220);
+          timers.push(t);
+        });
+      },
+    },
+    { // 4 BUSINESS CASE — "B with the twist"
+      eyebrow: 'MOUVEMENT IV · CAS D\'AFFAIRES',
+      title: 'Le coût de l\'inaction, <em>chiffré.</em>',
+      lede: "À partir des coûts aux 4 portes HITL et du volume que vous m'avez donné, voici la fourchette d'économies sur 12 mois — à raffiner pendant le pilote, pas avant.",
+      duration: 0,
+      chat: [
+        { delay: 300, role: 'ai', by: 'Codex · 14:44', body: "J'ai calculé la fourchette depuis vos 4 portes HITL et le volume Genesys. Faites glisser les curseurs — la fourchette se met à jour en 80 ms.", citation: '↳ FFA 2024 · ACPR · cohorte AXA sinistres 2023' },
+        { delay: 2800, role: 'ai', by: 'Codex · 14:44', body: "Ce chiffre n'inclut pas le gain opérationnel sur l'équipe de Sophie — environ <strong>5,4 h/jour</strong> libérées. Je peux rédiger un mémo séparé pour la planification RH." },
+      ],
+      render: () => `
+        <div class="mv-bizcase">
+          <div class="biz-sliders">
+            <div class="slider-row">
+              <label>Volume mensuel <span class="slider-val" id="sl-vol-v">9 200</span> FNOL</label>
+              <input type="range" id="sl-vol" min="4000" max="18000" value="9200" step="200">
+            </div>
+            <div class="slider-row">
+              <label>Précision visée <span class="slider-val" id="sl-acc-v">87</span>%</label>
+              <input type="range" id="sl-acc" min="70" max="99" value="87" step="1">
+            </div>
+            <div class="slider-row">
+              <label>Taux de repli humain <span class="slider-val" id="sl-fb-v">18</span>%</label>
+              <input type="range" id="sl-fb" min="5" max="50" value="18" step="1">
+            </div>
+          </div>
+
+          <div class="biz-headline">
+            <div class="cost-card" id="cost-card">
+              <div class="cost-primary">
+                <span class="cost-icon">🪙</span>
+                <span class="cost-number" id="cost-num">€350 000</span>
+                <span class="cost-band">/ an · fourchette <span id="cost-range">€280k – €420k</span></span>
+              </div>
+              <div class="cost-confidence">estimation · à raffiner au pilote</div>
+              <div class="cost-axes-hover" id="cost-axes">
+                <div class="axis-card">
+                  <div class="axis-icon">💶</div>
+                  <div class="axis-label">Coût d'erreur évité</div>
+                  <div class="axis-value" id="ax-err">€218 400 / an</div>
+                  <div class="axis-sub">4 portes × erreurs/mois × coût moyen</div>
+                </div>
+                <div class="axis-card">
+                  <div class="axis-icon">⏱️</div>
+                  <div class="axis-label">Économie FTE·h</div>
+                  <div class="axis-value" id="ax-fte">€84 600 / an</div>
+                  <div class="axis-sub">~5,4 h/j libérées · Sophie + équipe</div>
+                </div>
+                <div class="axis-card">
+                  <div class="axis-icon">⚖️</div>
+                  <div class="axis-label">Réduction risque réglementaire</div>
+                  <div class="axis-value" id="ax-reg">€47 000 / an</div>
+                  <div class="axis-sub">CNIL/ACPR · exposition amende évitée</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="biz-sensitivity">
+            <div class="sens-eyebrow">Tableau de sensibilité</div>
+            <table class="sens-table" id="sens-table">
+              <thead><tr><th></th><th>Pessimiste</th><th>Réaliste</th><th>Optimiste</th></tr></thead>
+              <tbody>
+                <tr><td>Volume seul</td><td id="s-vp">€189k</td><td id="s-vr">€280k</td><td id="s-vo">€412k</td></tr>
+                <tr><td>Précision seule</td><td id="s-ap">€224k</td><td id="s-ar">€350k</td><td id="s-ao">€476k</td></tr>
+                <tr><td>Repli humain seul</td><td id="s-fp">€198k</td><td id="s-fr">€315k</td><td id="s-fo">€441k</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="biz-deck-cta">
+            <button class="btn" id="b-deck">Préparer une slide pour le comité → 7 slides, template AXA Canopée</button>
+          </div>
+        </div>`,
+      onRender: () => {
+        function calcROI(vol, acc, fb) {
+          const errorCost = vol * 0.038 * (1 - acc / 100) * 9.2 * 12;
+          const fteSaving = vol * 0.0062 * 35 * 12;
+          const regRisk = 47000 + vol * 0.002 * 8;
+          const total = errorCost * 0.72 + fteSaving * 0.68 + regRisk;
+          return { total: Math.round(total / 1000) * 1000, errorCost: Math.round(errorCost * 0.72), fteSaving: Math.round(fteSaving * 0.68), regRisk: Math.round(regRisk) };
+        }
+        function fmt(n) { return '€' + (n >= 1000 ? (n/1000).toFixed(0) + 'k' : n.toLocaleString('fr-FR')); }
+        function fmtFull(n) { return '€' + n.toLocaleString('fr-FR'); }
+        function update() {
+          const vol = +document.getElementById('sl-vol').value;
+          const acc = +document.getElementById('sl-acc').value;
+          const fb  = +document.getElementById('sl-fb').value;
+          document.getElementById('sl-vol-v').textContent = vol.toLocaleString('fr-FR');
+          document.getElementById('sl-acc-v').textContent = acc;
+          document.getElementById('sl-fb-v').textContent = fb;
+          const r = calcROI(vol, acc, fb);
+          const low = Math.round(r.total * 0.80 / 1000) * 1000;
+          const high = Math.round(r.total * 1.20 / 1000) * 1000;
+          document.getElementById('cost-num').textContent = fmtFull(r.total);
+          document.getElementById('cost-range').textContent = `${fmt(low)} – ${fmt(high)}`;
+          document.getElementById('ax-err').textContent = fmtFull(r.errorCost) + ' / an';
+          document.getElementById('ax-fte').textContent = fmtFull(r.fteSaving) + ' / an';
+          document.getElementById('ax-reg').textContent = fmtFull(r.regRisk) + ' / an';
+          // sensitivity cells
+          const rp = calcROI(vol * 0.7, acc, fb); const ro = calcROI(vol * 1.3, acc, fb);
+          document.getElementById('s-vp').textContent = fmt(Math.round(rp.total/1000)*1000);
+          document.getElementById('s-vr').textContent = fmt(r.total);
+          document.getElementById('s-vo').textContent = fmt(Math.round(ro.total/1000)*1000);
+          const ap = calcROI(vol, acc - 12, fb); const ao = calcROI(vol, Math.min(98, acc + 8), fb);
+          document.getElementById('s-ap').textContent = fmt(Math.round(ap.total/1000)*1000);
+          document.getElementById('s-ar').textContent = fmt(r.total);
+          document.getElementById('s-ao').textContent = fmt(Math.round(ao.total/1000)*1000);
+          const fp = calcROI(vol, acc, fb + 15); const fo = calcROI(vol, acc, Math.max(5, fb - 10));
+          document.getElementById('s-fp').textContent = fmt(Math.round(fp.total/1000)*1000);
+          document.getElementById('s-fr').textContent = fmt(r.total);
+          document.getElementById('s-fo').textContent = fmt(Math.round(fo.total/1000)*1000);
+        }
+        ['sl-vol', 'sl-acc', 'sl-fb'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', update);
+        });
+        const deck = document.getElementById('b-deck');
+        if (deck) deck.addEventListener('click', () => {
+          deck.textContent = '✓ Génération slide en cours… (simulation)';
+          deck.disabled = true;
+        });
+        const t = setTimeout(update, 100);
+        timers.push(t);
+      },
+    },
+    { // 5 SYNTHETIC SEED
+      eyebrow: 'MOUVEMENT V · SEED SYNTHÉTIQUE',
+      title: 'Les données, <em>nées sous vos yeux.</em>',
+      lede: "Regardez-moi générer 240 scénarios FNOL moteur sur le périmètre que vous m'avez donné. Pause quand vous voulez, modifiez la forme, demandez un cas-limite.",
+      duration: 6000,
+      chat: [
+        { delay: 400, role: 'ai', by: 'Codex · 14:45', body: "Génération de 10 tamponnements-arrière simples — ils représentent 42 % du périmètre. Vous en voulez moins ?" },
+        { delay: 2600, role: 'ai', by: 'Codex · 14:46', body: "Ajout d'un cas-extrême : client qui raccroche en cours d’appel. L'agent doit-il tenter un rappel ?" },
+        { delay: 5000, role: 'human', by: 'Sophie M. · 14:46', body: "Oui, un rappel automatique après 90 secondes, max 2 tentatives. Loguer si pas de réponse." },
+      ],
+      render: () => `
+        <div class="mv-synth">
+          <div class="synth-left">
+            <div class="synth-eyebrow"><span class="pip azur"></span> Génération en cours · <span id="synth-count">0</span> / 240 scénarios</div>
+            <div class="synth-feed" id="synth-feed"></div>
+            <div class="synth-validators" id="synth-validators"></div>
+          </div>
+          <div class="synth-right">
+            <div class="synth-settings-title">Paramètres</div>
+            <div class="synth-setting-row">
+              <label>Nombre <strong>240</strong></label>
+            </div>
+            <div class="synth-setting-row">
+              <label>Mix langues <strong>FR 80% · EN 20%</strong></label>
+            </div>
+            <div class="synth-setting-row">
+              <label>Taux de fraude <strong>8 %</strong></label>
+            </div>
+            <div class="synth-advanced">
+              <div class="synth-adv-title">Avancé</div>
+              <div class="synth-checkbox"><input type="checkbox" checked> Tamponnement arrière simple</div>
+              <div class="synth-checkbox"><input type="checkbox" checked> Multi-véhicules sévérité ambiguë</div>
+              <div class="synth-checkbox"><input type="checkbox" checked> Raccroche en cours d’appel</div>
+              <div class="synth-checkbox"><input type="checkbox"> Délit de fuite</div>
+              <div class="synth-checkbox"><input type="checkbox"> Plaque étrangère</div>
+              <div class="synth-checkbox"><input type="checkbox"> Conducteur alcoolisé</div>
+            </div>
+            <button class="btn btn-primary" id="b-approve-seed" style="margin-top:16px;width:100%" disabled>Valider le seed → débloquer Mouvement VI</button>
+          </div>
+        </div>`,
+      onRender: () => {
+        const records = [
+          { kind: '🚗', label: 'client_record · CL-SYN-001 · Sophie Renard · Lyon 69003' },
+          { kind: '📋', label: 'policy_record · POL-2024-8821 · moteur · franchise 500€' },
+          { kind: '💥', label: 'accident_scenario · tamponnement arrière · A6 sortie 33 · 14:22' },
+          { kind: '🎙️', label: 'voice_recording · ElevenLabs TTS · FR · 2m34s · sans PII' },
+          { kind: '📸', label: 'damage_photo · gen · pare-chocs arr. · severite=2/5' },
+          { kind: '🚛', label: 'tow_vendor · Dépann\'Express Lyon · ETA 22 min' },
+          { kind: '📋', label: 'policy_record · POL-2024-5543 · flotte 12v · franchise 1 000€' },
+          { kind: '💥', label: 'accident_scenario · multi-véhicules · M7 · ambiguïté sévérité' },
+          { kind: '🚗', label: 'client_record · CL-SYN-009 · Marco Bellini · acte-fraude suspicion' },
+          { kind: '💥', label: 'accident_scenario [EDGE] · raccroche mi-appel · rappel ×2 logged' },
+          { kind: '🎙️', label: 'voice_recording · ElevenLabs TTS · EN · 1m12s · sans PII' },
+          { kind: '📸', label: 'damage_photo · gen · airbag déclenché · severite=4/5' },
+        ];
+        const feed = document.getElementById('synth-feed');
+        const countEl = document.getElementById('synth-count');
+        let count = 0;
+        if (!feed) return;
+        records.forEach((r, i) => {
+          const t = setTimeout(() => {
+            count += Math.floor(Math.random() * 12) + 8;
+            if (countEl) countEl.textContent = Math.min(240, count);
+            const div = document.createElement('div');
+            div.className = 'synth-record';
+            div.style.cssText = 'opacity:0;transform:translateY(4px);transition:opacity 220ms ease,transform 220ms ease';
+            div.innerHTML = `<span class="synth-kind">${r.kind}</span><span class="synth-label">${r.label}</span>`;
+            feed.appendChild(div);
+            feed.scrollTop = feed.scrollHeight;
+            requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+          }, 300 + i * 420);
           timers.push(t);
         });
         const t2 = setTimeout(() => {
-          $('prev-metrics').innerHTML = `
-            <div class="prev-met"><span>Latence p50</span><strong>4,1 s</strong></div>
-            <div class="prev-met"><span>Coût</span><strong>0,024 €</strong></div>
-            <div class="prev-met"><span>Tokens</span><strong>2 840</strong></div>
-            <div class="prev-met"><span>Verdict</span><strong>auto-résolu</strong></div>`;
-        }, 3400);
+          if (countEl) countEl.textContent = '240';
+          const validators = document.getElementById('synth-validators');
+          if (validators) {
+            validators.innerHTML = `<div class="validator-row ok">schéma ✓</div><div class="validator-row ok">distribution ✓</div><div class="validator-row ok">anti-PII ✓</div><div class="validator-row ok">fidélité persona ✓</div>`;
+          }
+          const btn = document.getElementById('b-approve-seed');
+          if (btn) btn.disabled = false;
+        }, 300 + 12 * 420 + 800);
         timers.push(t2);
+        const btn = document.getElementById('b-approve-seed');
+        if (btn) btn.addEventListener('click', () => {
+          btn.textContent = '✓ Seed validé · Mouvement VI débloqué';
+          btn.disabled = true;
+          appendChat({ role: 'human', by: 'Sophie M. · 14:47', body: 'Seed validé. Continuons.' });
+        });
       },
     },
-    { // 8 DEPLOY
-      eyebrow: 'Mouvement VIII · Déploiement',
-      title: 'Un pilote, <em>livré en G0</em>.',
-      lede: "Bundle signé. Ancré sur la chaîne d'audit. Vivant derrière le feature flag pf_orchestrator à 0 % — promotion à votre signal.",
-      duration: 3200,
+    { // 6 CHARTER
+      eyebrow: 'MOUVEMENT VI · CHARTE',
+      title: 'Les règles du jeu, <em>convenues par écrit.</em>',
+      lede: "Règles dures à ne jamais enfreindre. Contrats d'intégration réels (vrais endpoints dès L1). Accords pris en chemin. Signez une fois, c'est verrouillé.",
+      duration: 3600,
       chat: [
-        { delay: 200, role: 'ai', by: 'Codex · 14:43', body: "Déploiement vers l'anneau G0. <em>railway.deploy</em>, <em>posthog.flag.create</em>." },
-        { delay: 1600, role: 'ai', by: 'Codex · 14:43', body: "<strong>Livré.</strong> property-fast-track v0.4 est en ligne derrière <code>pf_orchestrator</code> à 0 %. Ouvrez le canevas pour voir un vrai run." },
+        { delay: 300, role: 'ai', by: 'Codex · 14:47', body: "Compilation de la charte — 7 règles dures, 5 intégrations réelles, 4 accords de session. J'ai détecté une <strong>tension</strong> à résoudre.", citation: '↳ RGPD Art.22 · lint_capability_manifest ✓' },
+        { delay: 2800, role: 'human', by: 'Sophie M. · 14:48', body: "La porte C reste. Aucun paiement auto > €4 000 sans revue humaine." },
       ],
       render: () => `
-        <section class="section">
-          <div class="marg"><span class="num">viii.</span>Déploiement<br>anneau G0<br>0 % rollout</div>
-          <div class="body" id="deploy-body" style="opacity:0;transform:translateY(8px);transition:opacity 600ms ease,transform 600ms ease">
-            <div class="bsim-deploy">
-              <div class="bsim-deploy-check">✓</div>
-              <h3>Livré en <em>G0</em>.</h3>
-              <p class="sub">property-fast-track · v0.4 · build 7f4a-31bd · ancre 0xa3·1e</p>
-              <div class="bsim-deploy-grid">
-                <div class="approval-tile"><span class="tile-key">Anneau</span><span class="tile-val">G0</span><span class="tile-sub">canary · 0 % trafic</span></div>
-                <div class="approval-tile"><span class="tile-key">Flag</span><span class="tile-val">off</span><span class="tile-sub">pf_orchestrator · posthog</span></div>
-                <div class="approval-tile"><span class="tile-key">Audit</span><span class="tile-val">ancré</span><span class="tile-sub">0xa3·1e · chaîne externe</span></div>
-                <div class="approval-tile"><span class="tile-key">Healthcheck</span><span class="tile-val">200</span><span class="tile-sub">latence p50 87 ms</span></div>
+        <div class="mv-charter">
+          <div class="tension-banner" id="tension-banner">
+            <span class="tension-icon">⚔️</span>
+            <div class="tension-body">
+              <div class="tension-title">Tension détectée</div>
+              <div class="tension-text">Vous avez dit «jamais de paiement auto > €4 000» au Mouvement I, mais le plan III autorise jusqu’à €4 200. Lequel l'emporte ?</div>
+            </div>
+            <div class="tension-actions">
+              <button class="btn" id="t-keep">Garder la porte C (€4 000)</button>
+              <button class="btn btn-ghost" id="t-raise">Monter à €4 200</button>
+            </div>
+          </div>
+
+          <div class="charter-panels">
+            <div class="charter-panel" id="panel-rules">
+              <div class="charter-panel-head"><span class="cp-icon">⚖️</span><span>7 règles dures</span><span class="cp-chevron">▼</span></div>
+              <div class="charter-panel-body" id="rules-body"></div>
+            </div>
+            <div class="charter-panel" id="panel-integrations">
+              <div class="charter-panel-head"><span class="cp-icon">🔌</span><span>5 intégrations</span><span class="cp-chevron">▼</span></div>
+              <div class="charter-panel-body" id="integrations-body"></div>
+            </div>
+            <div class="charter-panel" id="panel-agreements">
+              <div class="charter-panel-head"><span class="cp-icon">✅</span><span>4 accords</span><span class="cp-chevron">▼</span></div>
+              <div class="charter-panel-body" id="agreements-body"></div>
+            </div>
+          </div>
+
+          <div class="charter-sign-row">
+            <button class="btn" id="b-compliance-memo">Générer un mémo conformité pour le juridique → PDF</button>
+            <button class="btn btn-primary" id="b-sign-charter" disabled>Signer la charte &amp; continuer → Mouvement VII</button>
+          </div>
+        </div>`,
+      onRender: () => {
+        const rules = [
+          'Aucun paiement automatique > €4 000 sans revue humaine documentée · RGPD Art.22(3)',
+          'Disclosure «agent automatisé» dans les 3 premières secondes de tout appel · EU AI Act Art.50',
+          'Toute décision de fraude automatique doit générer un log immuable · ACPR L113-2',
+          'PII redaction par défaut sur toutes les traces Langfuse · CNIL guidance 2024-03',
+          'Seuil de confiance minimum 0,65 pour le score fraude — non abaissable sans revue juridique',
+          'SLA 90 s pour toute passation HITL — dépassement = retour file manuelle',
+          'Secret rotation mensuelle — aucun credential hardcodé dans les flows',
+        ];
+        const integrations = [
+          { name: 'ElevenLabs Voice', endpoint: 'api.elevenlabs.io · EU region', auth: 'API key · env var', sandbox: 'sandbox.elevenlabs.io', owner: 'IT/Voix' },
+          { name: 'Guidewire ClaimCenter', endpoint: 'gc.axa-fr.internal · private', auth: 'OAuth2 PKCE · Azure AD', sandbox: 'gc-sandbox.axa-fr.internal', owner: 'IT/Guidewire' },
+          { name: 'Salesforce Service Cloud', endpoint: 'axafr.my.salesforce.com', auth: 'Connected App OAuth2', sandbox: 'axafr--uat.sandbox.my', owner: 'CRM Team' },
+          { name: 'Twilio SMS', endpoint: 'api.twilio.com · EU data residency', auth: 'Account SID + Auth Token · env var', sandbox: 'test credentials', owner: 'IT/Communications' },
+          { name: 'n8n MCP Tools', endpoint: 'n8n.gdai.railway.internal', auth: 'internal · service token', sandbox: 'n8n-staging.gdai.railway', owner: 'AI Platform' },
+        ];
+        const agreements = [
+          { text: 'NPS mesuré sur chaque appel — baseline avant L1 obligatoire', time: '14:42' },
+          { text: 'Sophie conserve le droit de refus sur tout HITL — sans justification exigée', time: '14:44' },
+          { text: 'Rappel automatique 90 s max × 2 tentatives si raccroche mi-appel', time: '14:46' },
+          { text: 'Porte C fixée à €4 000 — non négociable au Mouvement VII', time: '14:48' },
+        ];
+        const rb = document.getElementById('rules-body');
+        if (rb) rb.innerHTML = rules.map(r => `<div class="rule-item">⚖️ ${r}</div>`).join('');
+        const ib = document.getElementById('integrations-body');
+        if (ib) ib.innerHTML = integrations.map(i => `<div class="integration-item"><strong>${i.name}</strong><span class="int-ep">${i.endpoint}</span><span class="int-auth">${i.auth}</span><span class="int-owner">Owner: ${i.owner}</span></div>`).join('');
+        const ab = document.getElementById('agreements-body');
+        if (ab) ab.innerHTML = agreements.map(a => `<div class="agreement-item">✅ ${a.text} <span class="agr-time">· ${a.time}</span></div>`).join('');
+
+        // Tension resolution
+        let tensionResolved = false;
+        const signBtn = document.getElementById('b-sign-charter');
+        function resolveTension(choice) {
+          if (tensionResolved) return;
+          tensionResolved = true;
+          const banner = document.getElementById('tension-banner');
+          if (banner) { banner.style.opacity = '0'; setTimeout(() => banner.remove(), 300); }
+          appendChat({ role: 'human', by: 'Sophie M. · 14:48', body: choice === 'keep' ? 'La porte C reste. Aucun paiement auto > €4 000 sans revue humaine.' : 'On monte à €4 200 — je prends la responsabilité.' });
+          if (signBtn) signBtn.disabled = false;
+        }
+        const tk = document.getElementById('t-keep');
+        const tr = document.getElementById('t-raise');
+        if (tk) tk.addEventListener('click', () => resolveTension('keep'));
+        if (tr) tr.addEventListener('click', () => resolveTension('raise'));
+
+        // Panel toggles
+        document.querySelectorAll('.charter-panel-head').forEach(head => {
+          head.addEventListener('click', () => {
+            const panel = head.parentElement;
+            panel.classList.toggle('open');
+          });
+        });
+        const t1 = setTimeout(() => { document.querySelector('#panel-rules')?.classList.add('open'); }, 200);
+        const t2 = setTimeout(() => { document.querySelector('#panel-integrations')?.classList.add('open'); }, 600);
+        const t3 = setTimeout(() => { document.querySelector('#panel-agreements')?.classList.add('open'); }, 1000);
+        timers.push(t1, t2, t3);
+
+        // Sign charter
+        if (signBtn) signBtn.addEventListener('click', () => {
+          signBtn.textContent = '✓ Charte signée · Mouvement VII débloqué';
+          signBtn.disabled = true;
+          setRunhead('CHARTE SIGNÉE · MOUVEMENT 6/8', 'azur');
+        });
+        const memo = document.getElementById('b-compliance-memo');
+        if (memo) memo.addEventListener('click', () => {
+          memo.textContent = '✓ Mémo conformité généré (simulation)';
+          memo.disabled = true;
+        });
+      },
+    },
+    { // 7 REHEARSAL
+      eyebrow: 'MOUVEMENT VII · RÉPÉTITION',
+      title: 'L\'écran de votre conseillère, <em>avant le premier appel.</em>',
+      lede: "Cliquez sur une porte humaine pour parcourir ce que Sophie ou Hugo verront vraiment. KPI séparés : baseline d’aujourd’hui à gauche, ce qu'on mesure pendant le run à droite.",
+      duration: 4800,
+      chat: [
+        { delay: 300, role: 'ai', by: 'Codex · 14:49', body: "AHT baseline : 12 min. Je propose 90 s pour les cas IA-traités, 4 min pour les HITL escaladés. Cliquez porte A ou B pour voir l'interface Sophie.", citation: '↳ Genesys AHT · FFA p.47 · Chatwoot HITL UI' },
+        { delay: 3600, role: 'ai', by: 'Codex · 14:50', body: "Si Sophie décline : le sinistre revient en file manuelle, l'IA journalise l'écart de raisonnement, le dataset de réentraînement gagne une ligne." },
+      ],
+      render: () => `
+        <div class="mv-rehearsal">
+          <div class="rehearsal-flow" id="rehearsal-flow"></div>
+          <div class="hitl-sim" id="hitl-sim" style="display:none">
+            <div class="hitl-sim-head">
+              <span class="hitl-sim-title">Simulation HITL · Voici exactement ce que Sophie verra dès le L1</span>
+              <button class="btn btn-ghost" id="hitl-sim-close">✕ Fermer</button>
+            </div>
+            <div class="hitl-sim-body">
+              <div class="hitl-dossier">
+                <div class="hitl-claim-id">CLM-SYN-005 · Score fraude : <strong>0.71</strong> · Seuil : 0.65</div>
+                <div class="hitl-fields">
+                  <div class="hitl-field"><span>Client</span><strong>Marco Bellini · Lyon 69007</strong></div>
+                  <div class="hitl-field"><span>Police</span><strong>POL-2024-9943 · moteur flotte</strong></div>
+                  <div class="hitl-field"><span>Accident</span><strong>A6 sortie 33 · tamponnement arr.</strong></div>
+                  <div class="hitl-field"><span>Montant estimé</span><strong>€2 840 · 2 photos reçues</strong></div>
+                  <div class="hitl-field"><span>IA rationale</span><strong>Incohérence MMS timestamp vs déclaration horaire</strong></div>
+                </div>
               </div>
-              <div class="bsim-deploy-actions">
-                <button class="btn" id="b-promote">Promouvoir vers G1 · 5 %</button>
-                <a class="btn btn-primary" href="./canvas.html">Ouvrir le canevas →</a>
+              <div class="hitl-actions-row">
+                <button class="btn btn-primary" id="hitl-approve">✓ Approuver · continuer auto</button>
+                <button class="btn" id="hitl-escalate">↑ Escalader à Hugo</button>
+                <button class="btn btn-ghost" id="hitl-decline">✕ Rejeter · file manuelle</button>
+              </div>
+              <div class="hitl-decline-preview" id="hitl-decline-preview" style="display:none">
+                <em>Si vous déclinez :</em> le sinistre revient en file manuelle · l'IA journalise l'écart de raisonnement · le dataset de réentraînement gagne une ligne.
               </div>
             </div>
           </div>
-        </section>`,
+          <div class="kpi-dashboard">
+            <div class="kpi-cols">
+              <div class="kpi-col">
+                <div class="kpi-col-head">🎯 Baseline humaine (aujourd'hui)</div>
+                <div class="kpi-row"><span>AHT moyen</span><strong>11 min 40</strong></div>
+                <div class="kpi-row"><span>FCR (1er appel)</span><strong>68 %</strong></div>
+                <div class="kpi-row"><span>NPS</span><strong>38</strong></div>
+                <div class="kpi-row"><span>Taux abandon</span><strong>11 %</strong></div>
+                <div class="kpi-row"><span>Fraude non détectée</span><strong>~8 %</strong></div>
+              </div>
+              <div class="kpi-col">
+                <div class="kpi-col-head">✨ Run IA (cible)</div>
+                <div class="kpi-row"><span>Latence p50</span><strong>4,2 s</strong></div>
+                <div class="kpi-row"><span>Coût/sinistre</span><strong>€0,024</strong></div>
+                <div class="kpi-row"><span>Précision</span><strong>87 %</strong></div>
+                <div class="kpi-row"><span>Taux hallucination</span><strong>&lt; 2 %</strong></div>
+                <div class="kpi-row"><span>SLA porte HITL</span><strong>90 s (95 %)</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>`,
       onRender: () => {
-        const t = setTimeout(() => {
-          const b = $('deploy-body');
-          if (b) { b.style.opacity = '1'; b.style.transform = 'translateY(0)'; }
-        }, 200);
-        timers.push(t);
+        const flowNodes = [
+          { id: 'rn-voice', label: 'Agent vocal ElevenLabs', kind: 'tool' },
+          { id: 'rn-ai1', label: 'Classification IA', kind: 'ai' },
+          { id: 'rn-gateA', label: '⚠ Porte A · fraude > 0,65', kind: 'hitl', clickable: true, gate: 'A' },
+          { id: 'rn-severity', label: 'Sévérité IA', kind: 'ai' },
+          { id: 'rn-gateB', label: '⚠ Porte B · sévérité haute', kind: 'hitl', clickable: true, gate: 'B' },
+          { id: 'rn-letter', label: 'Lettre client IA', kind: 'ai' },
+          { id: 'rn-gateC', label: '⚠ Porte C · > €4 000', kind: 'hitl', clickable: false, gate: 'C' },
+          { id: 'rn-settle', label: 'Règlement Salesforce+GW', kind: 'tool' },
+        ];
+        const rf = document.getElementById('rehearsal-flow');
+        if (rf) {
+          rf.innerHTML = flowNodes.map(n => `
+            <div class="rh-node rh-${n.kind}${n.clickable ? ' rh-clickable' : ''}" id="${n.id}" data-gate="${n.gate || ''}">
+              <span>${n.label}</span>
+              ${n.clickable ? '<span class="rh-click-hint">← cliquer</span>' : ''}
+            </div>`).join('<span class="rh-edge">→</span>');
+          rf.querySelectorAll('.rh-clickable').forEach(node => {
+            node.addEventListener('click', () => {
+              document.getElementById('hitl-sim').style.display = 'block';
+            });
+          });
+        }
+        document.getElementById('hitl-sim-close')?.addEventListener('click', () => {
+          document.getElementById('hitl-sim').style.display = 'none';
+        });
+        document.getElementById('hitl-decline')?.addEventListener('click', () => {
+          document.getElementById('hitl-decline-preview').style.display = 'block';
+        });
+        document.getElementById('hitl-approve')?.addEventListener('click', () => {
+          document.getElementById('hitl-sim').style.display = 'none';
+          appendChat({ role: 'human', by: 'Sophie M. (sim) · 14:50', body: 'Approuvé. Sinistre continué en auto.' });
+        });
+      },
+    },
+    { // 8 SUMMARY + SHIP OVERLAY
+      eyebrow: 'MOUVEMENT VIII · SYNTHÈSE',
+      title: 'Tout ce qu\'on a décidé, <em>sur une page.</em>',
+      lede: "Lisez-la une fois. Modifiez n'importe quoi sur place — ça se propage. Quand vous êtes prêt(e), expédiez vers L1 et je le construis pour de vrai.",
+      duration: 3200,
+      chat: [
+        { delay: 300, role: 'ai', by: 'Codex · 14:51', body: "J'ai relancé le lint complet. <strong>1 alerte non résolue :</strong> la stratégie de mesure de la porte D n'est pas définie. Corrigez ou outrepassez avant l'envoi.", citation: '↳ lint_capability_manifest · run #2 · 1 warning' },
+        { delay: 2400, role: 'ai', by: 'Codex · 14:52', body: "Trois premiers appels à tester en L1 : <em>tamponnement simple</em> / <em>multi-véhicules avec sévérité ambiguë</em> / <em>raccroche en cours d’appel</em>." },
+      ],
+      render: () => `
+        <div class="mv-summary">
+          <div class="summary-lint-warn">
+            ⚠ 1 alerte lint : la stratégie de mesure de la porte D n'est pas définie.
+            <button class="btn btn-ghost" id="b-override-lint" style="margin-left:12px">Outrepasser</button>
+          </div>
+          <div class="summary-sections">
+            <div class="summary-section open">
+              <div class="sum-head"><span class="sum-icon">🚀</span><span class="sum-title">Identité pilote</span><span class="sum-stat">motor-fnol-tow · v0.1 · FR</span></div>
+              <div class="sum-body">
+                <div class="sum-field"><span>Nom</span><strong>motor-fnol-tow</strong></div>
+                <div class="sum-field"><span>Version</span><strong>0.1-L0-sim</strong></div>
+                <div class="sum-field"><span>Propriétaire</span><strong>Sophie M. · Claims Lyon</strong></div>
+                <div class="sum-field"><span>Domaine ancre</span><strong>Motor FNOL + Tow Dispatch</strong></div>
+                <div class="sum-field"><span>Langues</span><strong>FR · EN</strong></div>
+                <div class="sum-field"><span>Régions</span><strong>FR · Plateau Lyon</strong></div>
+              </div>
+            </div>
+            <div class="summary-section">
+              <div class="sum-head"><span class="sum-icon">👥</span><span class="sum-title">Personas</span><span class="sum-stat">5 personas · 12 nœuds parcours</span></div>
+              <div class="sum-body">Sophie M. · Marc T. · Hugo R. · Le sinistré · IT/Sécurité</div>
+            </div>
+            <div class="summary-section">
+              <div class="sum-head"><span class="sum-icon">📚</span><span class="sum-title">Citations</span><span class="sum-stat">3 contraignantes · 9 contextuelles</span></div>
+              <div class="sum-body">RGPD Art.22 · EU AI Act Art.50 · Code assurances L121-12 + 9 contextuelles</div>
+            </div>
+            <div class="summary-section">
+              <div class="sum-head"><span class="sum-icon">🔀</span><span class="sum-title">Plan + Portes HITL</span><span class="sum-stat">14 nœuds · 4 portes · total €42 000/err</span></div>
+              <div class="sum-body">A: €4 800 · B: €25 000 · C: régl. · D: €8 200</div>
+            </div>
+            <div class="summary-section open">
+              <div class="sum-head"><span class="sum-icon">🪙</span><span class="sum-title">Cas d'affaires</span><span class="sum-stat">€280k – €420k / an · médiane €350k</span></div>
+              <div class="sum-body">Volume 9 200 FNOL/mois · Précision cible 87 % · Repli humain 18 %</div>
+            </div>
+            <div class="summary-section">
+              <div class="sum-head"><span class="sum-icon">🌱</span><span class="sum-title">Seed synthétique</span><span class="sum-stat">240 scénarios · 8 % fraude · validé</span></div>
+              <div class="sum-body">schéma ✓ · distribution ✓ · anti-PII ✓ · fidélité persona ✓</div>
+            </div>
+            <div class="summary-section">
+              <div class="sum-head"><span class="sum-icon">📜</span><span class="sum-title">Charte signée</span><span class="sum-stat">7 règles · 5 intégrations · 4 accords</span></div>
+              <div class="sum-body">Porte C ≤ €4 000 · Disclosure 3 s · PII redaction · SLA 90 s</div>
+            </div>
+            <div class="summary-section open">
+              <div class="sum-head"><span class="sum-icon">📡</span><span class="sum-title">Bundle observabilité</span><span class="sum-stat">Langfuse · 3 rubriques eval · 5 alertes</span></div>
+              <div class="sum-body">
+                Projet Langfuse : <code>gdai-pilot-motor-fnol-tow</code><br>
+                Rubriques : factuel · politique · ton · personnalisé<br>
+                Alertes : latence p95 · coût/sinistre · taux repli · hallucination · anti-PII drift
+              </div>
+            </div>
+          </div>
+          <div class="summary-ship-row">
+            <button class="btn" id="b-invite-reviewer">Enregistrer &amp; inviter un relecteur · lien lecture seule</button>
+            <button class="btn btn-primary" id="b-ship-l1">Générer &amp; expédier vers L1 →</button>
+          </div>
+        </div>
+        <div class="ship-overlay" id="ship-overlay" style="display:none">
+          <div class="ship-content">
+            <div class="ship-check">✓</div>
+            <h2 class="ship-title">Expédié vers <em>L1</em>.</h2>
+            <p class="ship-sub">motor-fnol-tow · v0.1 · build <code>a3f7-21bd</code> · ancre <code>0xa3·1e</code></p>
+            <div class="ship-items">
+              <div class="ship-item"><span>Niveau</span><strong>L1 · Sandbox réel</strong></div>
+              <div class="ship-item"><span>Feature flag</span><strong>pf_orchestrator = off · PostHog</strong></div>
+              <div class="ship-item"><span>Langfuse</span><strong>gdai-pilot-motor-fnol-tow · actif</strong></div>
+              <div class="ship-item"><span>Seed chargé</span><strong>240 scénarios FNOL</strong></div>
+            </div>
+            <div class="ship-scenarios">
+              <div class="ship-sc-title">3 premiers appels recommandés en L1</div>
+              <div class="ship-sc-item">1. Tamponnement simple → auto-résolution attendue</div>
+              <div class="ship-sc-item">2. Multi-véhicules sévérité ambiguë → Porte B attendue</div>
+              <div class="ship-sc-item">3. Raccroche mi-appel → rappel ×2 puis file manuelle</div>
+            </div>
+            <a class="btn btn-primary" href="./canvas.html" style="margin-top:24px">Ouvrir le canevas live →</a>
+          </div>
+        </div>`,
+      onRender: () => {
+        document.querySelectorAll('.summary-section .sum-head').forEach(h => {
+          h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+        });
+        document.getElementById('b-override-lint')?.addEventListener('click', (e) => {
+          e.target.closest('.summary-lint-warn').style.opacity = '0.4';
+          e.target.textContent = '✓ Outrepassé';
+          e.target.disabled = true;
+        });
+        document.getElementById('b-invite-reviewer')?.addEventListener('click', (e) => {
+          e.target.textContent = '✓ Lien copié (simulation)';
+          e.target.disabled = true;
+        });
+        document.getElementById('b-ship-l1')?.addEventListener('click', () => {
+          const overlay = document.getElementById('ship-overlay');
+          if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.style.cssText = 'display:flex;position:fixed;inset:0;background:var(--axa-blue);z-index:9999;align-items:center;justify-content:center;animation:fadeInShip 600ms ease';
+            setRunhead('EXPÉDIÉ · L1 · 8/8 MOUVEMENTS', 'azur');
+          }
+        });
       },
     },
   ];
@@ -1065,7 +1459,7 @@ const CodexBuilder = (() => {
       nxt.textContent = '✓ Terminé';
       nxt.disabled = true;
     } else {
-      const labels = ['', 'Recherche →', 'Plan →', 'Approbation →', 'Construction →', 'Lint →', 'Aperçu →', 'Déploiement →'];
+      const labels = ['', 'Recherche →', 'Plan →', 'Cas d\'affaires →', 'Graine synthétique →', 'Charte →', 'Répétition →', 'Synthèse →'];
       nxt.textContent = labels[mvIdx] || `Mouvement ${mvIdx + 1} →`;
       nxt.disabled = false;
     }
@@ -1108,8 +1502,8 @@ const CodexBuilder = (() => {
     $('bsim-chat').innerHTML = '';
     $('bsim-body').innerHTML = '';
     $('bsim-eyebrow').textContent = 'Mouvement 0 · Au repos';
-    $('bsim-title').innerHTML = 'Composez un pilote, <em>mouvement par mouvement</em>.';
-    $('bsim-lede').textContent = "Cliquez sur Suivant pour avancer dans les huit mouvements — de la prise en charge au déploiement. Précédent revient en arrière, à votre rythme. Flèches ← → ou espace pour naviguer au clavier.";
+    $('bsim-title').innerHTML = 'Lancez la <em>composition</em>.';
+    $('bsim-lede').textContent = "Simulez les huit mouvements d'une composition de pilote — des personas à la mise en service. Précédent revient en arrière, à votre rythme. Flèches ← → ou espace pour naviguer au clavier.";
     setRunhead('AU REPOS · MOUVEMENT 0/8', 'yellow');
     setNavState();
   }
