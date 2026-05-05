@@ -45,9 +45,13 @@ target-version = "py312"
 select = ["E", "F", "W", "I", "B", "C4", "UP", "S"]
 ignore = ["S101"]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S105", "S106"]
+
 [tool.mypy]
 strict = true
 python_version = "3.12"
+explicit_package_bases = true
 plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]
