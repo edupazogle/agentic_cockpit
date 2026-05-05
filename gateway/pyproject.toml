@@ -51,6 +51,10 @@ ignore = ["S101"]
 "src/gateway/posthog_flags.py" = ["S110"]
 "src/gateway/synthdata/*.py" = ["S311", "E501"]
 "src/gateway/routers/audit_router.py" = ["E501"]
+"src/gateway/routers/chat_router.py" = ["E501", "S110"]
+"src/gateway/routers/kpis_router.py" = ["E501"]
+"src/gateway/citation_gate.py" = ["E501"]
+"src/gateway/seed/*.py" = ["S311", "E501"]
 
 [tool.mypy]
 strict = true
