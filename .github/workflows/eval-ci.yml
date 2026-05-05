@@ -1,0 +1,32 @@
+name: Eval CI
+
+on:
+  pull_request:
+    paths:
+      - "flows/**"
+      - "prompts/**"
+      - "gateway/src/gateway/eval_runner.py"
+      - "gateway/evals/**"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Run eval CI
+        run: python gateway/src/gateway/eval_runner.py
+        env:
+          LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+
+      - name: Post scores to Langfuse
+        if: always()
+        run: |
+          echo "Eval CI complete. Scores posted to Langfuse Datasets."
