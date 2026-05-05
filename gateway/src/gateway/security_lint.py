@@ -62,8 +62,8 @@ def lint_capability_manifest(manifest: dict) -> LintReport:
         ))
         return LintReport(passed=False, violations=violations, warnings=warnings)
 
-    for field in CAPABILITY_MANIFEST_REQUIRED_FIELDS:
-        if field not in manifest:
+    for required_field in CAPABILITY_MANIFEST_REQUIRED_FIELDS:
+        if required_field not in manifest:
             violations.append(LintViolation(
                 rule="CAP-002",
                 severity="critical",

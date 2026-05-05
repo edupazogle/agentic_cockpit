@@ -18,7 +18,7 @@ export default function OpsPage() {
   const [runs, setRuns] = useState<RunRow[]>([]);
   const [deps, setDeps] = useState<HealthDep[]>([]);
   const [deadLetter, setDeadLetter] = useState<DeadLetterItem[]>([]);
-  const timer = useRef<ReturnType<typeof setInterval>>();
+  const timer = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 
   useEffect(() => {
     async function poll() {
