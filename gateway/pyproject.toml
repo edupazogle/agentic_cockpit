@@ -47,6 +47,8 @@ ignore = ["S101"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["S105", "S106"]
+"src/gateway/routers/*.py" = ["B008"]
+"src/gateway/posthog_flags.py" = ["S110"]
 
 [tool.mypy]
 strict = true

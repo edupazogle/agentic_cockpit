@@ -20,6 +20,7 @@ from gateway.logging_config import configure_logging
 from gateway.otel import init_otel
 from gateway.routers.auth_router import router as auth_router
 from gateway.routers.callbacks import router as callbacks_router
+from gateway.routers.runs_router import router as runs_router
 from gateway.settings import get_settings
 
 logger = structlog.get_logger()
@@ -89,6 +90,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     app.include_router(auth_router)
     app.include_router(callbacks_router)
+    app.include_router(runs_router)
 
     # ── OpenTelemetry instrumentation ─────────────────────────────────────────
     FastAPIInstrumentor.instrument_app(app)

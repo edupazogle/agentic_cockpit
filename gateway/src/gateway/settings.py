@@ -70,6 +70,21 @@ class Settings(BaseSettings):
     langfuse_public_key: str = Field(default="")
     langfuse_host: str = Field(default="http://localhost:3000")
 
+    # ── Langflow runtime ─────────────────────────────────────────────────────
+    langflow_api_url: str = Field(default="")
+    langflow_api_key: SecretStr = Field(default=SecretStr(""))
+    langflow_timeout_s: float = Field(default=30.0)
+    langflow_flow_id: str = Field(default="property-fast-track")
+
+    # ── PostHog ──────────────────────────────────────────────────────────────
+    posthog_api_key: str = Field(default="")
+    posthog_host: str = Field(default="https://eu.posthog.com")
+
+    # ── Canary rollout ───────────────────────────────────────────────────────
+    langflow_canary_pct: int = Field(default=5, description="Max Langflow traffic percentage")
+    langflow_error_threshold: float = Field(default=5.0)
+    langflow_rollback_window_s: int = Field(default=600)
+
     @property
     def is_production(self) -> bool:
         return self.app_env == "production"
