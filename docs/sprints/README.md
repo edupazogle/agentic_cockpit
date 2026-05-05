@@ -22,11 +22,19 @@ The canonical source for scope and rationale remains [`../refactor_main_v3.md`](
 | 1 | [Foundation + Trust Boundary](sprint-1-foundation-trust-boundary.md) | Weeks 1-2 | Operator can log in; engineer can verify the gateway trust boundary and first redacted trace. |
 | 2 | [Runtime Estate Landing](sprint-2-runtime-estate-landing.md) | Weeks 3-4 | Admin can verify the runtime estate is healthy, backed up, observable, and still running n8n. |
 | 3 | [Langflow Cutover Canary](sprint-3-langflow-cutover-canary.md) | Weeks 5-6 | The same property-fast-track runs through Langflow safely, with rollback and step-idempotency proof. |
-| 4 | [Pilot + HITL Product Surface](sprint-4-pilot-hitl-product-surface.md) | Weeks 7-8 | Claims operator can create/open a pilot, run a claim, decide HITL, and see audit. |
-| 5 | [Ops + Eval Control Loop](sprint-5-ops-eval-control-loop.md) | Weeks 9-10 | Ops/admin can detect degraded quality, latency, and runtime health early. |
-| 6 | [Executive Demo + Experimentation](sprint-6-executive-demo-experimentation.md) | Weeks 11-12 | Executive sponsor can open a polished demo, try a synthetic run, see experimentation with rollback. |
-| 7 | [Motor-Fleet + Audit Hardening](sprint-7-motor-fleet-audit-hardening.md) | Weeks 13-14 | Platform proves second pilot + produces an audit bundle a compliance reviewer can inspect. |
-| 8 | [Scenario Builder + Synthdata Factory](sprint-8-scenario-builder-synthdata-factory.md) | Weeks 15-16, gated | Admin can describe a new synthetic pilot, review a cited plan, build a safe bundle, and deploy to G0. |
+| 4 | [L1 First-Arrival of Pilot Workspace (Pilot + HITL Surface)](sprint-4-pilot-hitl-product-surface.md) | Weeks 7-8 | Operator lands at L1 right after ship, sees hero card + voucher, places real call, decides HITL, sees audit. |
+| 5 | [L4 Live Ops Centre Pane (Ops + Eval Control Loop)](sprint-5-ops-eval-control-loop.md) | Weeks 9-10 | Ops/admin detects degraded quality early; L4 centre-pane skeleton seeded for future polish. |
+| 6 | [Staircase End-to-End Demo (Executive Demo + Experimentation)](sprint-6-executive-demo-experimentation.md) | Weeks 11-12 | Executive watches one pilot climb L0 → L4 in 12-15 min with companion narration + on-demand rollback. |
+| 7 | [Motor-FNOL-Tow Anchor + Audit Hardening](sprint-7-motor-fnol-tow-audit-hardening.md) | Weeks 13-14 | Anchor pilot for Pilot Workspace + audit bundle a compliance reviewer can inspect. |
+| 8 | [Pilot Workspace L0 (Eight Movements) + Ship Overlay](sprint-8-pilot-workspace-l0-ship-overlay.md) | Weeks 15-16, gated | A business user composes a pilot in 8 movements, ships to L1 in ≤ 75 s with real Langfuse + ElevenLabs + Twilio + Guidewire + Salesforce wiring. |
+| 9 | [L2 Sandbox Load](sprint-9-l2-sandbox-load.md) | Weeks 17-18 (post-MVP) | Owner runs N synthetic claims in cohort + drift detector + eval rerun; gates L2→L3 by checklist. |
+| 10 | [L3 Canary](sprint-10-l3-canary.md) | Weeks 19-20 (post-MVP) | Owner exposes pilot to live canary cohort with always-visible rollback; gates L3→L4 by checklist. |
+| 11 | [L4 Live Ops Polish](sprint-11-l4-live-ops-polish.md) | Weeks 21-22 (post-MVP) | Plateau head operates L4 pilot long-term: KPIs, anomalies, improvement queue, drift, cost ledger, retirement. |
+| 12 | [Companion Polish](sprint-12-companion-polish.md) | Weeks 23-24 (post-MVP) | Multimodal upload polish, board-ready deck/memo generators, multilingual companion (FR/EN/ES/DE), full a11y. |
+| 13 | [Cockpit Shell: Landing + Sphere + Scenarios](sprint-13-cockpit-shell-landing-scenarios.md) | Weeks 25-26 (post-MVP) | Plateau head opens per-country cockpit with sphere companion, configurable landing bento, and pilot catalog. |
+| 14 | [KPI Dashboard + Agent Drill-Down](sprint-14-kpi-dashboard-agent-drilldown.md) | Weeks 27-28 (post-MVP) | Three-pillar governance (Business · Operational · Quality) with per-agent trace drill-down to Langfuse. |
+| 15 | [HITL Chat + Decision Packets](sprint-15-hitl-chat-decision-packets.md) | Weeks 29-30 (post-MVP) | Country-level companion chat with HITL decision packets (Approve/Override/Escalate), citation chips, artifact cards. |
+| 16 | [External Escalation Adapters + Blueprint Library](sprint-16-external-escalation-adapters.md) | Weeks 31-32 (post-MVP) | Teams/SF/ServiceNow adapters activated; cross-country blueprint library for sharing agents, flows, and data. |
 
 ## Cross-sprint demo standards
 
