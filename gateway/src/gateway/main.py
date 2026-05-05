@@ -20,6 +20,7 @@ from gateway.logging_config import configure_logging
 from gateway.otel import init_otel
 from gateway.routers.audit_router import router as audit_router
 from gateway.routers.auth_router import router as auth_router
+from gateway.routers.builder_router import router as builder_router
 from gateway.routers.callbacks import router as callbacks_router
 from gateway.routers.demo_router import router as demo_router
 from gateway.routers.hitl_router import router as hitl_router
@@ -100,6 +101,7 @@ def create_app() -> FastAPI:
     app.include_router(ops_router)
     app.include_router(demo_router)
     app.include_router(audit_router)
+    app.include_router(builder_router)
     app.include_router(runs_router)
 
     # ── OpenTelemetry instrumentation ─────────────────────────────────────────
