@@ -1,0 +1,10 @@
+{
+  "movement": "v",
+  "name": "Synth seed",
+  "checks": [
+    {"id": "approved_batches", "kind": "count", "artifact_kind": "synth_seed_manifest", "min": 1,
+     "question_when_missing": "Aucun batch approuvé. Générez et approuvez au moins un batch."},
+    {"id": "golden_cases_count", "kind": "count", "artifact_kind": "golden_cases", "min": 40,
+     "question_when_missing": "Minimum 40 golden cases requis. Il en manque {missing}."}
+  ]
+}

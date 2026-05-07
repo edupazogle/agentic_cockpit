@@ -1,0 +1,12 @@
+{
+  "movement": "viii",
+  "name": "Summary",
+  "checks": [
+    {"id": "charter_signed", "kind": "count", "artifact_kind": "charter", "min": 1,
+     "question_when_missing": "La charte n'est pas signée. Retournez au mouvement VI."},
+    {"id": "modules_ready", "kind": "count", "artifact_kind": "module_spec", "min": 1,
+     "question_when_missing": "Aucun module prêt. Vérifiez les critères de sortie par module."},
+    {"id": "repo_change_set_present", "kind": "count", "artifact_kind": "repo_change_set", "min": 1,
+     "question_when_missing": "Aucun ensemble de changements repo généré."}
+  ]
+}

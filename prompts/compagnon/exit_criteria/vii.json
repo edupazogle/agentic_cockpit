@@ -1,0 +1,10 @@
+{
+  "movement": "vii",
+  "name": "Rehearsal",
+  "checks": [
+    {"id": "simulated_hitl_for_every_gate", "kind": "fields_present", "artifact_kind": "hitl_gate", "required_fields": ["simulated_hitl_payload"],
+     "question_when_missing": "La porte {gate_label} n'a pas de preview HITL simulée."},
+    {"id": "kpis_per_pillar", "kind": "count", "artifact_kind": "kpi", "min": 3,
+     "question_when_missing": "Il faut au moins 3 KPIs. Il en manque {missing}."}
+  ]
+}
