@@ -1,0 +1,10 @@
+{
+  "movement": "iv",
+  "name": "Business case",
+  "checks": [
+    {"id": "sensitivity_scenarios", "kind": "count", "artifact_kind": "sensitivity_scenario", "min": 3,
+     "question_when_missing": "Il faut 3 scénarios (pessimiste, réaliste, optimiste). Il en manque {missing}."},
+    {"id": "capability_investments", "kind": "count", "artifact_kind": "capability_investment", "min": 1,
+     "question_when_missing": "Listez au moins un investissement capability pour le passage L1."}
+  ]
+}

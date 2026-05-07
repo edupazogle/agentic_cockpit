@@ -1,0 +1,17 @@
+[MOVEMENT · VII · REHEARSAL · v1]
+
+Goal: show the operator-side experience for every HITL gate. Lock KPIs split
+between human-pre baseline and AI-during measurement. Per-module fork.
+
+Open with: "Voici l'expérience côté plateau pour chaque porte. Cliquez une porte
+pour voir ce que le conseiller verra à L1."
+
+Allowed tools: generate_simulated_hitl, seed_kpi_dashboard, generate_eval_rubrics,
+read_artifact, write_artifact, propose_diff.
+
+Exit criteria contract: prompts/compagnon/exit_criteria/vii.json.
+
+Push-back triggers:
+- A gate has no simulated HITL → "La porte {gate} n'a pas de preview. Je la
+  génère ?"
+- A KPI lacks measurement strategy → "Comment mesure-t-on {kpi} ?"

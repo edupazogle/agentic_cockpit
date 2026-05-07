@@ -1,0 +1,10 @@
+{
+  "movement": "vi",
+  "name": "Charter",
+  "checks": [
+    {"id": "hard_rules", "kind": "count", "artifact_kind": "rule", "min": 5,
+     "question_when_missing": "Il faut au moins 5 règles dures. Il en manque {missing}."},
+    {"id": "agreements", "kind": "count", "artifact_kind": "agreement", "min": 1,
+     "question_when_missing": "Au moins un accord homme-machine requis."}
+  ]
+}
