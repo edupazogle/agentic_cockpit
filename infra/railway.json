@@ -1,0 +1,189 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "version": "1",
+  "project": {
+    "name": "gdai-agentic-cockpit",
+    "description": "GDAI Agentic Cockpit — MVP S2 Runtime Estate"
+  },
+  "services": [
+    {
+      "name": "agentic-web",
+      "source": {
+        "type": "repo",
+        "repo": "gdai/agentic-cockpit",
+        "branch": "main",
+        "rootDirectory": "."
+      },
+      "build": {
+        "builder": "nixpacks",
+        "buildCommand": "pnpm install --frozen-lockfile && pnpm build"
+      },
+      "deploy": {
+        "startCommand": "pnpm start",
+        "healthcheckPath": "/api/health",
+        "healthcheckTimeout": 30,
+        "restartPolicyType": "on_failure",
+        "numReplicas": 1
+      },
+      "networking": {
+        "serviceDomains": [{ "domain": "cockpit.gdai.axa" }]
+      },
+      "variables": {
+        "NODE_ENV": "production",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "GATEWAY_INTERNAL_URL": "${{agent-gateway.RAILWAY_PRIVATE_DOMAIN}}:8000"
+      }
+    },
+    {
+      "name": "agent-gateway",
+      "source": {
+        "type": "repo",
+        "repo": "gdai/agentic-cockpit",
+        "branch": "main",
+        "rootDirectory": "gateway"
+      },
+      "build": {
+        "builder": "nixpacks",
+        "buildCommand": "uv sync --frozen"
+      },
+      "deploy": {
+        "startCommand": "uv run uvicorn gateway.main:create_app --factory --host 0.0.0.0 --port 8000",
+        "healthcheckPath": "/healthz",
+        "healthcheckTimeout": 30,
+        "restartPolicyType": "on_failure",
+        "numReplicas": 1
+      },
+      "networking": {
+        "internalPort": 8000
+      },
+      "variables": {
+        "APP_ENV": "production",
+        "LANGFLOW_URL": "${{langflow-runtime.RAILWAY_PRIVATE_DOMAIN}}:7860",
+        "N8N_BASE_URL": "${{n8n.RAILWAY_PRIVATE_DOMAIN}}:5678",
+        "LANGFUSE_HOST": "${{langfuse-web.RAILWAY_PRIVATE_DOMAIN}}:3000",
+        "CHATWOOT_BASE_URL": "${{chatwoot-web.RAILWAY_PRIVATE_DOMAIN}}:3000",
+        "OTEL_COLLECTOR_HEALTH_URL": "${{otel-collector.RAILWAY_PRIVATE_DOMAIN}}:13133/health",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://${{otel-collector.RAILWAY_PRIVATE_DOMAIN}}:4317"
+      }
+    },
+    {
+      "name": "n8n",
+      "source": {
+        "type": "image",
+        "image": "n8nio/n8n:1.94"
+      },
+      "deploy": {
+        "startCommand": "n8n start",
+        "healthcheckPath": "/healthz",
+        "healthcheckTimeout": 30,
+        "restartPolicyType": "on_failure"
+      },
+      "networking": {
+        "internalPort": 5678
+      },
+      "volumes": [
+        { "mountPath": "/home/node/.n8n" }
+      ],
+      "variables": {
+        "N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS": "true",
+        "N8N_ENCRYPTION_KEY": "${{N8N_ENCRYPTION_KEY}}",
+        "DB_TYPE": "postgresdb",
+        "DB_POSTGRESDB_HOST": "${{n8n-db.RAILWAY_PRIVATE_DOMAIN}}",
+        "DB_POSTGRESDB_PORT": "5432",
+        "DB_POSTGRESDB_DATABASE": "n8n",
+        "DB_POSTGRESDB_USER": "${{n8n-db.PGUSER}}",
+        "DB_POSTGRESDB_PASSWORD": "${{n8n-db.PGPASSWORD}}"
+      }
+    },
+    {
+      "name": "langfuse-web",
+      "source": {
+        "type": "image",
+        "image": "ghcr.io/langfuse/langfuse:3"
+      },
+      "deploy": {
+        "healthcheckPath": "/api/public/health",
+        "healthcheckTimeout": 30,
+        "restartPolicyType": "on_failure"
+      },
+      "networking": {
+        "internalPort": 3000,
+        "serviceDomains": [{ "domain": "langfuse.gdai.axa" }]
+      },
+      "variables": {
+        "NODE_ENV": "production",
+        "DATABASE_URL": "postgresql://${{langfuse-db.PGUSER}}:${{langfuse-db.PGPASSWORD}}@${{langfuse-db.RAILWAY_PRIVATE_DOMAIN}}:5432/langfuse",
+        "CLICKHOUSE_URL": "http://${{clickhouse.RAILWAY_PRIVATE_DOMAIN}}:8123",
+        "LANGFUSE_S3_MEDIA_UPLOAD_BUCKET": "langfuse-blobs",
+        "SALT": "${{LANGFUSE_SALT}}",
+        "ENCRYPTION_KEY": "${{LANGFUSE_ENCRYPTION_KEY}}",
+        "AUTH_DISABLE_SIGNUP": "true"
+      }
+    },
+    {
+      "name": "langfuse-worker",
+      "source": {
+        "type": "image",
+        "image": "ghcr.io/langfuse/langfuse-worker:3"
+      },
+      "deploy": {
+        "restartPolicyType": "on_failure"
+      },
+      "variables": {
+        "DATABASE_URL": "postgresql://${{langfuse-db.PGUSER}}:${{langfuse-db.PGPASSWORD}}@${{langfuse-db.RAILWAY_PRIVATE_DOMAIN}}:5432/langfuse",
+        "CLICKHOUSE_URL": "http://${{clickhouse.RAILWAY_PRIVATE_DOMAIN}}:8123"
+      }
+    },
+    {
+      "name": "clickhouse",
+      "source": {
+        "type": "image",
+        "image": "clickhouse/clickhouse-server:24.8-alpine"
+      },
+      "deploy": {
+        "healthcheckPath": "/ping",
+        "healthcheckTimeout": 15,
+        "restartPolicyType": "on_failure"
+      },
+      "networking": {
+        "internalPort": 8123
+      },
+      "volumes": [
+        { "mountPath": "/var/lib/clickhouse" }
+      ],
+      "variables": {
+        "CLICKHOUSE_DB": "default",
+        "CLICKHOUSE_USER": "default",
+        "CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT": "1"
+      }
+    },
+    {
+      "name": "otel-collector",
+      "source": {
+        "type": "image",
+        "image": "otel/opentelemetry-collector-contrib:0.103.0"
+      },
+      "build": {
+        "startCommand": "--config /etc/otelcol/otel-config.yaml"
+      },
+      "deploy": {
+        "healthcheckPath": "/health",
+        "healthcheckTimeout": 15,
+        "restartPolicyType": "on_failure"
+      },
+      "networking": {
+        "internalPort": 13133
+      },
+      "variables": {
+        "LANGFUSE_OTLP_ENDPOINT": "http://${{langfuse-web.RAILWAY_PRIVATE_DOMAIN}}:3000/api/public/otel",
+        "DYNATRACE_OTLP_ENDPOINT": "${{DYNATRACE_OTLP_ENDPOINT}}",
+        "DYNATRACE_API_TOKEN": "${{DYNATRACE_API_TOKEN}}",
+        "LANGFUSE_SECRET_KEY": "${{LANGFUSE_SECRET_KEY}}"
+      }
+    }
+  ],
+  "volumes": [
+    { "name": "langfuse-blobs", "mountPath": "/langfuse-blobs" },
+    { "name": "cockpit-uploads", "mountPath": "/cockpit-uploads" }
+  ]
+}

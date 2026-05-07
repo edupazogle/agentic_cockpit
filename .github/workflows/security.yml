@@ -1,0 +1,125 @@
+name: Security Gates — Semgrep + Gitleaks + Dependency Audit
+
+on:
+  push:
+    branches: [main, "deliver/**"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write  # for uploading SARIF results
+
+jobs:
+  # ── Gitleaks — detect secrets before they land ──────────────────────────────
+  gitleaks:
+    name: Gitleaks secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so Gitleaks can scan all commits on the branch
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ── Semgrep — SAST for OWASP Top 10 ────────────────────────────────────────
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Semgrep
+        run: |
+          semgrep \
+            --config "p/owasp-top-ten" \
+            --config "p/python" \
+            --config "p/typescript" \
+            --config "p/secrets" \
+            --sarif \
+            --output semgrep.sarif \
+            --error \
+            --exclude "node_modules" \
+            --exclude ".venv" \
+            --exclude "delete/" \
+            --exclude "design-proposal/"
+        continue-on-error: false  # block on CRITICAL findings
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep
+
+  # ── Python dependency audit (gateway) ──────────────────────────────────────
+  python-audit:
+    name: Python dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.11.3"
+
+      - name: Install gateway dependencies
+        working-directory: gateway
+        run: uv sync --extra dev
+
+      - name: pip-audit (known CVEs)
+        working-directory: gateway
+        run: |
+          uv run pip-audit --require-hashes=false --fix=false --exit-code=1 2>/dev/null || \
+          uv run pip-audit --require-hashes=false --fix=false 2>&1 | tee audit.txt
+          grep -qv "No known vulnerabilities" audit.txt && exit 1 || exit 0
+        continue-on-error: false
+
+      - name: Ruff lint (gateway)
+        working-directory: gateway
+        run: uv run ruff check src/
+
+      - name: mypy type-check (gateway)
+        working-directory: gateway
+        run: uv run mypy src/gateway/ --ignore-missing-imports
+
+      - name: pytest (gateway)
+        working-directory: gateway
+        run: uv run pytest tests/ -v
+
+  # ── Node.js dependency audit (web) ─────────────────────────────────────────
+  node-audit:
+    name: Node.js dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "latest"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: pnpm audit (high severity)
+        run: pnpm audit --audit-level=high
+        continue-on-error: false
+
+      - name: ESLint / Next lint
+        run: pnpm lint
+
+      - name: TypeScript type-check
+        run: pnpm exec tsc --noEmit
+
+      - name: Unit tests
+        run: pnpm test --if-present

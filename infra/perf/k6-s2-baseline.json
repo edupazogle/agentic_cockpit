@@ -1,0 +1,32 @@
+{
+  "id": "s2-baseline",
+  "metadata": {
+    "description": "Sprint 2 k6 baseline — healthz + callback endpoint",
+    "recorded_at": "2025-01-01T00:00:00Z",
+    "k6_version": "0.52.0",
+    "note": "Stub baseline committed for CI reference. Replace with real measurements from staging post-deploy."
+  },
+  "thresholds": {
+    "http_req_duration{path:/healthz}": ["p95<300", "p99<500"],
+    "http_req_duration{path:/callbacks/n8n}": ["p95<500", "p99<1000"],
+    "http_req_failed": ["rate<0.01"]
+  },
+  "baselines": {
+    "healthz": {
+      "path": "/healthz",
+      "method": "GET",
+      "p50_ms": 25,
+      "p95_ms": 80,
+      "p99_ms": 150,
+      "rps": 50
+    },
+    "callback_n8n": {
+      "path": "/callbacks/n8n/wf001",
+      "method": "POST",
+      "p50_ms": 60,
+      "p95_ms": 200,
+      "p99_ms": 400,
+      "rps": 20
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "movement": "i",
+  "name": "Personas & journey",
+  "checks": [
+    {"id": "personas_min", "kind": "count", "artifact_kind": "persona", "min": 3,
+     "question_when_missing": "Combien de personas répondent aujourd'hui ? J'en ai posé {current}, on m'en a au moins 3 dans la pratique."},
+    {"id": "journey_min", "kind": "count", "artifact_kind": "journey_node", "min": 8,
+     "question_when_missing": "Le parcours actuel a {current} étapes — il en faut au moins 8 pour qu'on voie où le temps part."},
+    {"id": "every_node_fields", "kind": "fields_present",
+     "artifact_kind": "journey_node", "required_fields": ["actor","action","tool_used"],
+     "question_when_missing": "Pour {missing_count} étape(s), il manque {field}. Vous me les complétez ou je marque 'à vérifier' ?"}
+  ]
+}

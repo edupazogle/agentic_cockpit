@@ -1,0 +1,16 @@
+{
+  "movement": "iii",
+  "name": "Plan & HITL gates",
+  "checks": [
+    {"id": "modules_min", "kind": "count", "artifact_kind": "module_spec", "min": 1,
+     "question_when_missing": "On n'a pas encore de module défini. Lequel on traite en premier ?"},
+    {"id": "every_module_has_flow", "kind": "per_module", "artifact_kind": "flow_node",
+     "min_per_module": 8,
+     "question_when_missing": "Le module {module} n'a que {current} nœuds. Trace-moi les étapes principales ou je dessine et tu corriges."},
+    {"id": "every_hitl_has_cost_and_citation", "kind": "fields_present",
+     "artifact_kind": "hitl_gate", "required_fields": ["cost_eur","citation_id","skip_impact"],
+     "question_when_missing": "Pour la porte {gate_label} il manque {field}. Combien coûte une mauvaise validation côté plateau ?"},
+    {"id": "no_binding_citation_contradicted", "kind": "tension_check",
+     "question_when_missing": "Il y a une tension entre votre porte {gate} et la citation {citation}. Laquelle gagne ?"}
+  ]
+}

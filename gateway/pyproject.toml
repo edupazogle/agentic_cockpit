@@ -1,0 +1,77 @@
+[project]
+name = "agent-gateway"
+version = "0.1.0"
+description = "GDAI Agentic Cockpit — trust boundary gateway"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.34.0",
+  "httpx>=0.28.0",
+  "pydantic[email]>=2.10.0",
+  "pydantic-settings>=2.7.0",
+  "python-jose[cryptography]>=3.4.0",
+  "itsdangerous>=2.2.0",
+  "slowapi>=0.1.9",
+  "opentelemetry-sdk>=1.29.0",
+  "opentelemetry-exporter-otlp-proto-http>=1.29.0",
+  "opentelemetry-instrumentation-fastapi>=0.50b0",
+  "supabase>=2.10.0",
+  "structlog>=24.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.25.0",
+  "pytest-httpx>=0.35.0",
+  "httpx>=0.28.0",
+  "ruff>=0.8.0",
+  "mypy>=1.13.0",
+  "types-python-jose>=3.3.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gateway"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "psycopg2-binary>=2.9.12",
+    "sqlalchemy>=2.0.49",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "C4", "UP", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S105", "S106", "E501"]
+"src/gateway/routers/*.py" = ["B008"]
+"src/gateway/posthog_flags.py" = ["S110"]
+"src/gateway/synthdata/*.py" = ["S311", "E501"]
+"src/gateway/routers/audit_router.py" = ["E501"]
+"src/gateway/routers/chat_router.py" = ["E501", "S110"]
+"src/gateway/routers/kpis_router.py" = ["E501"]
+"src/gateway/citation_gate.py" = ["E501"]
+"src/gateway/seed/*.py" = ["S311", "E501"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+explicit_package_bases = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+  "integration: integration tests that exercise multiple modules together",
+  "unit: unit tests for individual functions",
+]
