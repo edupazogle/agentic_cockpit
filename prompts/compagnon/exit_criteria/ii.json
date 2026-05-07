@@ -1,0 +1,12 @@
+{
+  "movement": "ii",
+  "name": "Research / reality",
+  "checks": [
+    {"id": "binding_citations", "kind": "count", "artifact_kind": "citation",
+     "filter": {"binding": true, "verified": true}, "min": 3,
+     "question_when_missing": "Je n'ai que {current} citation(s) contraignante(s) vérifiée(s). On a besoin d'au moins 3. Voulez-vous que je relance la recherche sur {suggested_topic} ?"},
+    {"id": "reality_check_ack", "kind": "count",
+     "artifact_kind": "reality_check_item", "filter": {"acknowledged": true}, "min": 1,
+     "question_when_missing": "Vous n'avez pas encore réagi aux défis que je remonte. Lequel on creuse ?"}
+  ]
+}
